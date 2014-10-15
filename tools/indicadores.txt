@@ -1,0 +1,22 @@
+ V- Lá em tarefas estão faltando os post´s
+ V - Quando eu crio tarafe como "em andamento" não aperece nada na listagem
+ V - Em ações algum campo está como obrigatorio e quando insiro a ação ela se perde no banco, acho que é o status
+ V - Erro no envio dos emails localmente
+ V - A impressão ta maluca esse link: "http://localhost/civis/Reuniao/imprimir/4" aparece a reunião do id 3
+ V - La em tarfeas o lembrete é opcional e o responsavel é obrigatorio
+ V - A busca tu precisa fazer como o civis antigo e queria que jogasse na sessão o que o cara vai buscando. tinha conversado isso contigo ja.
+ V - nos grids quando eu clico pra ordenar ele não ordena
+ - Vitor tá começando a ajeitar o design... A gente vai precisar começar a colocar as coisas do layout no sistema belhz? No começo a gente combinou pra tu ir fazendo sem se preocupar ai agora a gente adicionar o layout
+ V - Lá no mapa estrategico o grafico não ta funfando (antes de vitor mexer tava assim ja).
+ - Quando eu clico no mapa e exibo os valores para preencher ele nao esta responsivo (Está dando bug quando é exibido apenas uma linha)
+ V - Lá em reunião o projeto que eu criei não aparece, e esta aparecendo um deletado
+ V - A data no cadastro de reunião não chama o calendario
+ V - Aparecer na visualização de ação e tarefas os POSTS
+ V - Estamos sem o link de reunião la em tarefas (não entendi) (colocar um combo lá em tarefas com as reuniões) (colocar um radio la em tarefas perguntando se quer mostrar as relações) 
+ - as caixas para digitar valor mesmo num monitor normal estao passando no tamanho (Isso aqui é com victor, ele precisa colocar pra o conteúdo se adequar, estava funcionando antes)
+ V - estou escolhendo o indicador como inteiro e mesmo assim ele aparece com casas decimais.
+ V - Quando coloco uma meta como zero e digito um valor no realizado ele não reconhece e fica cinza.
+ V - Uma atividade deve ir para TAREFAS CONCLUIDS se for concluida independente do status la em tarefas (não entendi)(tirar os campos de concluido)
+ - Buscar pelos responsáveis de ação lah em anomalias para exibir no mouse hover
+ V - Colocar botão pra imprimir em ação, tarefas.
+ - Colocar um checkbox na busca pra bucar so as atrasadas la em ação em tarefas

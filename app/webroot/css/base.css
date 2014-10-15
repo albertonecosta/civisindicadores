@@ -1,0 +1,15 @@
+.cf {
+  *zoom: 1;
+}
+.cf:before,
+.cf:after {
+  content: "";
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+.ie6 .cf,
+.ie7 .cf {
+  zoom: 1;
+}

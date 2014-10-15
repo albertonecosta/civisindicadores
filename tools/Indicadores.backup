@@ -1,0 +1,4889 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.2.4
+-- Dumped by pg_dump version 9.2.2
+-- Started on 2014-01-24 21:21:41
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 248 (class 3079 OID 11727)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2475 (class 0 OID 0)
+-- Dependencies: 248
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 168 (class 1259 OID 33183)
+-- Name: acao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE acao (
+    id integer NOT NULL,
+    titulo character varying(255),
+    data_inicio_previsto date,
+    data_fim_previsto date,
+    concluido integer DEFAULT 0,
+    data_conclusao date,
+    status integer DEFAULT 1,
+    observacao text,
+    lembrete date,
+    andamento character varying(255),
+    responsavel_id integer,
+    acao_id integer,
+    supervisor_id integer,
+    prioridade character varying(10),
+    anomalia_id integer,
+    objetivo_id integer,
+    projeto_id integer
+);
+
+
+ALTER TABLE public.acao OWNER TO postgres;
+
+--
+-- TOC entry 169 (class 1259 OID 33191)
+-- Name: acao_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE acao_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.acao_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2476 (class 0 OID 0)
+-- Dependencies: 169
+-- Name: acao_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE acao_id_seq OWNED BY acao.id;
+
+
+--
+-- TOC entry 170 (class 1259 OID 33193)
+-- Name: acao_plano_acao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE acao_plano_acao (
+    id integer NOT NULL,
+    plano_acao_id integer,
+    acao_id integer
+);
+
+
+ALTER TABLE public.acao_plano_acao OWNER TO postgres;
+
+--
+-- TOC entry 171 (class 1259 OID 33196)
+-- Name: acao_plano_acao_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE acao_plano_acao_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.acao_plano_acao_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2477 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: acao_plano_acao_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE acao_plano_acao_id_seq OWNED BY acao_plano_acao.id;
+
+
+--
+-- TOC entry 172 (class 1259 OID 33198)
+-- Name: acos; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE acos (
+    id integer NOT NULL,
+    parent_id integer,
+    model character varying(255) DEFAULT NULL::character varying,
+    foreign_key integer,
+    alias character varying(255) DEFAULT NULL::character varying,
+    lft integer,
+    rght integer
+);
+
+
+ALTER TABLE public.acos OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 33206)
+-- Name: acos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE acos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.acos_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2478 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: acos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE acos_id_seq OWNED BY acos.id;
+
+
+--
+-- TOC entry 227 (class 1259 OID 41997)
+-- Name: anomalia; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE anomalia (
+    id integer NOT NULL,
+    causas_internas text,
+    causas_externas text,
+    data date,
+    indicador_id integer,
+    status integer DEFAULT 1,
+    data_conclusao date,
+    identificacao_problema text,
+    estratificacao_problema text,
+    concluido integer
+);
+
+
+ALTER TABLE public.anomalia OWNER TO postgres;
+
+--
+-- TOC entry 226 (class 1259 OID 41995)
+-- Name: anomalia_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE anomalia_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.anomalia_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2480 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: anomalia_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE anomalia_id_seq OWNED BY anomalia.id;
+
+
+--
+-- TOC entry 174 (class 1259 OID 33208)
+-- Name: aros; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE aros (
+    id integer NOT NULL,
+    parent_id integer,
+    model character varying(255) DEFAULT NULL::character varying,
+    foreign_key integer,
+    alias character varying(255) DEFAULT NULL::character varying,
+    lft integer,
+    rght integer
+);
+
+
+ALTER TABLE public.aros OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 33216)
+-- Name: aros_acos; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE aros_acos (
+    id integer NOT NULL,
+    aro_id integer NOT NULL,
+    aco_id integer NOT NULL,
+    _create character varying(2) DEFAULT '0'::character varying NOT NULL,
+    _read character varying(2) DEFAULT '0'::character varying NOT NULL,
+    _update character varying(2) DEFAULT '0'::character varying NOT NULL,
+    _delete character varying(2) DEFAULT '0'::character varying NOT NULL
+);
+
+
+ALTER TABLE public.aros_acos OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 33223)
+-- Name: aros_acos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE aros_acos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.aros_acos_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2482 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: aros_acos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE aros_acos_id_seq OWNED BY aros_acos.id;
+
+
+--
+-- TOC entry 177 (class 1259 OID 33225)
+-- Name: aros_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE aros_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.aros_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2483 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: aros_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE aros_id_seq OWNED BY aros.id;
+
+
+--
+-- TOC entry 245 (class 1259 OID 66942)
+-- Name: auditoria; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auditoria (
+    id integer NOT NULL,
+    alias_controller character varying(255),
+    alias_acao character varying(255),
+    usuario_id integer,
+    created timestamp without time zone,
+    elemento_id character varying
+);
+
+
+ALTER TABLE public.auditoria OWNER TO postgres;
+
+--
+-- TOC entry 247 (class 1259 OID 66958)
+-- Name: auditoria_campos; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE auditoria_campos (
+    id integer NOT NULL,
+    alias_model character varying(255),
+    valor_antigo text,
+    valor_novo text,
+    auditoria_id integer,
+    tipo_campo integer
+);
+
+
+ALTER TABLE public.auditoria_campos OWNER TO postgres;
+
+--
+-- TOC entry 246 (class 1259 OID 66956)
+-- Name: auditoria_campos_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auditoria_campos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auditoria_campos_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2486 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: auditoria_campos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auditoria_campos_id_seq OWNED BY auditoria_campos.id;
+
+
+--
+-- TOC entry 244 (class 1259 OID 66940)
+-- Name: auditoria_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE auditoria_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auditoria_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2488 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: auditoria_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE auditoria_id_seq OWNED BY auditoria.id;
+
+
+--
+-- TOC entry 178 (class 1259 OID 33227)
+-- Name: cargo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE cargo (
+    id integer NOT NULL,
+    titulo character varying(255),
+    descricao text,
+    status integer DEFAULT 1
+);
+
+
+ALTER TABLE public.cargo OWNER TO postgres;
+
+--
+-- TOC entry 179 (class 1259 OID 33234)
+-- Name: cargo_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE cargo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cargo_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2490 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: cargo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE cargo_id_seq OWNED BY cargo.id;
+
+
+--
+-- TOC entry 180 (class 1259 OID 33236)
+-- Name: comentario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE comentario (
+    id integer NOT NULL,
+    mensagem text,
+    arquivo character varying(255),
+    usuario_id integer,
+    acao_id integer
+);
+
+
+ALTER TABLE public.comentario OWNER TO postgres;
+
+--
+-- TOC entry 181 (class 1259 OID 33242)
+-- Name: comentario_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE comentario_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comentario_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2491 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: comentario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE comentario_id_seq OWNED BY comentario.id;
+
+
+--
+-- TOC entry 182 (class 1259 OID 33244)
+-- Name: comunicacao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE comunicacao (
+    id integer NOT NULL,
+    titulo character varying(255),
+    status integer DEFAULT 1,
+    tipo character varying(45)
+);
+
+
+ALTER TABLE public.comunicacao OWNER TO postgres;
+
+--
+-- TOC entry 183 (class 1259 OID 33248)
+-- Name: comunicacao_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE comunicacao_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comunicacao_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2492 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: comunicacao_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE comunicacao_id_seq OWNED BY comunicacao.id;
+
+
+--
+-- TOC entry 184 (class 1259 OID 33250)
+-- Name: departamento; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE departamento (
+    id integer NOT NULL,
+    titulo character varying(255),
+    status integer DEFAULT 1
+);
+
+
+ALTER TABLE public.departamento OWNER TO postgres;
+
+--
+-- TOC entry 185 (class 1259 OID 33254)
+-- Name: departamento_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE departamento_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.departamento_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2493 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: departamento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE departamento_id_seq OWNED BY departamento.id;
+
+
+--
+-- TOC entry 186 (class 1259 OID 33256)
+-- Name: dimensao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE dimensao (
+    id integer NOT NULL,
+    titulo character varying(255),
+    observacao text,
+    ordem integer,
+    status integer DEFAULT 1,
+    empresa_id integer
+);
+
+
+ALTER TABLE public.dimensao OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 33263)
+-- Name: dimensao_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE dimensao_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.dimensao_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2494 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: dimensao_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE dimensao_id_seq OWNED BY dimensao.id;
+
+
+--
+-- TOC entry 188 (class 1259 OID 33265)
+-- Name: empresa; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE empresa (
+    id integer NOT NULL,
+    matriz integer,
+    cnpj character varying(45),
+    inscricao_estadual character varying(255),
+    inscricao_municipal character varying(255),
+    pessoa_id integer,
+    empresa_id integer,
+    status integer DEFAULT 1
+);
+
+
+ALTER TABLE public.empresa OWNER TO postgres;
+
+--
+-- TOC entry 189 (class 1259 OID 33272)
+-- Name: empresa_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE empresa_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.empresa_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2495 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: empresa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE empresa_id_seq OWNED BY empresa.id;
+
+
+--
+-- TOC entry 190 (class 1259 OID 33274)
+-- Name: endereco; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE endereco (
+    id integer NOT NULL,
+    logradouro character varying(255),
+    cep character varying(45),
+    bairro character varying(255),
+    cidade character varying(255),
+    numero character varying(45),
+    uf character(2),
+    status integer DEFAULT 1
+);
+
+
+ALTER TABLE public.endereco OWNER TO postgres;
+
+--
+-- TOC entry 191 (class 1259 OID 33281)
+-- Name: endereco_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE endereco_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.endereco_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2496 (class 0 OID 0)
+-- Dependencies: 191
+-- Name: endereco_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE endereco_id_seq OWNED BY endereco.id;
+
+
+--
+-- TOC entry 213 (class 1259 OID 33534)
+-- Name: faixa; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE faixa (
+    id integer NOT NULL,
+    titulo character varying(255) NOT NULL,
+    limite_vermelho double precision,
+    limite_amarelo double precision,
+    status integer DEFAULT 1 NOT NULL
+);
+
+
+ALTER TABLE public.faixa OWNER TO postgres;
+
+--
+-- TOC entry 212 (class 1259 OID 33532)
+-- Name: faixa_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE faixa_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.faixa_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2498 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: faixa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE faixa_id_seq OWNED BY faixa.id;
+
+
+--
+-- TOC entry 192 (class 1259 OID 33283)
+-- Name: grupo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE grupo (
+    id integer NOT NULL,
+    titulo character varying(255),
+    status integer DEFAULT 1
+);
+
+
+ALTER TABLE public.grupo OWNER TO postgres;
+
+--
+-- TOC entry 193 (class 1259 OID 33287)
+-- Name: grupo_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE grupo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.grupo_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2500 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: grupo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE grupo_id_seq OWNED BY grupo.id;
+
+
+--
+-- TOC entry 215 (class 1259 OID 33547)
+-- Name: indicador; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE indicador (
+    id integer NOT NULL,
+    titulo character varying(255) NOT NULL,
+    indicador_id integer,
+    faixa_id integer NOT NULL,
+    objetivo_id integer NOT NULL,
+    usuario_id integer NOT NULL,
+    calculo integer NOT NULL,
+    desdobramento integer DEFAULT 1 NOT NULL,
+    projecao integer DEFAULT 0 NOT NULL,
+    tipo_calculo integer DEFAULT 0 NOT NULL,
+    tipo integer DEFAULT 0 NOT NULL,
+    ordem integer NOT NULL,
+    status integer DEFAULT 1 NOT NULL,
+    anos text,
+    unidade character varying(255)
+);
+
+
+ALTER TABLE public.indicador OWNER TO postgres;
+
+--
+-- TOC entry 221 (class 1259 OID 33669)
+-- Name: indicador_autorizado_visualizar; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE indicador_autorizado_visualizar (
+    id integer NOT NULL,
+    usuario_id integer,
+    indicador_id integer
+);
+
+
+ALTER TABLE public.indicador_autorizado_visualizar OWNER TO postgres;
+
+--
+-- TOC entry 220 (class 1259 OID 33667)
+-- Name: indicador_autorizado_visualizar_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE indicador_autorizado_visualizar_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.indicador_autorizado_visualizar_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2503 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: indicador_autorizado_visualizar_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE indicador_autorizado_visualizar_id_seq OWNED BY indicador_autorizado_visualizar.id;
+
+
+--
+-- TOC entry 214 (class 1259 OID 33545)
+-- Name: indicador_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE indicador_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.indicador_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2505 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: indicador_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE indicador_id_seq OWNED BY indicador.id;
+
+
+--
+-- TOC entry 223 (class 1259 OID 33757)
+-- Name: indicador_meta; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE indicador_meta (
+    id integer NOT NULL,
+    indicador_id integer,
+    janeiro double precision,
+    fevereiro double precision,
+    marco double precision,
+    abril double precision,
+    maio double precision,
+    junho double precision,
+    julho double precision,
+    agosto double precision,
+    setembro double precision,
+    outubro double precision,
+    novembro double precision,
+    dezembro double precision,
+    ano character varying
+);
+
+
+ALTER TABLE public.indicador_meta OWNER TO postgres;
+
+--
+-- TOC entry 222 (class 1259 OID 33755)
+-- Name: indicador_meta_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE indicador_meta_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.indicador_meta_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2508 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: indicador_meta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE indicador_meta_id_seq OWNED BY indicador_meta.id;
+
+
+--
+-- TOC entry 225 (class 1259 OID 33770)
+-- Name: indicador_realizado; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE indicador_realizado (
+    id integer NOT NULL,
+    indicador_id integer,
+    janeiro double precision,
+    fevereiro double precision,
+    marco double precision,
+    abril double precision,
+    maio double precision,
+    junho double precision,
+    julho double precision,
+    agosto double precision,
+    setembro double precision,
+    outubro double precision,
+    novembro double precision,
+    dezembro double precision,
+    ano character varying
+);
+
+
+ALTER TABLE public.indicador_realizado OWNER TO postgres;
+
+--
+-- TOC entry 224 (class 1259 OID 33768)
+-- Name: indicador_realizado_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE indicador_realizado_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.indicador_realizado_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2511 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: indicador_realizado_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE indicador_realizado_id_seq OWNED BY indicador_realizado.id;
+
+
+--
+-- TOC entry 219 (class 1259 OID 33623)
+-- Name: indicador_responsavel_meta; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE indicador_responsavel_meta (
+    id integer NOT NULL,
+    usuario_id integer,
+    indicador_id integer
+);
+
+
+ALTER TABLE public.indicador_responsavel_meta OWNER TO postgres;
+
+--
+-- TOC entry 2513 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: COLUMN indicador_responsavel_meta.indicador_id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN indicador_responsavel_meta.indicador_id IS '
+';
+
+
+--
+-- TOC entry 218 (class 1259 OID 33621)
+-- Name: indicador_responsavel_meta_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE indicador_responsavel_meta_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.indicador_responsavel_meta_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2515 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: indicador_responsavel_meta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE indicador_responsavel_meta_id_seq OWNED BY indicador_responsavel_meta.id;
+
+
+--
+-- TOC entry 217 (class 1259 OID 33605)
+-- Name: indicador_responsavel_realizado; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE indicador_responsavel_realizado (
+    id integer NOT NULL,
+    usuario_id integer,
+    indicador_id integer
+);
+
+
+ALTER TABLE public.indicador_responsavel_realizado OWNER TO postgres;
+
+--
+-- TOC entry 216 (class 1259 OID 33603)
+-- Name: indicador_responsavel_realizado_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE indicador_responsavel_realizado_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.indicador_responsavel_realizado_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2518 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: indicador_responsavel_realizado_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE indicador_responsavel_realizado_id_seq OWNED BY indicador_responsavel_realizado.id;
+
+
+--
+-- TOC entry 194 (class 1259 OID 33289)
+-- Name: objetivo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE objetivo (
+    id integer NOT NULL,
+    ano integer,
+    ordem integer,
+    titulo character varying(255),
+    dimensao_id integer,
+    status integer DEFAULT 1,
+    tipo integer DEFAULT 1,
+    objetivo_id integer
+);
+
+
+ALTER TABLE public.objetivo OWNER TO postgres;
+
+--
+-- TOC entry 195 (class 1259 OID 33293)
+-- Name: objetivo_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE objetivo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.objetivo_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2520 (class 0 OID 0)
+-- Dependencies: 195
+-- Name: objetivo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE objetivo_id_seq OWNED BY objetivo.id;
+
+
+--
+-- TOC entry 196 (class 1259 OID 33295)
+-- Name: objetivo_projeto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE objetivo_projeto (
+    id integer NOT NULL,
+    projeto_id integer,
+    objetivo_id integer
+);
+
+
+ALTER TABLE public.objetivo_projeto OWNER TO postgres;
+
+--
+-- TOC entry 197 (class 1259 OID 33298)
+-- Name: objetivo_projeto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE objetivo_projeto_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.objetivo_projeto_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2521 (class 0 OID 0)
+-- Dependencies: 197
+-- Name: objetivo_projeto_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE objetivo_projeto_id_seq OWNED BY objetivo_projeto.id;
+
+
+--
+-- TOC entry 198 (class 1259 OID 33300)
+-- Name: pessoa; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pessoa (
+    id integer NOT NULL,
+    titulo character varying(255),
+    tipo character(2),
+    observacao text,
+    email character varying(255)
+);
+
+
+ALTER TABLE public.pessoa OWNER TO postgres;
+
+--
+-- TOC entry 199 (class 1259 OID 33306)
+-- Name: pessoa_comunicacao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE pessoa_comunicacao (
+    id integer NOT NULL,
+    pessoa_id integer,
+    comunicacao_id integer
+);
+
+
+ALTER TABLE public.pessoa_comunicacao OWNER TO postgres;
+
+--
+-- TOC entry 200 (class 1259 OID 33309)
+-- Name: pessoa_comunicacao_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE pessoa_comunicacao_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pessoa_comunicacao_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2522 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: pessoa_comunicacao_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE pessoa_comunicacao_id_seq OWNED BY pessoa_comunicacao.id;
+
+
+--
+-- TOC entry 201 (class 1259 OID 33311)
+-- Name: pessoa_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE pessoa_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pessoa_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2523 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: pessoa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE pessoa_id_seq OWNED BY pessoa.id;
+
+
+--
+-- TOC entry 202 (class 1259 OID 33313)
+-- Name: plano_acao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE plano_acao (
+    id integer NOT NULL,
+    objetivo_id integer,
+    titulo character varying(255),
+    status integer DEFAULT 1
+);
+
+
+ALTER TABLE public.plano_acao OWNER TO postgres;
+
+--
+-- TOC entry 203 (class 1259 OID 33317)
+-- Name: plano_acao_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE plano_acao_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.plano_acao_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2524 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: plano_acao_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE plano_acao_id_seq OWNED BY plano_acao.id;
+
+
+--
+-- TOC entry 204 (class 1259 OID 33319)
+-- Name: plano_acao_projeto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE plano_acao_projeto (
+    id integer NOT NULL,
+    projeto_id integer,
+    plano_acao_id integer
+);
+
+
+ALTER TABLE public.plano_acao_projeto OWNER TO postgres;
+
+--
+-- TOC entry 205 (class 1259 OID 33322)
+-- Name: plano_acao_projeto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE plano_acao_projeto_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.plano_acao_projeto_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2525 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: plano_acao_projeto_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE plano_acao_projeto_id_seq OWNED BY plano_acao_projeto.id;
+
+
+--
+-- TOC entry 243 (class 1259 OID 58720)
+-- Name: post; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE post (
+    id integer NOT NULL,
+    titulo character varying(255),
+    mensagem text,
+    acao_id integer,
+    receber_email integer DEFAULT 1,
+    status integer DEFAULT 1,
+    post_id integer,
+    created timestamp without time zone,
+    modified timestamp without time zone,
+    usuario_id integer
+);
+
+
+ALTER TABLE public.post OWNER TO postgres;
+
+--
+-- TOC entry 242 (class 1259 OID 58718)
+-- Name: post_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE post_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.post_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2527 (class 0 OID 0)
+-- Dependencies: 242
+-- Name: post_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE post_id_seq OWNED BY post.id;
+
+
+--
+-- TOC entry 231 (class 1259 OID 50337)
+-- Name: procedimento; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE procedimento (
+    id integer NOT NULL,
+    titulo character varying(255),
+    resultado_esperado text,
+    passos text,
+    requisito text,
+    arquivo character varying(255),
+    arquivo_dir character varying(255),
+    usuario_id integer,
+    certificado integer,
+    status integer DEFAULT 1
+);
+
+
+ALTER TABLE public.procedimento OWNER TO postgres;
+
+--
+-- TOC entry 230 (class 1259 OID 50335)
+-- Name: procedimento_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE procedimento_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.procedimento_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2530 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: procedimento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE procedimento_id_seq OWNED BY procedimento.id;
+
+
+--
+-- TOC entry 206 (class 1259 OID 33324)
+-- Name: projeto; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE projeto (
+    id integer NOT NULL,
+    titulo character varying(255),
+    data_inicio_previsto date,
+    data_fim_previsto date,
+    valor double precision,
+    descricao text,
+    concluido integer DEFAULT 0,
+    data_conclusao date,
+    motivacao text,
+    resultado text,
+    risco text,
+    usuario_id integer,
+    status integer DEFAULT 1,
+    custo double precision
+);
+
+
+ALTER TABLE public.projeto OWNER TO postgres;
+
+--
+-- TOC entry 207 (class 1259 OID 33332)
+-- Name: projeto_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE projeto_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.projeto_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2532 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: projeto_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE projeto_id_seq OWNED BY projeto.id;
+
+
+--
+-- TOC entry 235 (class 1259 OID 50399)
+-- Name: reuniao; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE reuniao (
+    id integer NOT NULL,
+    titulo character varying(255),
+    projeto_id integer,
+    data date,
+    pauta text,
+    ata text,
+    observacao text,
+    convidados_externos text,
+    local character varying(255),
+    status integer DEFAULT 1,
+    hora_inicio character varying(10),
+    hora_fim character varying(10)
+);
+
+
+ALTER TABLE public.reuniao OWNER TO postgres;
+
+--
+-- TOC entry 239 (class 1259 OID 50433)
+-- Name: reuniao_conhecedor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE reuniao_conhecedor (
+    id integer NOT NULL,
+    reuniao_id integer,
+    usuario_id integer
+);
+
+
+ALTER TABLE public.reuniao_conhecedor OWNER TO postgres;
+
+--
+-- TOC entry 238 (class 1259 OID 50431)
+-- Name: reuniao_conhecedor_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE reuniao_conhecedor_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reuniao_conhecedor_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2535 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: reuniao_conhecedor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE reuniao_conhecedor_id_seq OWNED BY reuniao_conhecedor.id;
+
+
+--
+-- TOC entry 241 (class 1259 OID 50452)
+-- Name: reuniao_email_externo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE reuniao_email_externo (
+    id integer NOT NULL,
+    reuniao_id integer,
+    email character varying(255)
+);
+
+
+ALTER TABLE public.reuniao_email_externo OWNER TO postgres;
+
+--
+-- TOC entry 240 (class 1259 OID 50450)
+-- Name: reuniao_email_externo_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE reuniao_email_externo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reuniao_email_externo_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2538 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: reuniao_email_externo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE reuniao_email_externo_id_seq OWNED BY reuniao_email_externo.id;
+
+
+--
+-- TOC entry 234 (class 1259 OID 50397)
+-- Name: reuniao_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE reuniao_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reuniao_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2540 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: reuniao_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE reuniao_id_seq OWNED BY reuniao.id;
+
+
+--
+-- TOC entry 237 (class 1259 OID 50415)
+-- Name: reuniao_participante; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE reuniao_participante (
+    id integer NOT NULL,
+    reuniao_id integer,
+    usuario_id integer
+);
+
+
+ALTER TABLE public.reuniao_participante OWNER TO postgres;
+
+--
+-- TOC entry 236 (class 1259 OID 50413)
+-- Name: reuniao_participante_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE reuniao_participante_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reuniao_participante_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2543 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: reuniao_participante_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE reuniao_participante_id_seq OWNED BY reuniao_participante.id;
+
+
+--
+-- TOC entry 229 (class 1259 OID 50260)
+-- Name: setor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE setor (
+    id integer NOT NULL,
+    titulo character varying(255),
+    status integer DEFAULT 1,
+    tipo integer
+);
+
+
+ALTER TABLE public.setor OWNER TO postgres;
+
+--
+-- TOC entry 228 (class 1259 OID 50258)
+-- Name: setor_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE setor_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.setor_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2546 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: setor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE setor_id_seq OWNED BY setor.id;
+
+
+--
+-- TOC entry 233 (class 1259 OID 50366)
+-- Name: tarefa; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tarefa (
+    id integer NOT NULL,
+    titulo character varying(255),
+    data_inicio_previsto date,
+    data_fim_previsto date,
+    concluido integer DEFAULT 0,
+    data_conclusao date,
+    status integer DEFAULT 1,
+    comentario text,
+    lembrete date,
+    arquivo character varying(255),
+    arquivo_dir character varying(255),
+    responsavel_id integer,
+    supervisor_id integer,
+    prioridade character varying(10),
+    reuniao_id integer,
+    acao_id integer
+);
+
+
+ALTER TABLE public.tarefa OWNER TO postgres;
+
+--
+-- TOC entry 232 (class 1259 OID 50364)
+-- Name: terefa_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE terefa_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.terefa_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2549 (class 0 OID 0)
+-- Dependencies: 232
+-- Name: terefa_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE terefa_id_seq OWNED BY tarefa.id;
+
+
+--
+-- TOC entry 208 (class 1259 OID 33334)
+-- Name: usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE usuario (
+    id integer NOT NULL,
+    login character varying(255),
+    senha character varying(50),
+    status integer DEFAULT 1,
+    lembrete_senha character varying(255),
+    foto character varying(255),
+    enviado integer,
+    pessoa_id integer,
+    cargo_id integer,
+    vinculo_id integer,
+    cpf character varying(45),
+    rg character varying(45),
+    grupo_id integer,
+    departamento_id integer,
+    setor_id integer,
+    chefe integer DEFAULT 0,
+    imagem_perfil character varying(255),
+    diretorio_imagem_perfil character varying(255),
+    endereco_id integer
+);
+
+
+ALTER TABLE public.usuario OWNER TO postgres;
+
+--
+-- TOC entry 209 (class 1259 OID 33341)
+-- Name: usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE usuario_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.usuario_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2551 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE usuario_id_seq OWNED BY usuario.id;
+
+
+--
+-- TOC entry 210 (class 1259 OID 33343)
+-- Name: vinculo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE vinculo (
+    id integer NOT NULL,
+    titulo character varying(255),
+    status integer DEFAULT 1,
+    created timestamp without time zone,
+    modified timestamp without time zone
+);
+
+
+ALTER TABLE public.vinculo OWNER TO postgres;
+
+--
+-- TOC entry 211 (class 1259 OID 33347)
+-- Name: vinculo_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE vinculo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.vinculo_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2552 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: vinculo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE vinculo_id_seq OWNED BY vinculo.id;
+
+
+--
+-- TOC entry 2175 (class 2604 OID 33349)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY acao ALTER COLUMN id SET DEFAULT nextval('acao_id_seq'::regclass);
+
+
+--
+-- TOC entry 2176 (class 2604 OID 33350)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY acao_plano_acao ALTER COLUMN id SET DEFAULT nextval('acao_plano_acao_id_seq'::regclass);
+
+
+--
+-- TOC entry 2179 (class 2604 OID 33351)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY acos ALTER COLUMN id SET DEFAULT nextval('acos_id_seq'::regclass);
+
+
+--
+-- TOC entry 2233 (class 2604 OID 42000)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY anomalia ALTER COLUMN id SET DEFAULT nextval('anomalia_id_seq'::regclass);
+
+
+--
+-- TOC entry 2182 (class 2604 OID 33352)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY aros ALTER COLUMN id SET DEFAULT nextval('aros_id_seq'::regclass);
+
+
+--
+-- TOC entry 2187 (class 2604 OID 33353)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY aros_acos ALTER COLUMN id SET DEFAULT nextval('aros_acos_id_seq'::regclass);
+
+
+--
+-- TOC entry 2250 (class 2604 OID 66945)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auditoria ALTER COLUMN id SET DEFAULT nextval('auditoria_id_seq'::regclass);
+
+
+--
+-- TOC entry 2251 (class 2604 OID 66961)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auditoria_campos ALTER COLUMN id SET DEFAULT nextval('auditoria_campos_id_seq'::regclass);
+
+
+--
+-- TOC entry 2189 (class 2604 OID 33354)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY cargo ALTER COLUMN id SET DEFAULT nextval('cargo_id_seq'::regclass);
+
+
+--
+-- TOC entry 2190 (class 2604 OID 33355)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comentario ALTER COLUMN id SET DEFAULT nextval('comentario_id_seq'::regclass);
+
+
+--
+-- TOC entry 2192 (class 2604 OID 33356)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comunicacao ALTER COLUMN id SET DEFAULT nextval('comunicacao_id_seq'::regclass);
+
+
+--
+-- TOC entry 2194 (class 2604 OID 33357)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY departamento ALTER COLUMN id SET DEFAULT nextval('departamento_id_seq'::regclass);
+
+
+--
+-- TOC entry 2196 (class 2604 OID 33358)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dimensao ALTER COLUMN id SET DEFAULT nextval('dimensao_id_seq'::regclass);
+
+
+--
+-- TOC entry 2198 (class 2604 OID 33359)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY empresa ALTER COLUMN id SET DEFAULT nextval('empresa_id_seq'::regclass);
+
+
+--
+-- TOC entry 2200 (class 2604 OID 33360)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY endereco ALTER COLUMN id SET DEFAULT nextval('endereco_id_seq'::regclass);
+
+
+--
+-- TOC entry 2220 (class 2604 OID 33537)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY faixa ALTER COLUMN id SET DEFAULT nextval('faixa_id_seq'::regclass);
+
+
+--
+-- TOC entry 2202 (class 2604 OID 33361)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY grupo ALTER COLUMN id SET DEFAULT nextval('grupo_id_seq'::regclass);
+
+
+--
+-- TOC entry 2222 (class 2604 OID 33550)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador ALTER COLUMN id SET DEFAULT nextval('indicador_id_seq'::regclass);
+
+
+--
+-- TOC entry 2230 (class 2604 OID 33672)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador_autorizado_visualizar ALTER COLUMN id SET DEFAULT nextval('indicador_autorizado_visualizar_id_seq'::regclass);
+
+
+--
+-- TOC entry 2231 (class 2604 OID 33760)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador_meta ALTER COLUMN id SET DEFAULT nextval('indicador_meta_id_seq'::regclass);
+
+
+--
+-- TOC entry 2232 (class 2604 OID 33773)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador_realizado ALTER COLUMN id SET DEFAULT nextval('indicador_realizado_id_seq'::regclass);
+
+
+--
+-- TOC entry 2229 (class 2604 OID 33626)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador_responsavel_meta ALTER COLUMN id SET DEFAULT nextval('indicador_responsavel_meta_id_seq'::regclass);
+
+
+--
+-- TOC entry 2228 (class 2604 OID 33608)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador_responsavel_realizado ALTER COLUMN id SET DEFAULT nextval('indicador_responsavel_realizado_id_seq'::regclass);
+
+
+--
+-- TOC entry 2204 (class 2604 OID 33362)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY objetivo ALTER COLUMN id SET DEFAULT nextval('objetivo_id_seq'::regclass);
+
+
+--
+-- TOC entry 2206 (class 2604 OID 33363)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY objetivo_projeto ALTER COLUMN id SET DEFAULT nextval('objetivo_projeto_id_seq'::regclass);
+
+
+--
+-- TOC entry 2207 (class 2604 OID 33364)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pessoa ALTER COLUMN id SET DEFAULT nextval('pessoa_id_seq'::regclass);
+
+
+--
+-- TOC entry 2208 (class 2604 OID 33365)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pessoa_comunicacao ALTER COLUMN id SET DEFAULT nextval('pessoa_comunicacao_id_seq'::regclass);
+
+
+--
+-- TOC entry 2210 (class 2604 OID 33366)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY plano_acao ALTER COLUMN id SET DEFAULT nextval('plano_acao_id_seq'::regclass);
+
+
+--
+-- TOC entry 2211 (class 2604 OID 33367)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY plano_acao_projeto ALTER COLUMN id SET DEFAULT nextval('plano_acao_projeto_id_seq'::regclass);
+
+
+--
+-- TOC entry 2247 (class 2604 OID 58723)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY post ALTER COLUMN id SET DEFAULT nextval('post_id_seq'::regclass);
+
+
+--
+-- TOC entry 2237 (class 2604 OID 50340)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY procedimento ALTER COLUMN id SET DEFAULT nextval('procedimento_id_seq'::regclass);
+
+
+--
+-- TOC entry 2214 (class 2604 OID 33368)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY projeto ALTER COLUMN id SET DEFAULT nextval('projeto_id_seq'::regclass);
+
+
+--
+-- TOC entry 2242 (class 2604 OID 50402)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reuniao ALTER COLUMN id SET DEFAULT nextval('reuniao_id_seq'::regclass);
+
+
+--
+-- TOC entry 2245 (class 2604 OID 50436)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reuniao_conhecedor ALTER COLUMN id SET DEFAULT nextval('reuniao_conhecedor_id_seq'::regclass);
+
+
+--
+-- TOC entry 2246 (class 2604 OID 50455)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reuniao_email_externo ALTER COLUMN id SET DEFAULT nextval('reuniao_email_externo_id_seq'::regclass);
+
+
+--
+-- TOC entry 2244 (class 2604 OID 50418)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reuniao_participante ALTER COLUMN id SET DEFAULT nextval('reuniao_participante_id_seq'::regclass);
+
+
+--
+-- TOC entry 2235 (class 2604 OID 50263)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY setor ALTER COLUMN id SET DEFAULT nextval('setor_id_seq'::regclass);
+
+
+--
+-- TOC entry 2239 (class 2604 OID 50369)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tarefa ALTER COLUMN id SET DEFAULT nextval('terefa_id_seq'::regclass);
+
+
+--
+-- TOC entry 2216 (class 2604 OID 33369)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuario ALTER COLUMN id SET DEFAULT nextval('usuario_id_seq'::regclass);
+
+
+--
+-- TOC entry 2219 (class 2604 OID 33370)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY vinculo ALTER COLUMN id SET DEFAULT nextval('vinculo_id_seq'::regclass);
+
+
+--
+-- TOC entry 2388 (class 0 OID 33183)
+-- Dependencies: 168
+-- Data for Name: acao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO acao VALUES (6, 'Teste Acao 1', '2013-03-13', '2013-03-13', 0, NULL, 3, NULL, '2013-03-13', '0%', 27, NULL, 25, 'A', NULL, NULL, NULL);
+INSERT INTO acao VALUES (7, 'Teste Acao 2', '2013-06-24', '2014-06-24', 0, NULL, 3, NULL, '2014-06-22', '50%', 26, 6, 25, 'A', NULL, NULL, NULL);
+INSERT INTO acao VALUES (8, 'asdasdasd', '2013-06-24', '2014-06-24', 0, NULL, 3, NULL, '2014-06-22', '50%', 26, NULL, 25, 'A', 1, NULL, NULL);
+INSERT INTO acao VALUES (9, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO acao VALUES (10, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO acao VALUES (11, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO acao VALUES (12, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO acao VALUES (31, 'asdasdas', '2013-11-25', '2013-11-28', 0, NULL, 3, '', '2013-11-26', '25%', 25, NULL, 25, 'A', NULL, NULL, NULL);
+INSERT INTO acao VALUES (15, 'teste', '2013-09-06', '2013-09-06', 0, NULL, 3, NULL, '2013-09-06', '10%', 26, NULL, 26, 'A', 1, NULL, NULL);
+INSERT INTO acao VALUES (17, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO acao VALUES (18, 'asdasdas', '2013-09-06', '2013-09-06', 0, NULL, 3, NULL, '2013-09-06', '10%', 25, NULL, 25, 'A', 1, NULL, NULL);
+INSERT INTO acao VALUES (19, 'asdasdasasd', '2013-09-06', '2013-09-06', 0, NULL, 3, NULL, '2013-09-06', '10%', 25, NULL, 25, 'A', 1, NULL, NULL);
+INSERT INTO acao VALUES (20, 'asdasdasasd', '2013-09-06', '2013-09-06', 0, NULL, 3, NULL, '2013-09-06', '10%', 25, NULL, 25, 'A', 1, NULL, NULL);
+INSERT INTO acao VALUES (21, 'asdasdasasdasd', '2013-09-06', '2013-09-06', 0, NULL, 3, NULL, '2013-09-06', '10%', 25, NULL, 25, 'A', 1, NULL, NULL);
+INSERT INTO acao VALUES (23, 'Teste', '2013-09-09', '2013-09-09', 0, NULL, 3, NULL, NULL, '10%', 25, NULL, 25, 'A', 3, NULL, NULL);
+INSERT INTO acao VALUES (24, 'Ação do indicador tirar 10 em emp', '2013-09-24', '2013-09-19', 0, NULL, 3, NULL, '2013-09-17', '10%', 25, NULL, 25, 'A', NULL, 2, NULL);
+INSERT INTO acao VALUES (25, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO acao VALUES (26, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO acao VALUES (29, 'Teste', '2013-10-07', '2013-10-12', 0, NULL, 3, '', '2013-10-09', '25%', 25, NULL, 26, 'A', NULL, NULL, NULL);
+INSERT INTO acao VALUES (16, 'sdasds', '2013-09-06', '2013-09-06', 0, NULL, 0, NULL, '2013-09-06', '10%', 25, NULL, 25, 'A', 1, NULL, NULL);
+INSERT INTO acao VALUES (22, 'Teste', '2013-11-11', '2013-11-11', 0, NULL, 3, '', '2013-11-11', '25%', 25, NULL, 26, 'A', 1, NULL, NULL);
+INSERT INTO acao VALUES (28, 'Teste projeto 1', '2013-10-11', '2013-10-25', 0, NULL, 3, NULL, '2013-10-09', '25%', 25, NULL, 25, 'A', NULL, NULL, 1);
+INSERT INTO acao VALUES (39, 'dasd', '2014-01-09', '2014-01-02', 0, NULL, 3, '', '2014-01-24', '50%', 25, NULL, 25, 'A', NULL, NULL, NULL);
+INSERT INTO acao VALUES (32, 'Adicionar Log', '2013-11-25', '2013-11-28', 1, '2013-11-26', 5, NULL, '2013-11-25', '100%', 25, 24, 25, 'A', NULL, 2, NULL);
+INSERT INTO acao VALUES (33, 'Adicionar Log', '2013-11-25', '2013-11-28', 1, '2013-11-26', 5, NULL, '2013-11-25', '100%', 25, 24, 25, 'A', NULL, 2, NULL);
+INSERT INTO acao VALUES (34, 'Adicionar Log', '2013-11-25', '2013-11-28', 1, '2013-11-26', 5, NULL, '2013-11-25', '100%', 25, 24, 25, 'A', NULL, 2, NULL);
+INSERT INTO acao VALUES (35, 'Adicionar Log', '2013-11-25', '2013-11-28', 1, '2013-11-26', 5, NULL, '2013-11-25', '100%', 25, 24, 25, 'A', NULL, 2, NULL);
+INSERT INTO acao VALUES (36, 'Adicionar Log', '2013-11-25', '2013-11-28', 1, '2013-11-26', 5, NULL, '2013-11-25', '100%', 25, 24, 25, 'A', NULL, 2, NULL);
+INSERT INTO acao VALUES (37, 'Adicionar Log', '2013-11-25', '2013-11-28', 1, '2013-11-26', 5, NULL, '2013-11-25', '100%', 25, 24, 25, 'A', NULL, 2, NULL);
+INSERT INTO acao VALUES (38, 'Teste Log 22', '2013-11-25', '2013-11-28', 1, '2013-11-25', 3, '', '2013-11-25', '10%', 25, 15, 25, 'A', 1, NULL, NULL);
+INSERT INTO acao VALUES (30, 'Teste projeto 2', '2013-10-11', '2014-04-30', 0, NULL, 2, '', '2013-10-11', '0%', 25, 28, 25, 'A', NULL, NULL, 1);
+
+
+--
+-- TOC entry 2553 (class 0 OID 0)
+-- Dependencies: 169
+-- Name: acao_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('acao_id_seq', 39, true);
+
+
+--
+-- TOC entry 2390 (class 0 OID 33193)
+-- Dependencies: 170
+-- Data for Name: acao_plano_acao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO acao_plano_acao VALUES (5, 1, 6);
+INSERT INTO acao_plano_acao VALUES (6, 1, 7);
+
+
+--
+-- TOC entry 2554 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: acao_plano_acao_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('acao_plano_acao_id_seq', 6, true);
+
+
+--
+-- TOC entry 2392 (class 0 OID 33198)
+-- Dependencies: 172
+-- Data for Name: acos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO acos VALUES (58, 56, NULL, NULL, 'visualizar', 113, 114);
+INSERT INTO acos VALUES (3, 2, NULL, NULL, 'index', 3, 4);
+INSERT INTO acos VALUES (4, 2, NULL, NULL, 'visualizar', 5, 6);
+INSERT INTO acos VALUES (32, 31, NULL, NULL, 'index', 61, 62);
+INSERT INTO acos VALUES (5, 2, NULL, NULL, 'adicionar', 7, 8);
+INSERT INTO acos VALUES (59, 56, NULL, NULL, 'adicionar', 115, 116);
+INSERT INTO acos VALUES (6, 2, NULL, NULL, 'editar', 9, 10);
+INSERT INTO acos VALUES (33, 31, NULL, NULL, 'visualizar', 63, 64);
+INSERT INTO acos VALUES (2, 1, NULL, NULL, 'Cargo', 2, 13);
+INSERT INTO acos VALUES (7, 2, NULL, NULL, 'excluir', 11, 12);
+INSERT INTO acos VALUES (34, 31, NULL, NULL, 'adicionar', 65, 66);
+INSERT INTO acos VALUES (9, 8, NULL, NULL, 'index', 15, 16);
+INSERT INTO acos VALUES (60, 56, NULL, NULL, 'editar', 117, 118);
+INSERT INTO acos VALUES (10, 8, NULL, NULL, 'visualizar', 17, 18);
+INSERT INTO acos VALUES (35, 31, NULL, NULL, 'editar', 67, 68);
+INSERT INTO acos VALUES (11, 8, NULL, NULL, 'adicionar', 19, 20);
+INSERT INTO acos VALUES (12, 8, NULL, NULL, 'editar', 21, 22);
+INSERT INTO acos VALUES (31, 1, NULL, NULL, 'Empresa', 60, 71);
+INSERT INTO acos VALUES (8, 1, NULL, NULL, 'Grupo', 14, 25);
+INSERT INTO acos VALUES (13, 8, NULL, NULL, 'excluir', 23, 24);
+INSERT INTO acos VALUES (36, 31, NULL, NULL, 'excluir', 69, 70);
+INSERT INTO acos VALUES (56, 1, NULL, NULL, 'Projeto', 110, 121);
+INSERT INTO acos VALUES (14, 1, NULL, NULL, 'Pages', 26, 29);
+INSERT INTO acos VALUES (15, 14, NULL, NULL, 'display', 27, 28);
+INSERT INTO acos VALUES (61, 56, NULL, NULL, 'excluir', 119, 120);
+INSERT INTO acos VALUES (17, 16, NULL, NULL, 'index', 31, 32);
+INSERT INTO acos VALUES (38, 37, NULL, NULL, 'index', 73, 74);
+INSERT INTO acos VALUES (18, 16, NULL, NULL, 'login', 33, 34);
+INSERT INTO acos VALUES (19, 16, NULL, NULL, 'logout', 35, 36);
+INSERT INTO acos VALUES (39, 37, NULL, NULL, 'visualizar', 75, 76);
+INSERT INTO acos VALUES (20, 16, NULL, NULL, 'visualizar', 37, 38);
+INSERT INTO acos VALUES (21, 16, NULL, NULL, 'adicionar', 39, 40);
+INSERT INTO acos VALUES (40, 37, NULL, NULL, 'adicionar', 77, 78);
+INSERT INTO acos VALUES (22, 16, NULL, NULL, 'editar', 41, 42);
+INSERT INTO acos VALUES (63, 62, NULL, NULL, 'index', 123, 124);
+INSERT INTO acos VALUES (16, 1, NULL, NULL, 'Usuario', 30, 45);
+INSERT INTO acos VALUES (23, 16, NULL, NULL, 'excluir', 43, 44);
+INSERT INTO acos VALUES (41, 37, NULL, NULL, 'editar', 79, 80);
+INSERT INTO acos VALUES (25, 24, NULL, NULL, 'index', 47, 48);
+INSERT INTO acos VALUES (37, 1, NULL, NULL, 'Departamento', 72, 83);
+INSERT INTO acos VALUES (42, 37, NULL, NULL, 'excluir', 81, 82);
+INSERT INTO acos VALUES (26, 24, NULL, NULL, 'visualizar', 49, 50);
+INSERT INTO acos VALUES (27, 24, NULL, NULL, 'adicionar', 51, 52);
+INSERT INTO acos VALUES (64, 62, NULL, NULL, 'visualizar', 125, 126);
+INSERT INTO acos VALUES (28, 24, NULL, NULL, 'editar', 53, 54);
+INSERT INTO acos VALUES (24, 1, NULL, NULL, 'Vinculo', 46, 57);
+INSERT INTO acos VALUES (29, 24, NULL, NULL, 'excluir', 55, 56);
+INSERT INTO acos VALUES (30, 1, NULL, NULL, 'AclExtras', 58, 59);
+INSERT INTO acos VALUES (44, 43, NULL, NULL, 'index', 85, 86);
+INSERT INTO acos VALUES (65, 62, NULL, NULL, 'adicionar', 127, 128);
+INSERT INTO acos VALUES (45, 43, NULL, NULL, 'visualizar', 87, 88);
+INSERT INTO acos VALUES (46, 43, NULL, NULL, 'adicionar', 89, 90);
+INSERT INTO acos VALUES (66, 62, NULL, NULL, 'editar', 129, 130);
+INSERT INTO acos VALUES (47, 43, NULL, NULL, 'editar', 91, 92);
+INSERT INTO acos VALUES (43, 1, NULL, NULL, 'Dimensao', 84, 95);
+INSERT INTO acos VALUES (48, 43, NULL, NULL, 'excluir', 93, 94);
+INSERT INTO acos VALUES (62, 1, NULL, NULL, 'Acao', 122, 133);
+INSERT INTO acos VALUES (49, 1, NULL, NULL, 'FilterResults', 96, 97);
+INSERT INTO acos VALUES (67, 62, NULL, NULL, 'excluir', 131, 132);
+INSERT INTO acos VALUES (51, 50, NULL, NULL, 'index', 99, 100);
+INSERT INTO acos VALUES (52, 50, NULL, NULL, 'visualizar', 101, 102);
+INSERT INTO acos VALUES (69, 68, NULL, NULL, 'index', 135, 136);
+INSERT INTO acos VALUES (53, 50, NULL, NULL, 'adicionar', 103, 104);
+INSERT INTO acos VALUES (54, 50, NULL, NULL, 'editar', 105, 106);
+INSERT INTO acos VALUES (50, 1, NULL, NULL, 'Objetivo', 98, 109);
+INSERT INTO acos VALUES (55, 50, NULL, NULL, 'excluir', 107, 108);
+INSERT INTO acos VALUES (70, 68, NULL, NULL, 'visualizar', 137, 138);
+INSERT INTO acos VALUES (57, 56, NULL, NULL, 'index', 111, 112);
+INSERT INTO acos VALUES (71, 68, NULL, NULL, 'adicionar', 139, 140);
+INSERT INTO acos VALUES (72, 68, NULL, NULL, 'editar', 141, 142);
+INSERT INTO acos VALUES (68, 1, NULL, NULL, 'PlanoAcao', 134, 145);
+INSERT INTO acos VALUES (73, 68, NULL, NULL, 'excluir', 143, 144);
+INSERT INTO acos VALUES (74, 1, NULL, NULL, 'Faixa', 145, 156);
+INSERT INTO acos VALUES (75, 74, NULL, NULL, 'index', 146, 147);
+INSERT INTO acos VALUES (76, 74, NULL, NULL, 'visualizar', 148, 149);
+INSERT INTO acos VALUES (77, 74, NULL, NULL, 'adicionar', 150, 151);
+INSERT INTO acos VALUES (78, 74, NULL, NULL, 'editar', 152, 153);
+INSERT INTO acos VALUES (79, 74, NULL, NULL, 'excluir', 154, 155);
+INSERT INTO acos VALUES (120, 114, NULL, NULL, 'enviar', 231, 232);
+INSERT INTO acos VALUES (80, 1, NULL, NULL, 'Indicador', 156, 167);
+INSERT INTO acos VALUES (96, 1, NULL, NULL, 'Setor', 187, 198);
+INSERT INTO acos VALUES (81, 80, NULL, NULL, 'index', 157, 158);
+INSERT INTO acos VALUES (82, 80, NULL, NULL, 'visualizar', 159, 160);
+INSERT INTO acos VALUES (83, 80, NULL, NULL, 'adicionar', 161, 162);
+INSERT INTO acos VALUES (84, 80, NULL, NULL, 'editar', 163, 164);
+INSERT INTO acos VALUES (85, 80, NULL, NULL, 'excluir', 165, 166);
+INSERT INTO acos VALUES (87, 86, NULL, NULL, 'index', 169, 170);
+INSERT INTO acos VALUES (97, 96, NULL, NULL, 'index', 188, 189);
+INSERT INTO acos VALUES (98, 96, NULL, NULL, 'visualizar', 190, 191);
+INSERT INTO acos VALUES (88, 86, NULL, NULL, 'indicadores', 171, 172);
+INSERT INTO acos VALUES (99, 96, NULL, NULL, 'adicionar', 192, 193);
+INSERT INTO acos VALUES (100, 96, NULL, NULL, 'editar', 194, 195);
+INSERT INTO acos VALUES (101, 96, NULL, NULL, 'excluir', 196, 197);
+INSERT INTO acos VALUES (89, 86, NULL, NULL, 'salvar', 173, 174);
+INSERT INTO acos VALUES (86, 1, NULL, NULL, 'MapaEstrategico', 168, 175);
+INSERT INTO acos VALUES (114, 1, NULL, NULL, 'Reuniao', 220, 233);
+INSERT INTO acos VALUES (90, 1, NULL, NULL, 'Anomalia', 176, 187);
+INSERT INTO acos VALUES (102, 1, NULL, NULL, 'Procedimento', 198, 209);
+INSERT INTO acos VALUES (91, 90, NULL, NULL, 'index', 177, 178);
+INSERT INTO acos VALUES (92, 90, NULL, NULL, 'visualizar', 179, 180);
+INSERT INTO acos VALUES (93, 90, NULL, NULL, 'adicionar', 181, 182);
+INSERT INTO acos VALUES (94, 90, NULL, NULL, 'editar', 183, 184);
+INSERT INTO acos VALUES (95, 90, NULL, NULL, 'excluir', 185, 186);
+INSERT INTO acos VALUES (103, 102, NULL, NULL, 'index', 199, 200);
+INSERT INTO acos VALUES (104, 102, NULL, NULL, 'visualizar', 201, 202);
+INSERT INTO acos VALUES (105, 102, NULL, NULL, 'adicionar', 203, 204);
+INSERT INTO acos VALUES (106, 102, NULL, NULL, 'editar', 205, 206);
+INSERT INTO acos VALUES (107, 102, NULL, NULL, 'excluir', 207, 208);
+INSERT INTO acos VALUES (108, 1, NULL, NULL, 'Tarefa', 209, 220);
+INSERT INTO acos VALUES (109, 108, NULL, NULL, 'index', 210, 211);
+INSERT INTO acos VALUES (110, 108, NULL, NULL, 'visualizar', 212, 213);
+INSERT INTO acos VALUES (111, 108, NULL, NULL, 'adicionar', 214, 215);
+INSERT INTO acos VALUES (112, 108, NULL, NULL, 'editar', 216, 217);
+INSERT INTO acos VALUES (113, 108, NULL, NULL, 'excluir', 218, 219);
+INSERT INTO acos VALUES (122, 121, NULL, NULL, 'index', 234, 235);
+INSERT INTO acos VALUES (115, 114, NULL, NULL, 'index', 221, 222);
+INSERT INTO acos VALUES (116, 114, NULL, NULL, 'visualizar', 223, 224);
+INSERT INTO acos VALUES (117, 114, NULL, NULL, 'adicionar', 225, 226);
+INSERT INTO acos VALUES (118, 114, NULL, NULL, 'editar', 227, 228);
+INSERT INTO acos VALUES (119, 114, NULL, NULL, 'excluir', 229, 230);
+INSERT INTO acos VALUES (121, 1, NULL, NULL, 'Organograma', 233, 236);
+INSERT INTO acos VALUES (124, 123, NULL, NULL, 'index', 237, 238);
+INSERT INTO acos VALUES (125, 123, NULL, NULL, 'visualizar', 239, 240);
+INSERT INTO acos VALUES (126, 123, NULL, NULL, 'adicionarNaAcao', 241, 242);
+INSERT INTO acos VALUES (127, 123, NULL, NULL, 'adicionar', 243, 244);
+INSERT INTO acos VALUES (123, 1, NULL, NULL, 'Post', 236, 245);
+INSERT INTO acos VALUES (130, 128, NULL, NULL, 'visualizar', 248, 249);
+INSERT INTO acos VALUES (129, 128, NULL, NULL, 'index', 246, 247);
+INSERT INTO acos VALUES (128, 1, NULL, NULL, 'Auditoria', 245, 250);
+INSERT INTO acos VALUES (1, NULL, NULL, NULL, 'controllers', 1, 251);
+
+
+--
+-- TOC entry 2555 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: acos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('acos_id_seq', 74, true);
+
+
+--
+-- TOC entry 2447 (class 0 OID 41997)
+-- Dependencies: 227
+-- Data for Name: anomalia; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO anomalia VALUES (1, 'Uma causa', 'Outra causa', '2013-10-06', 15, 1, NULL, 'Uma identificação qualquer', 'Uma estratificacao qualquer', 7);
+INSERT INTO anomalia VALUES (3, 'Teste', 'Teste', '2013-01-08', 15, 1, NULL, 'Teste', 'TEste', 7);
+INSERT INTO anomalia VALUES (4, 'teste 2', 'teste 2', '2013-01-09', 15, 1, NULL, 'Teste 2', 'Teste 2', 7);
+
+
+--
+-- TOC entry 2556 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: anomalia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('anomalia_id_seq', 4, true);
+
+
+--
+-- TOC entry 2394 (class 0 OID 33208)
+-- Dependencies: 174
+-- Data for Name: aros; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO aros VALUES (14, NULL, 'Grupo', 5, NULL, 1, 2);
+INSERT INTO aros VALUES (18, 15, 'Usuario', 22, NULL, 4, 5);
+INSERT INTO aros VALUES (32, 15, 'Usuario', 33, NULL, 16, 17);
+INSERT INTO aros VALUES (29, 15, 'Usuario', 30, NULL, 10, 11);
+INSERT INTO aros VALUES (30, 15, 'Usuario', 31, NULL, 12, 13);
+INSERT INTO aros VALUES (31, 15, 'Usuario', 32, NULL, 14, 15);
+INSERT INTO aros VALUES (28, 15, 'Usuario', 29, NULL, 8, 9);
+INSERT INTO aros VALUES (16, NULL, 'Grupo', 7, NULL, 37, 48);
+INSERT INTO aros VALUES (19, 16, 'Usuario', 23, NULL, 38, 39);
+INSERT INTO aros VALUES (37, 16, 'Usuario', 38, NULL, 44, 45);
+INSERT INTO aros VALUES (36, 16, 'Usuario', 37, NULL, 42, 43);
+INSERT INTO aros VALUES (38, 16, 'Usuario', 39, NULL, 46, 47);
+INSERT INTO aros VALUES (23, 17, 'Usuario', 27, NULL, 52, 53);
+INSERT INTO aros VALUES (17, NULL, 'Grupo', 8, NULL, 49, 54);
+INSERT INTO aros VALUES (20, 17, 'Usuario', 24, NULL, 50, 51);
+INSERT INTO aros VALUES (25, NULL, 'Grupo', 9, NULL, 55, 56);
+INSERT INTO aros VALUES (26, NULL, 'Grupo', 10, NULL, 57, 58);
+INSERT INTO aros VALUES (15, NULL, 'Grupo', 6, NULL, 3, 36);
+INSERT INTO aros VALUES (43, 15, 'Usuario', 44, NULL, 32, 33);
+INSERT INTO aros VALUES (44, 15, 'Usuario', 45, NULL, 34, 35);
+INSERT INTO aros VALUES (42, 15, 'Usuario', 43, NULL, 30, 31);
+INSERT INTO aros VALUES (22, 16, 'Usuario', 26, NULL, 40, 41);
+INSERT INTO aros VALUES (27, NULL, 'Grupo', 11, NULL, 59, 62);
+INSERT INTO aros VALUES (39, 15, 'Usuario', 40, NULL, 24, 25);
+INSERT INTO aros VALUES (40, 15, 'Usuario', 41, NULL, 26, 27);
+INSERT INTO aros VALUES (41, 15, 'Usuario', 42, NULL, 28, 29);
+INSERT INTO aros VALUES (33, 15, 'Usuario', 34, NULL, 18, 19);
+INSERT INTO aros VALUES (24, 15, 'Usuario', 28, NULL, 6, 7);
+INSERT INTO aros VALUES (21, 27, 'Usuario', 25, NULL, 60, 61);
+INSERT INTO aros VALUES (35, 15, 'Usuario', 36, NULL, 22, 23);
+INSERT INTO aros VALUES (34, 15, 'Usuario', 35, NULL, 20, 21);
+
+
+--
+-- TOC entry 2395 (class 0 OID 33216)
+-- Dependencies: 175
+-- Data for Name: aros_acos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO aros_acos VALUES (2811, 27, 1, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (12, 26, 1, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (9, 25, 1, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2812, 27, 18, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2813, 27, 19, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2814, 27, 2, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2815, 27, 3, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2816, 27, 4, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2817, 27, 5, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2818, 27, 6, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2819, 27, 7, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2820, 27, 31, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2821, 27, 32, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2822, 27, 33, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2823, 27, 34, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2824, 27, 35, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2825, 27, 36, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2826, 27, 8, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2827, 27, 9, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2828, 27, 10, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2829, 27, 11, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2830, 27, 12, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2831, 27, 13, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2832, 27, 56, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2833, 27, 58, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2834, 27, 59, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2835, 27, 60, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2836, 27, 61, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2837, 27, 57, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (8, 24, 17, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (7, 15, 1, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (10, 25, 18, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (11, 25, 19, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (13, 26, 18, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (14, 26, 19, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2838, 27, 16, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2839, 27, 17, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2840, 27, 20, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2841, 27, 21, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2842, 27, 22, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2843, 27, 23, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2844, 27, 37, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2845, 27, 38, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2846, 27, 39, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2847, 27, 40, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2848, 27, 41, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2849, 27, 42, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2850, 27, 24, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2851, 27, 25, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2852, 27, 26, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2853, 27, 27, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2854, 27, 28, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2855, 27, 29, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2856, 27, 43, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2857, 27, 44, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2858, 27, 45, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2859, 27, 46, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2860, 27, 47, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2861, 27, 48, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2862, 27, 62, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2863, 27, 63, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2864, 27, 64, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2865, 27, 65, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2866, 27, 66, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2867, 27, 67, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2868, 27, 50, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2869, 27, 51, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2870, 27, 52, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2871, 27, 53, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2872, 27, 54, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2873, 27, 55, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2874, 27, 68, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2875, 27, 69, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2876, 27, 70, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2877, 27, 71, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2878, 27, 72, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2879, 27, 73, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2880, 27, 74, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2881, 27, 75, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2882, 27, 76, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2883, 27, 77, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2884, 27, 78, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2885, 27, 79, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2886, 27, 80, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2887, 27, 81, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2888, 27, 82, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2889, 27, 83, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2890, 27, 84, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2891, 27, 85, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2892, 27, 96, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2893, 27, 97, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2894, 27, 98, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2895, 27, 99, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2896, 27, 100, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2897, 27, 101, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2898, 27, 86, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2899, 27, 87, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2900, 27, 88, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2901, 27, 89, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2902, 27, 114, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2903, 27, 120, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2904, 27, 115, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2905, 27, 116, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2906, 27, 117, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2907, 27, 118, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2908, 27, 119, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2909, 27, 90, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2910, 27, 91, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2911, 27, 92, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2912, 27, 93, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2913, 27, 94, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2914, 27, 95, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2915, 27, 102, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2916, 27, 103, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2917, 27, 104, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2918, 27, 105, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2919, 27, 106, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2920, 27, 107, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2921, 27, 108, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2922, 27, 109, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2923, 27, 110, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2924, 27, 111, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2925, 27, 112, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2926, 27, 113, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2927, 27, 121, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2928, 27, 122, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2929, 27, 123, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2930, 27, 124, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2931, 27, 125, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2932, 27, 126, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2933, 27, 127, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2934, 27, 128, '-1', '-1', '-1', '-1');
+INSERT INTO aros_acos VALUES (2935, 27, 130, '1', '1', '1', '1');
+INSERT INTO aros_acos VALUES (2936, 27, 129, '1', '1', '1', '1');
+
+
+--
+-- TOC entry 2557 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: aros_acos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('aros_acos_id_seq', 2936, true);
+
+
+--
+-- TOC entry 2558 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: aros_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('aros_id_seq', 44, true);
+
+
+--
+-- TOC entry 2465 (class 0 OID 66942)
+-- Dependencies: 245
+-- Data for Name: auditoria; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO auditoria VALUES (84, 'Acao', 'adicionar', 25, '2013-11-25 22:27:49', '31');
+INSERT INTO auditoria VALUES (85, 'Acao', 'editar', 25, '2013-11-25 22:29:46', '31');
+INSERT INTO auditoria VALUES (86, 'Acao', 'adicionar', NULL, '2013-11-25 22:34:40', '32');
+INSERT INTO auditoria VALUES (87, 'Acao', 'adicionar', NULL, '2013-11-25 22:35:40', '33');
+INSERT INTO auditoria VALUES (88, 'Acao', 'adicionar', NULL, '2013-11-25 22:36:28', '34');
+INSERT INTO auditoria VALUES (89, 'Acao', 'adicionar', 25, '2013-11-25 22:42:50', '37');
+INSERT INTO auditoria VALUES (90, 'Acao', 'adicionar', 25, '2013-11-25 22:46:31', '38');
+INSERT INTO auditoria VALUES (91, 'Cargo', 'editar', 25, '2013-11-25 22:51:16', '1');
+INSERT INTO auditoria VALUES (92, 'Grupo', 'editar', 25, '2013-11-25 23:43:44', '11');
+INSERT INTO auditoria VALUES (93, 'Acao', 'editar', 25, '2013-11-26 23:37:07', '38');
+INSERT INTO auditoria VALUES (94, 'Indicador', 'adicionar', 25, '2013-11-27 00:31:54', '19');
+INSERT INTO auditoria VALUES (95, 'Indicador', 'editar', 25, '2013-11-27 00:36:24', '19');
+INSERT INTO auditoria VALUES (96, 'Indicador', 'editar', 25, '2013-11-27 00:40:57', '19');
+INSERT INTO auditoria VALUES (97, 'Acao', 'editar', 25, '2013-11-27 01:15:45', '30');
+INSERT INTO auditoria VALUES (98, 'Acao', 'editar', 25, '2013-11-27 01:18:26', '30');
+INSERT INTO auditoria VALUES (99, 'Cargo', 'adicionar', 25, '2014-01-15 01:16:13', '2');
+INSERT INTO auditoria VALUES (100, 'Tarefa', 'editar', 25, '2014-01-22 23:59:40', '2');
+INSERT INTO auditoria VALUES (101, 'Acao', 'adicionar', 25, '2014-01-23 00:01:15', '39');
+INSERT INTO auditoria VALUES (102, 'Usuario', 'editar', 25, '2014-01-23 00:03:21', '25');
+INSERT INTO auditoria VALUES (103, 'Usuario', 'editar', 25, '2014-01-23 00:04:11', '28');
+INSERT INTO auditoria VALUES (104, 'Usuario', 'editar', 25, '2014-01-23 00:12:46', '25');
+INSERT INTO auditoria VALUES (105, 'Reuniao', 'editar', 25, '2014-01-23 00:25:21', '2');
+INSERT INTO auditoria VALUES (106, 'Tarefa', 'editar', 25, '2014-01-23 01:20:10', '1');
+INSERT INTO auditoria VALUES (107, 'Acao', 'editar', 25, '2014-01-23 01:24:28', '31');
+INSERT INTO auditoria VALUES (108, 'Acao', 'editar', 25, '2014-01-23 01:27:23', '39');
+INSERT INTO auditoria VALUES (109, 'Acao', 'editar', 25, '2014-01-23 01:28:23', '39');
+INSERT INTO auditoria VALUES (110, 'Acao', 'editar', 25, '2014-01-23 01:30:15', '39');
+
+
+--
+-- TOC entry 2467 (class 0 OID 66958)
+-- Dependencies: 247
+-- Data for Name: auditoria_campos; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO auditoria_campos VALUES (420, 'IndicadorAutorizadoVisualizar', 'a:1:{i:0;a:3:{s:2:"id";i:223;s:10:"usuario_id";i:25;s:12:"indicador_id";i:19;}}', 'a:2:{s:12:"indicador_id";s:2:"19";s:10:"usuario_id";s:2:"25";}', 96, NULL);
+INSERT INTO auditoria_campos VALUES (435, 'ReuniaoParticipante', 'a:2:{i:0;a:3:{s:2:"id";i:5;s:10:"reuniao_id";i:1;s:10:"usuario_id";i:25;}i:1;a:3:{s:2:"id";i:10;s:10:"reuniao_id";i:2;s:10:"usuario_id";i:25;}}', 'a:3:{s:13:"participantes";a:2:{i:0;s:2:"28";i:1;s:2:"25";}s:10:"usuario_id";s:2:"25";s:10:"reuniao_id";s:1:"2";}', 105, NULL);
+INSERT INTO auditoria_campos VALUES (436, 'ReuniaoConhecedor', 'a:1:{i:0;a:3:{s:2:"id";i:5;s:10:"reuniao_id";i:1;s:10:"usuario_id";i:25;}}', 'a:3:{s:12:"conhecedores";a:2:{i:0;s:2:"26";i:1;s:2:"28";}s:10:"usuario_id";s:2:"28";s:10:"reuniao_id";s:1:"2";}', 105, NULL);
+INSERT INTO auditoria_campos VALUES (434, 'Endereco', 'a:8:{s:2:"id";i:120;s:10:"logradouro";s:5:"TEste";s:3:"cep";s:5:"Teste";s:6:"bairro";s:5:"Teste";s:6:"cidade";s:5:"Teste";s:6:"numero";s:5:"12312";s:2:"uf";s:2:"PE";s:6:"status";i:1;}', 'a:7:{s:2:"id";s:3:"120";s:10:"logradouro";s:5:"TEste";s:6:"numero";s:5:"12312";s:3:"cep";s:5:"Teste";s:6:"bairro";s:5:"Teste";s:6:"cidade";s:5:"Teste";s:2:"uf";s:2:"PE";}', 104, NULL);
+INSERT INTO auditoria_campos VALUES (437, 'Tarefa', NULL, 'a:15:{s:2:"id";s:1:"1";s:6:"titulo";s:5:"Teste";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"13/09/2013";s:17:"data_fim_previsto";s:10:"15/09/2013";s:8:"lembrete";s:10:"13/09/2013";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"2";s:7:"acao_id";s:0:"";s:9:"concluido";s:1:"0";s:14:"data_conclusao";s:0:"";s:10:"comentario";s:32:"siahdihs alalalala alal alalalla";s:11:"arquivo_dir";s:1:"1";s:7:"arquivo";a:5:{s:4:"name";s:0:"";s:4:"type";s:0:"";s:8:"tmp_name";s:0:"";s:5:"error";i:4;s:4:"size";i:0;}}', 106, NULL);
+INSERT INTO auditoria_campos VALUES (400, 'Acao', NULL, 'a:13:{s:6:"titulo";s:8:"asdasdas";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"25/11/2013";s:17:"data_fim_previsto";s:10:"28/11/2013";s:8:"lembrete";s:10:"26/11/2013";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"3";s:9:"andamento";s:3:"10%";s:9:"concluido";s:1:"0";s:14:"data_conclusao";s:0:"";s:7:"acao_id";s:0:"";s:10:"observacao";s:0:"";}', 84, NULL);
+INSERT INTO auditoria_campos VALUES (401, 'Acao', 'a:17:{s:2:"id";i:31;s:6:"titulo";s:8:"asdasdas";s:20:"data_inicio_previsto";s:10:"25/11/2013";s:17:"data_fim_previsto";s:10:"28/11/2013";s:9:"concluido";i:0;s:14:"data_conclusao";N;s:6:"status";i:3;s:10:"observacao";s:0:"";s:8:"lembrete";s:10:"26/11/2013";s:9:"andamento";s:3:"10%";s:14:"responsavel_id";i:25;s:7:"acao_id";N;s:13:"supervisor_id";i:25;s:10:"prioridade";s:1:"A";s:11:"anomalia_id";N;s:11:"objetivo_id";N;s:10:"projeto_id";N;}', 'a:14:{s:2:"id";s:2:"31";s:6:"titulo";s:8:"asdasdas";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"25/11/2013";s:17:"data_fim_previsto";s:10:"28/11/2013";s:8:"lembrete";s:10:"26/11/2013";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"3";s:9:"andamento";s:3:"25%";s:9:"concluido";s:1:"0";s:14:"data_conclusao";s:0:"";s:7:"acao_id";s:0:"";s:10:"observacao";s:0:"";}', 85, NULL);
+INSERT INTO auditoria_campos VALUES (402, 'Acao', NULL, 'a:13:{s:11:"objetivo_id";s:1:"2";s:6:"titulo";s:13:"Adicionar Log";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"25/11/2013";s:17:"data_fim_previsto";s:10:"28/11/2013";s:8:"lembrete";s:10:"25/11/2013";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"5";s:9:"andamento";s:4:"100%";s:9:"concluido";s:1:"1";s:14:"data_conclusao";s:10:"26/11/2013";s:7:"acao_id";s:2:"24";}', 86, NULL);
+INSERT INTO auditoria_campos VALUES (403, 'Acao', NULL, 'a:13:{s:11:"objetivo_id";s:1:"2";s:6:"titulo";s:13:"Adicionar Log";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"25/11/2013";s:17:"data_fim_previsto";s:10:"28/11/2013";s:8:"lembrete";s:10:"25/11/2013";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"5";s:9:"andamento";s:4:"100%";s:9:"concluido";s:1:"1";s:14:"data_conclusao";s:10:"26/11/2013";s:7:"acao_id";s:2:"24";}', 87, NULL);
+INSERT INTO auditoria_campos VALUES (404, 'Acao', NULL, 'a:13:{s:11:"objetivo_id";s:1:"2";s:6:"titulo";s:13:"Adicionar Log";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"25/11/2013";s:17:"data_fim_previsto";s:10:"28/11/2013";s:8:"lembrete";s:10:"25/11/2013";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"5";s:9:"andamento";s:4:"100%";s:9:"concluido";s:1:"1";s:14:"data_conclusao";s:10:"26/11/2013";s:7:"acao_id";s:2:"24";}', 88, NULL);
+INSERT INTO auditoria_campos VALUES (405, 'Acao', NULL, 'a:13:{s:11:"objetivo_id";s:1:"2";s:6:"titulo";s:13:"Adicionar Log";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"25/11/2013";s:17:"data_fim_previsto";s:10:"28/11/2013";s:8:"lembrete";s:10:"25/11/2013";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"5";s:9:"andamento";s:4:"100%";s:9:"concluido";s:1:"1";s:14:"data_conclusao";s:10:"26/11/2013";s:7:"acao_id";s:2:"24";}', 89, NULL);
+INSERT INTO auditoria_campos VALUES (406, 'Acao', NULL, 'a:13:{s:11:"anomalia_id";s:1:"1";s:6:"titulo";s:11:"Teste Log 2";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"25/11/2013";s:17:"data_fim_previsto";s:10:"28/11/2013";s:8:"lembrete";s:10:"25/11/2013";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"3";s:9:"andamento";s:3:"10%";s:9:"concluido";s:1:"1";s:14:"data_conclusao";s:10:"25/11/2013";s:7:"acao_id";s:2:"15";}', 90, NULL);
+INSERT INTO auditoria_campos VALUES (407, 'Cargo', 'a:4:{s:2:"id";i:1;s:6:"titulo";s:10:"Supervisor";s:9:"descricao";s:0:"";s:6:"status";i:1;}', 'a:3:{s:2:"id";s:1:"1";s:6:"titulo";s:10:"Supervisor";s:9:"descricao";s:13:"Uma descricao";}', 91, NULL);
+INSERT INTO auditoria_campos VALUES (408, 'Acao', 'a:17:{s:2:"id";i:38;s:6:"titulo";s:11:"Teste Log 2";s:20:"data_inicio_previsto";s:10:"25/11/2013";s:17:"data_fim_previsto";s:10:"28/11/2013";s:9:"concluido";i:1;s:14:"data_conclusao";s:10:"25/11/2013";s:6:"status";i:3;s:10:"observacao";N;s:8:"lembrete";s:10:"25/11/2013";s:9:"andamento";s:3:"10%";s:14:"responsavel_id";i:25;s:7:"acao_id";i:15;s:13:"supervisor_id";i:25;s:10:"prioridade";s:1:"A";s:11:"anomalia_id";i:1;s:11:"objetivo_id";N;s:10:"projeto_id";N;}', 'a:14:{s:2:"id";s:2:"38";s:6:"titulo";s:12:"Teste Log 22";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"25/11/2013";s:17:"data_fim_previsto";s:10:"28/11/2013";s:8:"lembrete";s:10:"25/11/2013";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"3";s:9:"andamento";s:3:"10%";s:9:"concluido";s:1:"1";s:14:"data_conclusao";s:10:"25/11/2013";s:7:"acao_id";s:2:"15";s:10:"observacao";s:0:"";}', 93, NULL);
+INSERT INTO auditoria_campos VALUES (409, 'Indicador', NULL, 'a:17:{s:2:"id";s:2:"19";s:6:"titulo";s:11:"bla bla bla";s:7:"unidade";s:0:"";s:12:"indicador_id";s:2:"18";s:8:"faixa_id";s:1:"1";s:11:"objetivo_id";s:1:"1";s:10:"usuario_id";s:2:"25";s:12:"tipo_calculo";s:1:"1";s:13:"desdobramento";s:1:"1";s:4:"tipo";s:1:"0";s:8:"projecao";s:1:"0";s:7:"calculo";s:1:"1";s:5:"ordem";s:1:"3";s:4:"anos";s:14:"2014,2013,2012";s:21:"autorizado_visualizar";a:1:{i:0;s:2:"25";}s:16:"responsavel_meta";a:1:{i:0;s:2:"25";}s:21:"responsavel_realizado";a:1:{i:0;s:2:"25";}}', 94, NULL);
+INSERT INTO auditoria_campos VALUES (410, 'IndicadorResponsavelRealizado', NULL, 'a:2:{s:12:"indicador_id";s:2:"19";s:10:"usuario_id";s:2:"25";}', 94, NULL);
+INSERT INTO auditoria_campos VALUES (411, 'IndicadorResponsavelMeta', NULL, 'a:2:{s:12:"indicador_id";s:2:"19";s:10:"usuario_id";s:2:"25";}', 94, NULL);
+INSERT INTO auditoria_campos VALUES (412, 'IndicadorAutorizadoVisualizar', NULL, 'a:2:{s:12:"indicador_id";s:2:"19";s:10:"usuario_id";s:2:"25";}', 94, NULL);
+INSERT INTO auditoria_campos VALUES (413, 'Indicador', NULL, 'a:17:{s:2:"id";s:2:"19";s:6:"titulo";s:11:"bla bla bla";s:7:"unidade";s:0:"";s:12:"indicador_id";s:2:"18";s:8:"faixa_id";s:1:"1";s:11:"objetivo_id";s:1:"1";s:10:"usuario_id";s:2:"25";s:12:"tipo_calculo";s:1:"1";s:13:"desdobramento";s:1:"1";s:4:"tipo";s:1:"0";s:8:"projecao";s:1:"0";s:7:"calculo";s:1:"1";s:5:"ordem";s:1:"3";s:4:"anos";s:14:"2014,2013,2012";s:21:"autorizado_visualizar";a:1:{i:0;s:2:"25";}s:16:"responsavel_meta";a:1:{i:0;s:2:"25";}s:21:"responsavel_realizado";a:1:{i:0;s:2:"25";}}', 95, NULL);
+INSERT INTO auditoria_campos VALUES (414, 'IndicadorResponsavelRealizado', NULL, 'a:2:{s:12:"indicador_id";s:2:"19";s:10:"usuario_id";s:2:"25";}', 95, NULL);
+INSERT INTO auditoria_campos VALUES (415, 'IndicadorResponsavelMeta', NULL, 'a:2:{s:12:"indicador_id";s:2:"19";s:10:"usuario_id";s:2:"25";}', 95, NULL);
+INSERT INTO auditoria_campos VALUES (416, 'IndicadorAutorizadoVisualizar', NULL, 'a:2:{s:12:"indicador_id";s:2:"19";s:10:"usuario_id";s:2:"25";}', 95, NULL);
+INSERT INTO auditoria_campos VALUES (417, 'Indicador', 'a:15:{s:2:"id";i:19;s:6:"titulo";s:11:"bla bla bla";s:12:"indicador_id";i:18;s:8:"faixa_id";i:1;s:11:"objetivo_id";i:1;s:10:"usuario_id";i:25;s:7:"calculo";i:1;s:13:"desdobramento";i:1;s:8:"projecao";i:0;s:12:"tipo_calculo";i:1;s:4:"tipo";i:0;s:5:"ordem";i:3;s:6:"status";i:1;s:4:"anos";s:14:"2014,2013,2012";s:7:"unidade";s:0:"";}', 'a:17:{s:2:"id";s:2:"19";s:6:"titulo";s:15:"bla bla bla bla";s:7:"unidade";s:0:"";s:12:"indicador_id";s:2:"18";s:8:"faixa_id";s:1:"1";s:11:"objetivo_id";s:1:"1";s:10:"usuario_id";s:2:"25";s:12:"tipo_calculo";s:1:"1";s:13:"desdobramento";s:1:"1";s:4:"tipo";s:1:"0";s:8:"projecao";s:1:"0";s:7:"calculo";s:1:"1";s:5:"ordem";s:1:"3";s:4:"anos";s:14:"2014,2013,2012";s:21:"autorizado_visualizar";a:1:{i:0;s:2:"25";}s:16:"responsavel_meta";a:1:{i:0;s:2:"25";}s:21:"responsavel_realizado";a:1:{i:0;s:2:"25";}}', 96, NULL);
+INSERT INTO auditoria_campos VALUES (418, 'IndicadorResponsavelRealizado', 'a:1:{i:0;a:3:{s:2:"id";i:193;s:10:"usuario_id";i:25;s:12:"indicador_id";i:19;}}', 'a:2:{s:12:"indicador_id";s:2:"19";s:10:"usuario_id";s:2:"25";}', 96, NULL);
+INSERT INTO auditoria_campos VALUES (419, 'IndicadorResponsavelMeta', 'a:1:{i:0;a:3:{s:2:"id";i:198;s:10:"usuario_id";i:25;s:12:"indicador_id";i:19;}}', 'a:2:{s:12:"indicador_id";s:2:"19";s:10:"usuario_id";s:2:"25";}', 96, NULL);
+INSERT INTO auditoria_campos VALUES (421, 'Acao', 'a:17:{s:2:"id";i:30;s:6:"titulo";s:15:"Teste projeto 2";s:20:"data_inicio_previsto";s:10:"11/10/2013";s:17:"data_fim_previsto";s:10:"31/12/2013";s:9:"concluido";i:0;s:14:"data_conclusao";N;s:6:"status";i:2;s:10:"observacao";s:0:"";s:8:"lembrete";s:10:"11/10/2013";s:9:"andamento";s:2:"0%";s:14:"responsavel_id";i:25;s:7:"acao_id";i:28;s:13:"supervisor_id";i:25;s:10:"prioridade";s:1:"A";s:11:"anomalia_id";N;s:11:"objetivo_id";N;s:10:"projeto_id";i:1;}', 'a:14:{s:2:"id";s:2:"30";s:6:"titulo";s:15:"Teste projeto 2";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"11/10/2013";s:17:"data_fim_previsto";s:10:"28/02/2014";s:8:"lembrete";s:10:"11/10/2013";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"2";s:9:"andamento";s:2:"0%";s:9:"concluido";s:1:"0";s:14:"data_conclusao";s:0:"";s:7:"acao_id";s:2:"28";s:10:"observacao";s:0:"";}', 97, NULL);
+INSERT INTO auditoria_campos VALUES (422, 'Acao', 'a:17:{s:2:"id";i:30;s:6:"titulo";s:15:"Teste projeto 2";s:20:"data_inicio_previsto";s:10:"11/10/2013";s:17:"data_fim_previsto";s:10:"28/02/2014";s:9:"concluido";i:0;s:14:"data_conclusao";N;s:6:"status";i:2;s:10:"observacao";s:0:"";s:8:"lembrete";s:10:"11/10/2013";s:9:"andamento";s:2:"0%";s:14:"responsavel_id";i:25;s:7:"acao_id";i:28;s:13:"supervisor_id";i:25;s:10:"prioridade";s:1:"A";s:11:"anomalia_id";N;s:11:"objetivo_id";N;s:10:"projeto_id";i:1;}', 'a:14:{s:2:"id";s:2:"30";s:6:"titulo";s:15:"Teste projeto 2";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"11/10/2013";s:17:"data_fim_previsto";s:10:"30/04/2014";s:8:"lembrete";s:10:"11/10/2013";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"2";s:9:"andamento";s:2:"0%";s:9:"concluido";s:1:"0";s:14:"data_conclusao";s:0:"";s:7:"acao_id";s:2:"28";s:10:"observacao";s:0:"";}', 98, NULL);
+INSERT INTO auditoria_campos VALUES (423, 'Cargo', NULL, 'a:2:{s:6:"titulo";s:13:"Administrador";s:9:"descricao";s:36:"Uma descrição para o administrador";}', 99, NULL);
+INSERT INTO auditoria_campos VALUES (424, 'Tarefa', NULL, 'a:15:{s:2:"id";s:1:"2";s:6:"titulo";s:30:"Teste de relação com reuniao";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"05/09/2013";s:17:"data_fim_previsto";s:10:"20/09/2013";s:8:"lembrete";s:10:"20/09/2013";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"2";s:7:"acao_id";s:0:"";s:9:"concluido";s:1:"0";s:14:"data_conclusao";s:0:"";s:10:"comentario";s:0:"";s:11:"arquivo_dir";s:1:"2";s:7:"arquivo";a:5:{s:4:"name";s:0:"";s:4:"type";s:0:"";s:8:"tmp_name";s:0:"";s:5:"error";i:4;s:4:"size";i:0;}}', 100, NULL);
+INSERT INTO auditoria_campos VALUES (425, 'Acao', NULL, 'a:13:{s:6:"titulo";s:4:"dasd";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"09/01/2014";s:17:"data_fim_previsto";s:10:"02/01/2014";s:8:"lembrete";s:10:"24/01/2014";s:14:"responsavel_id";s:2:"26";s:13:"supervisor_id";s:2:"26";s:6:"status";s:0:"";s:9:"andamento";s:3:"10%";s:9:"concluido";s:1:"1";s:14:"data_conclusao";s:10:"11/01/2014";s:7:"acao_id";s:1:"7";s:10:"observacao";s:0:"";}', 101, NULL);
+INSERT INTO auditoria_campos VALUES (426, 'Pessoa', 'a:5:{s:2:"id";i:69;s:6:"titulo";s:15:"Administrador 1";s:4:"tipo";s:2:"PF";s:10:"observacao";s:0:"";s:5:"email";s:31:"danielhenrique_1303@hotmail.com";}', 'a:5:{s:2:"id";s:2:"69";s:6:"titulo";s:15:"Administrador 1";s:5:"email";s:16:"oto@civis.com.br";s:4:"tipo";s:2:"PF";s:10:"observacao";s:0:"";}', 102, NULL);
+INSERT INTO auditoria_campos VALUES (427, 'Usuario', 'a:19:{s:2:"id";i:25;s:5:"login";s:5:"admin";s:5:"senha";s:40:"2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003";s:6:"status";i:1;s:14:"lembrete_senha";s:0:"";s:4:"foto";N;s:7:"enviado";N;s:9:"pessoa_id";i:69;s:8:"cargo_id";i:1;s:10:"vinculo_id";i:1;s:3:"cpf";s:9:"897987979";s:2:"rg";s:8:"98797987";s:8:"grupo_id";i:11;s:15:"departamento_id";N;s:8:"setor_id";i:1;s:5:"chefe";i:0;s:13:"imagem_perfil";s:9:"Koala.jpg";s:23:"diretorio_imagem_perfil";s:2:"25";s:11:"endereco_id";i:120;}', 'a:16:{s:2:"id";s:2:"25";s:5:"login";s:5:"admin";s:10:"senha_nova";s:0:"";s:22:"confirmacao_senha_nova";s:0:"";s:14:"lembrete_senha";s:0:"";s:3:"cpf";s:9:"897987979";s:2:"rg";s:8:"98797987";s:23:"diretorio_imagem_perfil";s:2:"25";s:8:"grupo_id";s:2:"11";s:8:"cargo_id";s:1:"1";s:10:"vinculo_id";s:1:"1";s:8:"setor_id";s:1:"1";s:5:"chefe";s:1:"0";s:13:"imagem_perfil";a:5:{s:4:"name";s:0:"";s:4:"type";s:0:"";s:8:"tmp_name";s:0:"";s:5:"error";i:4;s:4:"size";i:0;}s:11:"endereco_id";s:3:"120";s:9:"pessoa_id";s:2:"69";}', 102, NULL);
+INSERT INTO auditoria_campos VALUES (428, 'Endereco', 'a:8:{s:2:"id";i:120;s:10:"logradouro";s:5:"TEste";s:3:"cep";s:5:"Teste";s:6:"bairro";s:5:"Teste";s:6:"cidade";s:5:"Teste";s:6:"numero";s:5:"12312";s:2:"uf";s:2:"PE";s:6:"status";i:1;}', 'a:7:{s:2:"id";s:3:"120";s:10:"logradouro";s:5:"TEste";s:6:"numero";s:5:"12312";s:3:"cep";s:5:"Teste";s:6:"bairro";s:5:"Teste";s:6:"cidade";s:5:"Teste";s:2:"uf";s:2:"PE";}', 102, NULL);
+INSERT INTO auditoria_campos VALUES (429, 'Pessoa', 'a:5:{s:2:"id";i:67;s:6:"titulo";s:7:"Emanoel";s:4:"tipo";s:2:"PF";s:10:"observacao";s:0:"";s:5:"email";s:20:"emanoel@civis.com.br";}', 'a:5:{s:2:"id";s:2:"67";s:6:"titulo";s:7:"Emanoel";s:5:"email";s:31:"danielhenrique_1303@hotmail.com";s:4:"tipo";s:2:"PF";s:10:"observacao";s:0:"";}', 103, NULL);
+INSERT INTO auditoria_campos VALUES (430, 'Usuario', 'a:19:{s:2:"id";i:28;s:5:"login";s:7:"emanoel";s:5:"senha";s:40:"2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003";s:6:"status";i:1;s:14:"lembrete_senha";s:0:"";s:4:"foto";N;s:7:"enviado";N;s:9:"pessoa_id";i:67;s:8:"cargo_id";i:1;s:10:"vinculo_id";i:1;s:3:"cpf";s:0:"";s:2:"rg";s:0:"";s:8:"grupo_id";i:6;s:15:"departamento_id";N;s:8:"setor_id";i:3;s:5:"chefe";i:0;s:13:"imagem_perfil";s:10:"Tulips.jpg";s:23:"diretorio_imagem_perfil";s:2:"28";s:11:"endereco_id";N;}', 'a:16:{s:2:"id";s:2:"28";s:5:"login";s:7:"emanoel";s:10:"senha_nova";s:0:"";s:22:"confirmacao_senha_nova";s:0:"";s:14:"lembrete_senha";s:0:"";s:3:"cpf";s:0:"";s:2:"rg";s:0:"";s:23:"diretorio_imagem_perfil";s:2:"28";s:8:"grupo_id";s:1:"6";s:8:"cargo_id";s:1:"1";s:10:"vinculo_id";s:1:"1";s:8:"setor_id";s:1:"3";s:5:"chefe";s:1:"0";s:13:"imagem_perfil";a:5:{s:4:"name";s:0:"";s:4:"type";s:0:"";s:8:"tmp_name";s:0:"";s:5:"error";i:4;s:4:"size";i:0;}s:11:"endereco_id";s:3:"121";s:9:"pessoa_id";s:2:"67";}', 103, NULL);
+INSERT INTO auditoria_campos VALUES (431, 'Endereco', 'a:8:{s:2:"id";N;s:10:"logradouro";N;s:3:"cep";N;s:6:"bairro";N;s:6:"cidade";N;s:6:"numero";N;s:2:"uf";N;s:6:"status";N;}', 'a:7:{s:2:"id";s:0:"";s:10:"logradouro";s:0:"";s:6:"numero";s:0:"";s:3:"cep";s:0:"";s:6:"bairro";s:0:"";s:6:"cidade";s:0:"";s:2:"uf";s:2:"AC";}', 103, NULL);
+INSERT INTO auditoria_campos VALUES (432, 'Pessoa', 'a:5:{s:2:"id";i:69;s:6:"titulo";s:15:"Administrador 1";s:4:"tipo";s:2:"PF";s:10:"observacao";s:0:"";s:5:"email";s:16:"oto@civis.com.br";}', 'a:5:{s:2:"id";s:2:"69";s:6:"titulo";s:15:"Administrador 1";s:5:"email";s:16:"oto@civis.com.br";s:4:"tipo";s:2:"PF";s:10:"observacao";s:0:"";}', 104, NULL);
+INSERT INTO auditoria_campos VALUES (433, 'Usuario', 'a:19:{s:2:"id";i:25;s:5:"login";s:5:"admin";s:5:"senha";s:40:"2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003";s:6:"status";i:1;s:14:"lembrete_senha";s:0:"";s:4:"foto";N;s:7:"enviado";N;s:9:"pessoa_id";i:69;s:8:"cargo_id";i:1;s:10:"vinculo_id";i:1;s:3:"cpf";s:9:"897987979";s:2:"rg";s:8:"98797987";s:8:"grupo_id";i:11;s:15:"departamento_id";N;s:8:"setor_id";i:1;s:5:"chefe";i:0;s:13:"imagem_perfil";s:9:"Koala.jpg";s:23:"diretorio_imagem_perfil";s:2:"25";s:11:"endereco_id";i:120;}', 'a:16:{s:2:"id";s:2:"25";s:5:"login";s:5:"admin";s:10:"senha_nova";s:0:"";s:22:"confirmacao_senha_nova";s:0:"";s:14:"lembrete_senha";s:0:"";s:3:"cpf";s:9:"897987979";s:2:"rg";s:8:"98797987";s:23:"diretorio_imagem_perfil";s:2:"25";s:8:"grupo_id";s:2:"11";s:8:"cargo_id";s:1:"1";s:10:"vinculo_id";s:1:"1";s:8:"setor_id";s:1:"1";s:5:"chefe";s:1:"0";s:13:"imagem_perfil";a:5:{s:4:"name";s:0:"";s:4:"type";s:0:"";s:8:"tmp_name";s:0:"";s:5:"error";i:4;s:4:"size";i:0;}s:11:"endereco_id";s:3:"120";s:9:"pessoa_id";s:2:"69";}', 104, NULL);
+INSERT INTO auditoria_campos VALUES (438, 'Acao', 'a:17:{s:2:"id";i:31;s:6:"titulo";s:8:"asdasdas";s:20:"data_inicio_previsto";s:10:"25/11/2013";s:17:"data_fim_previsto";s:10:"28/11/2013";s:9:"concluido";i:0;s:14:"data_conclusao";N;s:6:"status";i:3;s:10:"observacao";s:0:"";s:8:"lembrete";s:10:"26/11/2013";s:9:"andamento";s:3:"25%";s:14:"responsavel_id";i:25;s:7:"acao_id";N;s:13:"supervisor_id";i:25;s:10:"prioridade";s:1:"A";s:11:"anomalia_id";N;s:11:"objetivo_id";N;s:10:"projeto_id";N;}', 'a:14:{s:2:"id";s:2:"31";s:6:"titulo";s:8:"asdasdas";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"25/11/2013";s:17:"data_fim_previsto";s:10:"28/11/2013";s:8:"lembrete";s:10:"26/11/2013";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"3";s:9:"andamento";s:3:"25%";s:9:"concluido";s:1:"0";s:14:"data_conclusao";s:0:"";s:7:"acao_id";s:0:"";s:10:"observacao";s:0:"";}', 107, NULL);
+INSERT INTO auditoria_campos VALUES (439, 'Acao', 'a:17:{s:2:"id";i:39;s:6:"titulo";s:4:"dasd";s:20:"data_inicio_previsto";s:10:"09/01/2014";s:17:"data_fim_previsto";s:10:"02/01/2014";s:9:"concluido";i:1;s:14:"data_conclusao";s:10:"11/01/2014";s:6:"status";i:3;s:10:"observacao";s:0:"";s:8:"lembrete";s:10:"24/01/2014";s:9:"andamento";s:3:"10%";s:14:"responsavel_id";i:26;s:7:"acao_id";i:7;s:13:"supervisor_id";i:26;s:10:"prioridade";s:1:"A";s:11:"anomalia_id";N;s:11:"objetivo_id";N;s:10:"projeto_id";N;}', 'a:14:{s:2:"id";s:2:"39";s:6:"titulo";s:4:"dasd";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"09/01/2014";s:17:"data_fim_previsto";s:10:"02/01/2014";s:8:"lembrete";s:10:"24/01/2014";s:14:"responsavel_id";s:2:"26";s:13:"supervisor_id";s:2:"26";s:6:"status";s:1:"3";s:9:"andamento";s:3:"10%";s:9:"concluido";s:1:"1";s:14:"data_conclusao";s:10:"11/01/2014";s:7:"acao_id";s:1:"7";s:10:"observacao";s:0:"";}', 108, NULL);
+INSERT INTO auditoria_campos VALUES (440, 'Acao', 'a:17:{s:2:"id";i:39;s:6:"titulo";s:4:"dasd";s:20:"data_inicio_previsto";s:10:"09/01/2014";s:17:"data_fim_previsto";s:10:"02/01/2014";s:9:"concluido";i:1;s:14:"data_conclusao";s:10:"11/01/2014";s:6:"status";i:3;s:10:"observacao";s:0:"";s:8:"lembrete";s:10:"24/01/2014";s:9:"andamento";s:3:"10%";s:14:"responsavel_id";i:26;s:7:"acao_id";i:7;s:13:"supervisor_id";i:26;s:10:"prioridade";s:1:"A";s:11:"anomalia_id";N;s:11:"objetivo_id";N;s:10:"projeto_id";N;}', 'a:14:{s:2:"id";s:2:"39";s:6:"titulo";s:4:"dasd";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"09/01/2014";s:17:"data_fim_previsto";s:10:"02/01/2014";s:8:"lembrete";s:10:"24/01/2014";s:14:"responsavel_id";s:2:"26";s:13:"supervisor_id";s:2:"26";s:6:"status";s:1:"3";s:9:"andamento";s:3:"50%";s:9:"concluido";s:1:"0";s:14:"data_conclusao";s:0:"";s:7:"acao_id";s:0:"";s:10:"observacao";s:0:"";}', 109, NULL);
+INSERT INTO auditoria_campos VALUES (441, 'Acao', 'a:17:{s:2:"id";i:39;s:6:"titulo";s:4:"dasd";s:20:"data_inicio_previsto";s:10:"09/01/2014";s:17:"data_fim_previsto";s:10:"02/01/2014";s:9:"concluido";i:0;s:14:"data_conclusao";N;s:6:"status";i:3;s:10:"observacao";s:0:"";s:8:"lembrete";s:10:"24/01/2014";s:9:"andamento";s:3:"50%";s:14:"responsavel_id";i:26;s:7:"acao_id";N;s:13:"supervisor_id";i:26;s:10:"prioridade";s:1:"A";s:11:"anomalia_id";N;s:11:"objetivo_id";N;s:10:"projeto_id";N;}', 'a:14:{s:2:"id";s:2:"39";s:6:"titulo";s:4:"dasd";s:10:"prioridade";s:1:"A";s:20:"data_inicio_previsto";s:10:"09/01/2014";s:17:"data_fim_previsto";s:10:"02/01/2014";s:8:"lembrete";s:10:"24/01/2014";s:14:"responsavel_id";s:2:"25";s:13:"supervisor_id";s:2:"25";s:6:"status";s:1:"3";s:9:"andamento";s:3:"50%";s:9:"concluido";s:1:"0";s:14:"data_conclusao";s:0:"";s:7:"acao_id";s:0:"";s:10:"observacao";s:0:"";}', 110, NULL);
+
+
+--
+-- TOC entry 2559 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: auditoria_campos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auditoria_campos_id_seq', 441, true);
+
+
+--
+-- TOC entry 2560 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: auditoria_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('auditoria_id_seq', 110, true);
+
+
+--
+-- TOC entry 2398 (class 0 OID 33227)
+-- Dependencies: 178
+-- Data for Name: cargo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO cargo VALUES (1, 'Supervisor', 'Uma descricao', 1);
+INSERT INTO cargo VALUES (2, 'Administrador', 'Uma descrição para o administrador', 1);
+
+
+--
+-- TOC entry 2561 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: cargo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('cargo_id_seq', 2, true);
+
+
+--
+-- TOC entry 2400 (class 0 OID 33236)
+-- Dependencies: 180
+-- Data for Name: comentario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2562 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: comentario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('comentario_id_seq', 1, false);
+
+
+--
+-- TOC entry 2402 (class 0 OID 33244)
+-- Dependencies: 182
+-- Data for Name: comunicacao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2563 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: comunicacao_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('comunicacao_id_seq', 1, false);
+
+
+--
+-- TOC entry 2404 (class 0 OID 33250)
+-- Dependencies: 184
+-- Data for Name: departamento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2564 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: departamento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('departamento_id_seq', 1, false);
+
+
+--
+-- TOC entry 2406 (class 0 OID 33256)
+-- Dependencies: 186
+-- Data for Name: dimensao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO dimensao VALUES (1, 'Dimensão 1', 'Uma dimensão para testes', 1, 1, 1);
+INSERT INTO dimensao VALUES (2, 'Dimensão 2', 'Opa', 2, 1, 1);
+
+
+--
+-- TOC entry 2565 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: dimensao_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('dimensao_id_seq', 2, true);
+
+
+--
+-- TOC entry 2408 (class 0 OID 33265)
+-- Dependencies: 188
+-- Data for Name: empresa; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO empresa VALUES (1, 1, '1234567891112', '123456789111213', '123456789111213', 47, NULL, 1);
+INSERT INTO empresa VALUES (2, 0, '123456789', '123456789', '123456789', 53, 1, 1);
+
+
+--
+-- TOC entry 2566 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: empresa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('empresa_id_seq', 2, true);
+
+
+--
+-- TOC entry 2410 (class 0 OID 33274)
+-- Dependencies: 190
+-- Data for Name: endereco; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO endereco VALUES (1, 'jhagsdjhagsdjhgasjhdgasjhg', '1321231', 'fdsadfa', 'sdfasdfasd', '13212', 'PE', 1);
+INSERT INTO endereco VALUES (2, 'jhagsdjhagsdjhgasjhdgasjhg', '1321231', 'fdsadfa', 'sdfasdfasd', '13212', 'PE', 1);
+INSERT INTO endereco VALUES (3, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (4, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (5, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (6, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (7, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (8, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (9, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (10, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (11, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (12, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (13, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (14, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (15, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (16, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (17, 'Algum lugar', '53250070', 'jd sao paulo', 'Recife', '220', 'PE', 1);
+INSERT INTO endereco VALUES (18, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (19, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (20, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (21, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (22, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (23, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (24, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (25, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (26, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (27, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (28, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (29, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (30, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (31, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (32, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (33, '', '', '', '', '', '  ', 1);
+INSERT INTO endereco VALUES (34, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (35, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (36, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (37, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (38, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (39, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (40, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (41, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (42, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (43, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (44, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (45, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (46, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (47, '', '', '', '', '', 'PE', 1);
+INSERT INTO endereco VALUES (48, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (49, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (50, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (51, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (52, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (53, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (54, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (55, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (56, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (57, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (58, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (59, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (60, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (61, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (62, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (63, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (64, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (65, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (66, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (67, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (68, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (69, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (70, 'asdasd', 'asdasd', 'asda', 'sdasdasd', '123', 'PE', 1);
+INSERT INTO endereco VALUES (71, 'asda', '12312312', 'asdasdas', 'asdasdasd', '123', 'PE', 1);
+INSERT INTO endereco VALUES (72, 'asda', '12312312', 'asdasdas', 'asdasdasd', '123', 'PE', 1);
+INSERT INTO endereco VALUES (73, 'asda', '12312312', 'asdasdas', 'asdasdasd', '123', 'PE', 1);
+INSERT INTO endereco VALUES (74, 'asda', '12312312', 'asdasdas', 'asdasdasd', '123', 'PE', 1);
+INSERT INTO endereco VALUES (75, 'asdasdas', '50790-000', 'asdasda', 'Recife', '2020', 'PE', 1);
+INSERT INTO endereco VALUES (76, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (77, 'askjdahskdhjkahs', '50790-000', 'ashkjdhaskjhdj', 'Recife', '897', 'PE', 1);
+INSERT INTO endereco VALUES (78, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (79, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (80, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (81, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (82, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (83, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (84, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (85, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (86, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (87, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (88, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (89, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (90, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (91, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (92, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (93, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (94, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (95, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (96, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (97, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (98, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (99, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (100, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (101, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (102, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (103, 'asdas', '50790-000', 'asdasdas', 'Recife', '123', 'PE', 1);
+INSERT INTO endereco VALUES (105, 'asdahsgdjahsgdjhga ahsdg a', '987987987', 'asgdjahgsdjhags', 'hasgdjhagsdjhgajhsdg', '987', 'PE', 1);
+INSERT INTO endereco VALUES (106, 'akjshdasiudasdaskj', '87687687', 'asgdjhasgdhjags', 'jashgdashgdjha', '9879', 'PE', 1);
+INSERT INTO endereco VALUES (107, 'aiushdiuash', '876876876', 'asduahsduygasu', 'yguasgduaysg', '687678', 'PE', 1);
+INSERT INTO endereco VALUES (108, 'aiushdiuash', '876876876', 'asduahsduygasu', 'yguasgduaysg', '687678', 'PE', 1);
+INSERT INTO endereco VALUES (109, 'aiushdiuash', '876876876', 'asduahsduygasu', 'yguasgduaysg', '687678', 'PE', 1);
+INSERT INTO endereco VALUES (110, 'akjshdasiudasdaskj', '87687687', 'asgdjhasgdhjags', 'jashgdashgdjha', '9879234234', 'PE', 1);
+INSERT INTO endereco VALUES (111, 'akjshdasiudasdaskj', '87687687', 'asgdjhasgdhjags', 'jashgdashgdjha', '9879123123', 'PE', 1);
+INSERT INTO endereco VALUES (112, 'akjshdasiudasdaskj', '87687687', 'asgdjhasgdhjags', 'jashgdashgdjha', '9879123123', 'PE', 1);
+INSERT INTO endereco VALUES (113, 'akjshdasiudasdaskj', '87687687', 'asgdjhasgdhjags', 'jashgdashgdjha', '9879123123', 'PE', 1);
+INSERT INTO endereco VALUES (114, 'asdahsgdjahsgdjhga ahsdg a', '987987987', 'asgdjahgsdjhags', 'hasgdjhagsdjhgajhsdg', '987', 'PE', 1);
+INSERT INTO endereco VALUES (115, 'asdahsgdjahsgdjhga ahsdg a', '987987987', 'asgdjahgsdjhags', 'hasgdjhagsdjhgajhsdg', '987', 'PE', 1);
+INSERT INTO endereco VALUES (104, 'asdahsgdjahsgdjhga ahsdg a', '987987987', 'asgdjahgsdjhags', 'hasgdjhagsdjhgajhsdg', '987', 'PE', 1);
+INSERT INTO endereco VALUES (116, 'Av bla bla bla', '50790-000', 'Jardim São Paulo', 'Recife', '428', 'PE', 1);
+INSERT INTO endereco VALUES (117, 'ahhsdjagsjdhg', '9879879', 'asdjhagsjhdg', 'aagsdjagsjhdg', '9879', 'PE', 1);
+INSERT INTO endereco VALUES (118, 'ahhsdjagsjdhg', '9879879', 'asdjhagsjhdg', 'aagsdjagsjhdg', '9879', 'PE', 1);
+INSERT INTO endereco VALUES (119, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (121, '', '', '', '', '', 'AC', 1);
+INSERT INTO endereco VALUES (120, 'TEste', 'Teste', 'Teste', 'Teste', '12312', 'PE', 1);
+
+
+--
+-- TOC entry 2567 (class 0 OID 0)
+-- Dependencies: 191
+-- Name: endereco_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('endereco_id_seq', 121, true);
+
+
+--
+-- TOC entry 2433 (class 0 OID 33534)
+-- Dependencies: 213
+-- Data for Name: faixa; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO faixa VALUES (1, 'faixa 1', 70, 90, 1);
+
+
+--
+-- TOC entry 2568 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: faixa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('faixa_id_seq', 1, true);
+
+
+--
+-- TOC entry 2412 (class 0 OID 33283)
+-- Dependencies: 192
+-- Data for Name: grupo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO grupo VALUES (6, 'Administrador', 1);
+INSERT INTO grupo VALUES (7, 'gerente', 1);
+INSERT INTO grupo VALUES (8, 'Usuario', 1);
+INSERT INTO grupo VALUES (9, 'Teste Acl', 0);
+INSERT INTO grupo VALUES (10, 'Teste Acl', 0);
+INSERT INTO grupo VALUES (11, 'Teste Acl', 1);
+
+
+--
+-- TOC entry 2569 (class 0 OID 0)
+-- Dependencies: 193
+-- Name: grupo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('grupo_id_seq', 11, true);
+
+
+--
+-- TOC entry 2435 (class 0 OID 33547)
+-- Dependencies: 215
+-- Data for Name: indicador; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO indicador VALUES (17, 'Parar de ver televisão', 15, 1, 1, 26, 2, 1, 1, 1, 1, 4, 1, '2015,2014,2013,2012', '');
+INSERT INTO indicador VALUES (16, 'Estudar até 2 horas por dia', NULL, 1, 1, 25, 1, 1, 1, 1, 0, 5, 1, '2014,2013,2012', '');
+INSERT INTO indicador VALUES (18, 'Teste mais um filho', 15, 1, 1, 25, 1, 1, 1, 3, 0, 2, 1, '2014,2013,2012', '');
+INSERT INTO indicador VALUES (20, 'Teste', NULL, 1, 2, 25, 1, 1, 1, 3, 0, 6, 1, '2014,2013,2012', '');
+INSERT INTO indicador VALUES (22, 'Finalizar todas as atividades', NULL, 1, 3, 25, 1, 1, 1, 3, 1, 1, 1, '2014,2013,2012', '');
+INSERT INTO indicador VALUES (15, 'Tirar 10 em todas as provas', NULL, 1, 1, 25, 2, 1, 0, 3, 0, 1, 1, '2014,2013,2012', '');
+INSERT INTO indicador VALUES (19, 'bla bla bla bla', 18, 1, 1, 25, 1, 1, 0, 1, 0, 3, 1, '2014,2013,2012', '');
+
+
+--
+-- TOC entry 2441 (class 0 OID 33669)
+-- Dependencies: 221
+-- Data for Name: indicador_autorizado_visualizar; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO indicador_autorizado_visualizar VALUES (212, 27, 18);
+INSERT INTO indicador_autorizado_visualizar VALUES (213, 26, 18);
+INSERT INTO indicador_autorizado_visualizar VALUES (214, 28, 18);
+INSERT INTO indicador_autorizado_visualizar VALUES (215, 25, 18);
+INSERT INTO indicador_autorizado_visualizar VALUES (216, 25, 20);
+INSERT INTO indicador_autorizado_visualizar VALUES (217, 25, 22);
+INSERT INTO indicador_autorizado_visualizar VALUES (170, 26, 17);
+INSERT INTO indicador_autorizado_visualizar VALUES (171, 27, 17);
+INSERT INTO indicador_autorizado_visualizar VALUES (172, 28, 17);
+INSERT INTO indicador_autorizado_visualizar VALUES (173, 25, 17);
+INSERT INTO indicador_autorizado_visualizar VALUES (221, 26, 15);
+INSERT INTO indicador_autorizado_visualizar VALUES (224, 25, 19);
+INSERT INTO indicador_autorizado_visualizar VALUES (96, 26, 16);
+INSERT INTO indicador_autorizado_visualizar VALUES (97, 25, 16);
+
+
+--
+-- TOC entry 2570 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: indicador_autorizado_visualizar_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('indicador_autorizado_visualizar_id_seq', 224, true);
+
+
+--
+-- TOC entry 2571 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: indicador_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('indicador_id_seq', 22, true);
+
+
+--
+-- TOC entry 2443 (class 0 OID 33757)
+-- Dependencies: 223
+-- Data for Name: indicador_meta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO indicador_meta VALUES (22, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+INSERT INTO indicador_meta VALUES (19, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+INSERT INTO indicador_meta VALUES (35, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+INSERT INTO indicador_meta VALUES (21, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+INSERT INTO indicador_meta VALUES (24, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+INSERT INTO indicador_meta VALUES (25, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2015');
+INSERT INTO indicador_meta VALUES (28, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+INSERT INTO indicador_meta VALUES (31, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+INSERT INTO indicador_meta VALUES (37, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+INSERT INTO indicador_meta VALUES (33, 19, 70.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_meta VALUES (20, 15, -55.25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_meta VALUES (36, 20, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_meta VALUES (38, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+INSERT INTO indicador_meta VALUES (32, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+INSERT INTO indicador_meta VALUES (34, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+INSERT INTO indicador_meta VALUES (39, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_meta VALUES (40, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+INSERT INTO indicador_meta VALUES (30, 18, -70.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_meta VALUES (27, 17, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_meta VALUES (23, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_meta VALUES (29, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+INSERT INTO indicador_meta VALUES (26, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+
+
+--
+-- TOC entry 2572 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: indicador_meta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('indicador_meta_id_seq', 40, true);
+
+
+--
+-- TOC entry 2445 (class 0 OID 33770)
+-- Dependencies: 225
+-- Data for Name: indicador_realizado; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO indicador_realizado VALUES (40, 19, 70.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_realizado VALUES (42, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+INSERT INTO indicador_realizado VALUES (44, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+INSERT INTO indicador_realizado VALUES (27, 15, -65.25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_realizado VALUES (43, 20, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_realizado VALUES (45, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+INSERT INTO indicador_realizado VALUES (46, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_realizado VALUES (39, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+INSERT INTO indicador_realizado VALUES (41, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+INSERT INTO indicador_realizado VALUES (47, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+INSERT INTO indicador_realizado VALUES (37, 18, -70.5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_realizado VALUES (34, 17, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_realizado VALUES (30, 16, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2013');
+INSERT INTO indicador_realizado VALUES (36, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+INSERT INTO indicador_realizado VALUES (33, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+INSERT INTO indicador_realizado VALUES (29, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+INSERT INTO indicador_realizado VALUES (26, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2014');
+INSERT INTO indicador_realizado VALUES (28, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+INSERT INTO indicador_realizado VALUES (31, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+INSERT INTO indicador_realizado VALUES (32, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2015');
+INSERT INTO indicador_realizado VALUES (35, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+INSERT INTO indicador_realizado VALUES (38, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '2012');
+
+
+--
+-- TOC entry 2573 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: indicador_realizado_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('indicador_realizado_id_seq', 47, true);
+
+
+--
+-- TOC entry 2439 (class 0 OID 33623)
+-- Dependencies: 219
+-- Data for Name: indicador_responsavel_meta; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO indicador_responsavel_meta VALUES (188, 28, 18);
+INSERT INTO indicador_responsavel_meta VALUES (189, 25, 18);
+INSERT INTO indicador_responsavel_meta VALUES (190, 25, 20);
+INSERT INTO indicador_responsavel_meta VALUES (191, 25, 22);
+INSERT INTO indicador_responsavel_meta VALUES (195, 26, 15);
+INSERT INTO indicador_responsavel_meta VALUES (196, 25, 15);
+INSERT INTO indicador_responsavel_meta VALUES (199, 25, 19);
+INSERT INTO indicador_responsavel_meta VALUES (155, 26, 17);
+INSERT INTO indicador_responsavel_meta VALUES (156, 27, 17);
+INSERT INTO indicador_responsavel_meta VALUES (157, 28, 17);
+INSERT INTO indicador_responsavel_meta VALUES (158, 25, 17);
+INSERT INTO indicador_responsavel_meta VALUES (85, 26, 16);
+INSERT INTO indicador_responsavel_meta VALUES (86, 25, 16);
+
+
+--
+-- TOC entry 2574 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: indicador_responsavel_meta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('indicador_responsavel_meta_id_seq', 199, true);
+
+
+--
+-- TOC entry 2437 (class 0 OID 33605)
+-- Dependencies: 217
+-- Data for Name: indicador_responsavel_realizado; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO indicador_responsavel_realizado VALUES (183, 28, 18);
+INSERT INTO indicador_responsavel_realizado VALUES (184, 25, 18);
+INSERT INTO indicador_responsavel_realizado VALUES (185, 25, 20);
+INSERT INTO indicador_responsavel_realizado VALUES (186, 25, 22);
+INSERT INTO indicador_responsavel_realizado VALUES (190, 26, 15);
+INSERT INTO indicador_responsavel_realizado VALUES (191, 25, 15);
+INSERT INTO indicador_responsavel_realizado VALUES (194, 25, 19);
+INSERT INTO indicador_responsavel_realizado VALUES (152, 28, 17);
+INSERT INTO indicador_responsavel_realizado VALUES (153, 25, 17);
+INSERT INTO indicador_responsavel_realizado VALUES (87, 26, 16);
+INSERT INTO indicador_responsavel_realizado VALUES (88, 25, 16);
+
+
+--
+-- TOC entry 2575 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: indicador_responsavel_realizado_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('indicador_responsavel_realizado_id_seq', 194, true);
+
+
+--
+-- TOC entry 2414 (class 0 OID 33289)
+-- Dependencies: 194
+-- Data for Name: objetivo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO objetivo VALUES (1, 2013, 1, 'Ser um Excelente Programador', 1, 1, 1, NULL);
+INSERT INTO objetivo VALUES (2, 2012, 2, 'Tirar 10 em Empreendedorismo', 1, 1, 2, 1);
+INSERT INTO objetivo VALUES (3, 2013, 1, 'Finalizar o projeto Indicadores', 2, 1, 1, NULL);
+
+
+--
+-- TOC entry 2576 (class 0 OID 0)
+-- Dependencies: 195
+-- Name: objetivo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('objetivo_id_seq', 3, true);
+
+
+--
+-- TOC entry 2416 (class 0 OID 33295)
+-- Dependencies: 196
+-- Data for Name: objetivo_projeto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO objetivo_projeto VALUES (1, 3, NULL);
+INSERT INTO objetivo_projeto VALUES (2, 3, NULL);
+INSERT INTO objetivo_projeto VALUES (8, 4, 1);
+
+
+--
+-- TOC entry 2577 (class 0 OID 0)
+-- Dependencies: 197
+-- Name: objetivo_projeto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('objetivo_projeto_id_seq', 8, true);
+
+
+--
+-- TOC entry 2418 (class 0 OID 33300)
+-- Dependencies: 198
+-- Data for Name: pessoa; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO pessoa VALUES (1, '765', 'PF', '687', NULL);
+INSERT INTO pessoa VALUES (2, 'asdasd', 'PF', 'asdas', 'asdas@adhsid.com');
+INSERT INTO pessoa VALUES (3, 'asdasd', 'PF', 'asdas', 'asdas@adhsid.com');
+INSERT INTO pessoa VALUES (4, 'testa', 'PF', 'dfadsfasdfasdfasd', 'testa@testa.com.br');
+INSERT INTO pessoa VALUES (5, 'testa', 'PF', 'dfadsfasdfasdfasd', 'testa@testa.com.br');
+INSERT INTO pessoa VALUES (6, '', 'PF', '', '');
+INSERT INTO pessoa VALUES (7, '', 'PF', '', '');
+INSERT INTO pessoa VALUES (8, '', 'PF', '', '');
+INSERT INTO pessoa VALUES (9, '', 'PF', '', '');
+INSERT INTO pessoa VALUES (10, 'asdas', 'PF', '', 'dadsa@email.com');
+INSERT INTO pessoa VALUES (11, 'asdasd', 'PF', '', 'daniel@email.com');
+INSERT INTO pessoa VALUES (12, 'daniel', 'PF', '', 'daniel@email.com');
+INSERT INTO pessoa VALUES (13, 'daniel', 'PF', '', 'daniel@email.com');
+INSERT INTO pessoa VALUES (14, 'daniel', 'PF', '', 'daniel@email.co');
+INSERT INTO pessoa VALUES (15, 'daniel', 'PF', '', 'daniel@email.com');
+INSERT INTO pessoa VALUES (16, 'daniel', 'PF', '', 'daniel@email.com');
+INSERT INTO pessoa VALUES (17, 'daniel', 'PF', '', 'daniel@civis.com.br');
+INSERT INTO pessoa VALUES (18, 'Henrique', 'PF', '', 'henrique@email.com');
+INSERT INTO pessoa VALUES (19, 'Henrique', 'PF', '', 'henrique@email.com');
+INSERT INTO pessoa VALUES (20, 'Henrique2', 'PF', '', 'henrique2@email.com');
+INSERT INTO pessoa VALUES (21, 'Tulio', 'PF', '', 'tulio@civis.com.br');
+INSERT INTO pessoa VALUES (22, 'asdsadsad', 'PF', '', 'luciano@civis.com.br');
+INSERT INTO pessoa VALUES (23, 'emanoel', 'PF', '', 'emanoel@civis.com.br');
+INSERT INTO pessoa VALUES (24, 'asdasd', 'PF', '', 'daniel@email.com');
+INSERT INTO pessoa VALUES (25, 'ashdusahd', 'PF', '', 'henrique2@email.com');
+INSERT INTO pessoa VALUES (26, 'asfafdsfdsf', 'PF', '', 'henrique@email.com');
+INSERT INTO pessoa VALUES (27, 'asdasd', 'PF', '', 'asdas@adhsid.com');
+INSERT INTO pessoa VALUES (28, 'teste', 'PF', '', 'teste@teste.com');
+INSERT INTO pessoa VALUES (29, 'usuario Administrador', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (30, 'usuario Gerente', 'PF', '', 'gerencia@gerencia.com.br');
+INSERT INTO pessoa VALUES (31, 'usuario Usuario', 'PF', '', 'usuario@usuario.com.br');
+INSERT INTO pessoa VALUES (32, 'usuario Administrado', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (33, 'usuario Administrador', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (34, 'asdasd', 'PF', '', 'daniel@email.com');
+INSERT INTO pessoa VALUES (35, 'Administrador', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (36, 'gerente', 'PF', '', 'gerencia@gerencia.com.br');
+INSERT INTO pessoa VALUES (37, 'usuario', 'PF', '', 'usuario@usuario.com.br');
+INSERT INTO pessoa VALUES (38, 'usuario', 'PF', '', 'usuario@usuario.com.br');
+INSERT INTO pessoa VALUES (39, 'usuario', 'PF', '', 'usuario@usuario.com.br');
+INSERT INTO pessoa VALUES (40, 'usuario', 'PF', '', 'usuario@usuario.com.br');
+INSERT INTO pessoa VALUES (41, 'usuario', 'PF', '', 'usuario@usuario.com.br');
+INSERT INTO pessoa VALUES (42, 'usuario', 'PF', '', 'usuario@usuario.com.br');
+INSERT INTO pessoa VALUES (43, 'usuario', 'PF', '', 'usuario@usuario.com.br');
+INSERT INTO pessoa VALUES (44, 'Administrador', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (45, 'Emanoel', 'PF', '', 'emanoel@civis.com.br');
+INSERT INTO pessoa VALUES (46, 'Administrador', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (47, 'Civis', 'PJ', '', 'atendimento@civis.com.br');
+INSERT INTO pessoa VALUES (48, 'Filial 1', 'PJ', '', 'filial@civis.com.br');
+INSERT INTO pessoa VALUES (49, 'Administrador 1', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (50, 'Filial 2', 'PJ', '', 'filial@civis.com.br');
+INSERT INTO pessoa VALUES (51, 'Filial 2', 'PJ', '', 'filial@civis.com.br');
+INSERT INTO pessoa VALUES (52, 'Filial 2', 'PJ', '', 'filial@civis.com.br');
+INSERT INTO pessoa VALUES (53, 'Filial 1', 'PJ', '', 'filial@civis.com.br');
+INSERT INTO pessoa VALUES (54, 'Administrador 1', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (55, 'Administrador 1', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (56, 'usuario', 'PF', '', 'usuario@usuario.com.br');
+INSERT INTO pessoa VALUES (57, 'gerente', 'PF', '', 'gerencia@gerencia.com.br');
+INSERT INTO pessoa VALUES (58, 'Emanoel', 'PF', '', 'emanoel@civis.com.br');
+INSERT INTO pessoa VALUES (59, 'Administrador 1', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (60, 'Administrador 1', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (61, 'Administrador 1', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (62, 'Administrador 1', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (63, 'Administrador 1', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (64, 'Administrador 1', 'PF', '', 'admin@admin.com.br');
+INSERT INTO pessoa VALUES (65, 'gerente', 'PF', '', 'gerencia@gerencia.com.br');
+INSERT INTO pessoa VALUES (66, 'gerente', 'PF', '', 'gerencia@gerencia.com.br');
+INSERT INTO pessoa VALUES (68, 'usuario', 'PF', '', 'usuario@usuario.com.br');
+INSERT INTO pessoa VALUES (70, 'Teste', 'PF', '', 'teste@teste.com');
+INSERT INTO pessoa VALUES (71, 'teste', 'PF', '', 'teste@teste.com');
+INSERT INTO pessoa VALUES (72, 'teste', 'PF', '', 'teste@teste.com');
+INSERT INTO pessoa VALUES (73, 'teste', 'PF', '', 'teste@teste.com');
+INSERT INTO pessoa VALUES (74, 'teste', 'PF', '', 'teste@teste.com');
+INSERT INTO pessoa VALUES (75, 'aiuhehih', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (76, 'teste', 'PF', '', 'teste@teste.com');
+INSERT INTO pessoa VALUES (77, 'Testei', 'PF', '', 'danielhenrique_1303@hotmail.com');
+INSERT INTO pessoa VALUES (78, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (79, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (80, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (81, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (82, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (83, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (84, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (85, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (86, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (87, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (88, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (89, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (90, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (91, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (92, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (93, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (94, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (67, 'Emanoel', 'PF', '', 'danielhenrique_1303@hotmail.com');
+INSERT INTO pessoa VALUES (95, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (96, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (97, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (98, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (99, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (100, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (101, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (102, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (103, 'teste chato', 'PF', '', 'danielbsiufrpe@gmail.com');
+INSERT INTO pessoa VALUES (104, 'lalalal', 'PF', '', 'lalala@email.com');
+INSERT INTO pessoa VALUES (105, 'lalalal', 'PF', '', 'lalala@email.com');
+INSERT INTO pessoa VALUES (106, 'oiajsojdaos', 'PF', '', 'daoisjdoa@ziosjaods.com');
+INSERT INTO pessoa VALUES (107, '123123', 'PF', '', 'asdasdasd@iaushd.com');
+INSERT INTO pessoa VALUES (108, '123123', 'PF', '', 'asdasdasd@iaushd.com');
+INSERT INTO pessoa VALUES (109, '123123', 'PF', '', 'asdasdasd@iaushd.com');
+INSERT INTO pessoa VALUES (110, 'oiajsojdaoskasd', 'PF', '', 'daoisjdoa@ziosjaods.com');
+INSERT INTO pessoa VALUES (111, 'oiajsojdaoskasdasdasdas', 'PF', '', 'daoisjdoa@ziosjaods.com');
+INSERT INTO pessoa VALUES (112, 'oiajsojdaoskasdasdasdas', 'PF', '', 'daoisjdoa@ziosjaods.com');
+INSERT INTO pessoa VALUES (113, 'oiajsojdaoskasdasdasdas', 'PF', '', 'daoisjdoa@ziosjaods.com');
+INSERT INTO pessoa VALUES (114, 'lalalalla', 'PF', '', 'lalala@email.com');
+INSERT INTO pessoa VALUES (115, 'lalalallaa', 'PF', '', 'lalala@email.com');
+INSERT INTO pessoa VALUES (116, 'Daniel', 'PF', '', 'danielhenrique_1303@hotmail.com');
+INSERT INTO pessoa VALUES (117, 'dasdas', 'PF', '', 'ads@dasdas.com');
+INSERT INTO pessoa VALUES (118, 'dasdas', 'PF', '', 'ads@dasdas.com');
+INSERT INTO pessoa VALUES (69, 'Administrador 1', 'PF', '', 'oto@civis.com.br');
+
+
+--
+-- TOC entry 2419 (class 0 OID 33306)
+-- Dependencies: 199
+-- Data for Name: pessoa_comunicacao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2578 (class 0 OID 0)
+-- Dependencies: 200
+-- Name: pessoa_comunicacao_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pessoa_comunicacao_id_seq', 1, false);
+
+
+--
+-- TOC entry 2579 (class 0 OID 0)
+-- Dependencies: 201
+-- Name: pessoa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('pessoa_id_seq', 118, true);
+
+
+--
+-- TOC entry 2422 (class 0 OID 33313)
+-- Dependencies: 202
+-- Data for Name: plano_acao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO plano_acao VALUES (2, NULL, 'Plano de Ação 1', 1);
+INSERT INTO plano_acao VALUES (1, NULL, 'Plano de Ação 2', 1);
+
+
+--
+-- TOC entry 2580 (class 0 OID 0)
+-- Dependencies: 203
+-- Name: plano_acao_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('plano_acao_id_seq', 2, true);
+
+
+--
+-- TOC entry 2424 (class 0 OID 33319)
+-- Dependencies: 204
+-- Data for Name: plano_acao_projeto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- TOC entry 2581 (class 0 OID 0)
+-- Dependencies: 205
+-- Name: plano_acao_projeto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('plano_acao_projeto_id_seq', 1, false);
+
+
+--
+-- TOC entry 2463 (class 0 OID 58720)
+-- Dependencies: 243
+-- Data for Name: post; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO post VALUES (1, 'Teste', 'testando', 24, 1, 1, NULL, '2013-09-21 17:56:52', '2013-09-21 17:56:52', 25);
+INSERT INTO post VALUES (3, 'teste filho', 'teste filho', 24, 1, 1, 1, '2013-09-21 18:52:04', '2013-09-21 18:52:04', 25);
+INSERT INTO post VALUES (4, 'Teste de email', 'Email', 24, 1, 1, 1, '2013-09-21 19:27:35', '2013-09-21 19:27:35', 25);
+INSERT INTO post VALUES (5, 'Teste de Email', 'Teste de Email', 24, 1, 1, 1, '2013-09-21 19:28:27', '2013-09-21 19:28:27', 25);
+INSERT INTO post VALUES (6, 'Teste de Email', 'Teste de Email', 24, 1, 1, 1, '2013-09-21 19:30:52', '2013-09-21 19:30:52', 25);
+INSERT INTO post VALUES (7, 'Teste de Email', 'Teste de Email', 24, 1, 1, 1, '2013-09-21 19:32:20', '2013-09-21 19:32:20', 25);
+INSERT INTO post VALUES (8, 'Teste de Email', 'teste email', 24, 1, 1, 1, '2013-09-21 19:34:06', '2013-09-21 19:34:06', 25);
+INSERT INTO post VALUES (9, 'aushiudsi', 'aishdiahsdiahsd', NULL, 1, 1, NULL, '2013-10-05 02:22:14', '2013-10-05 02:22:14', 25);
+INSERT INTO post VALUES (10, 'Mais um post', 'bla bla bla', 24, 1, 1, NULL, '2013-10-05 12:20:04', '2013-10-05 12:20:04', 25);
+INSERT INTO post VALUES (11, 'teste', 'teste', 18, 0, 1, NULL, '2013-10-23 23:27:10', '2013-10-23 23:27:10', 25);
+INSERT INTO post VALUES (12, 'aadasda', 'sdasdasdasd', 18, 1, 1, 11, '2013-10-23 23:27:22', '2013-10-23 23:27:22', 25);
+INSERT INTO post VALUES (13, 'asdasda', 'dasdasd', 18, 0, 1, 11, '2013-10-23 23:28:13', '2013-10-23 23:28:13', 25);
+
+
+--
+-- TOC entry 2582 (class 0 OID 0)
+-- Dependencies: 242
+-- Name: post_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('post_id_seq', 13, true);
+
+
+--
+-- TOC entry 2451 (class 0 OID 50337)
+-- Dependencies: 231
+-- Data for Name: procedimento; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO procedimento VALUES (1, 'teste', 'teste', 'teste', 'teste', '1185748_580144908709536_1233392382_n.png', '1', 25, 0, 1);
+
+
+--
+-- TOC entry 2583 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: procedimento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('procedimento_id_seq', 1, true);
+
+
+--
+-- TOC entry 2426 (class 0 OID 33324)
+-- Dependencies: 206
+-- Data for Name: projeto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO projeto VALUES (1, 'Projeto 1', '2013-06-20', '2013-06-20', NULL, 'Uma coisa é uma coisa, outra coisa é outra coisa.', 0, '2013-06-20', 'uma coisa', 'uma nova coisa', 'aquela coisa lá', 25, 1, 2500);
+INSERT INTO projeto VALUES (2, 'Projeto 1', '2013-06-20', '2013-06-20', NULL, 'Uma coisa é uma coisa, outra coisa é outra coisa.', 0, '2013-06-20', 'uma coisa', 'uma nova coisa', 'aquela coisa lá', 25, 1, 2500);
+INSERT INTO projeto VALUES (3, 'Projeto 1', '2013-06-20', '2013-06-20', NULL, 'Uma coisa é uma coisa, outra coisa é outra coisa.', 0, '2013-06-20', 'uma coisa', 'uma nova coisa', 'aquela coisa lá', 25, 1, 2500);
+INSERT INTO projeto VALUES (4, 'Projeto 1', '2013-06-20', '2013-06-20', NULL, 'Uma coisa é uma coisa, outra coisa é outra coisa.', 0, '2013-06-20', 'uma coisa', 'uma nova coisa', 'aquela coisa lá', 25, 1, 2500);
+
+
+--
+-- TOC entry 2584 (class 0 OID 0)
+-- Dependencies: 207
+-- Name: projeto_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('projeto_id_seq', 4, true);
+
+
+--
+-- TOC entry 2455 (class 0 OID 50399)
+-- Dependencies: 235
+-- Data for Name: reuniao; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO reuniao VALUES (1, 'Reuniao 1', 1, '2013-09-16', 'Ver com túlio alguns detalhes do algorítimo de ordenamento do mapa estratégico', '', 'Uma observação qualquer aqui', 'Alguem que queira participar', 'Civis', 1, '15:00', '18:00');
+INSERT INTO reuniao VALUES (2, '123123', NULL, '2013-10-25', 'asdasdasd', '', '', '', '123123', 1, '12:31', '12:31');
+
+
+--
+-- TOC entry 2459 (class 0 OID 50433)
+-- Dependencies: 239
+-- Data for Name: reuniao_conhecedor; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO reuniao_conhecedor VALUES (4, 1, 28);
+INSERT INTO reuniao_conhecedor VALUES (5, 1, 25);
+INSERT INTO reuniao_conhecedor VALUES (12, 2, 26);
+INSERT INTO reuniao_conhecedor VALUES (13, 2, 28);
+
+
+--
+-- TOC entry 2585 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: reuniao_conhecedor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('reuniao_conhecedor_id_seq', 13, true);
+
+
+--
+-- TOC entry 2461 (class 0 OID 50452)
+-- Dependencies: 241
+-- Data for Name: reuniao_email_externo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO reuniao_email_externo VALUES (3, 1, 'danielbsiufrpe@gmail.com');
+INSERT INTO reuniao_email_externo VALUES (4, 1, 'atendimento@danielwebsites.com.br');
+INSERT INTO reuniao_email_externo VALUES (8, 2, 'oburegio@gmail.com');
+
+
+--
+-- TOC entry 2586 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: reuniao_email_externo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('reuniao_email_externo_id_seq', 8, true);
+
+
+--
+-- TOC entry 2587 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: reuniao_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('reuniao_id_seq', 2, true);
+
+
+--
+-- TOC entry 2457 (class 0 OID 50415)
+-- Dependencies: 237
+-- Data for Name: reuniao_participante; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO reuniao_participante VALUES (4, 1, 28);
+INSERT INTO reuniao_participante VALUES (5, 1, 25);
+INSERT INTO reuniao_participante VALUES (11, 2, 28);
+INSERT INTO reuniao_participante VALUES (12, 2, 25);
+
+
+--
+-- TOC entry 2588 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: reuniao_participante_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('reuniao_participante_id_seq', 12, true);
+
+
+--
+-- TOC entry 2449 (class 0 OID 50260)
+-- Dependencies: 229
+-- Data for Name: setor; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO setor VALUES (1, 'Presidencia', 1, 1);
+INSERT INTO setor VALUES (2, 'Administração', 1, 2);
+INSERT INTO setor VALUES (3, 'Controladoria', 1, 2);
+INSERT INTO setor VALUES (4, 'Industrial', 1, 2);
+INSERT INTO setor VALUES (5, 'Vendas', 1, 2);
+INSERT INTO setor VALUES (6, 'Diretoria', 1, 1);
+
+
+--
+-- TOC entry 2589 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: setor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('setor_id_seq', 6, true);
+
+
+--
+-- TOC entry 2453 (class 0 OID 50366)
+-- Dependencies: 233
+-- Data for Name: tarefa; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO tarefa VALUES (3, 'Mais um teste de relação com reuniao', '2013-09-12', '2013-09-21', 1, NULL, 4, '', '2013-09-27', NULL, '', 25, 25, 'A', 1, NULL);
+INSERT INTO tarefa VALUES (2, 'Teste de relação com reuniao', '2013-09-05', '2013-09-20', 0, NULL, 3, '', '2013-09-20', 'Jellyfish.jpg', '2', 25, 25, 'A', 1, NULL);
+INSERT INTO tarefa VALUES (1, 'Teste', '2013-09-13', '2013-09-15', 0, NULL, 2, 'siahdihs alalalala alal alalalla', '2013-09-13', 'Lighthouse.jpg', '1', 25, 25, 'A', NULL, NULL);
+
+
+--
+-- TOC entry 2590 (class 0 OID 0)
+-- Dependencies: 232
+-- Name: terefa_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('terefa_id_seq', 3, true);
+
+
+--
+-- TOC entry 2428 (class 0 OID 33334)
+-- Dependencies: 208
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO usuario VALUES (39, 'aoisjdoaisj', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 113, 1, 1, '76876876876', '87686', 7, NULL, 3, 0, NULL, '', 106);
+INSERT INTO usuario VALUES (36, 'testechat45', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 103, 1, 1, '', '', 6, NULL, 2, 1, NULL, '', 78);
+INSERT INTO usuario VALUES (35, 'testei', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 77, 1, 1, '897987987', '87987987', 6, NULL, 2, 1, NULL, '', NULL);
+INSERT INTO usuario VALUES (44, 'asdahkjs', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, 'akjshd', NULL, NULL, 117, 1, 1, '987987', '9797', 6, NULL, 4, 0, NULL, '', 117);
+INSERT INTO usuario VALUES (45, '123123123', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, 'akjshd', NULL, NULL, 118, 1, 1, '987987', '9797', 6, NULL, 4, 0, NULL, '', 118);
+INSERT INTO usuario VALUES (43, 'danielok', '2667272d37414e97c6c30ad61b331f545b30caf1', 0, '375...', NULL, NULL, 116, 1, 1, '08784652438', '7433265', 6, NULL, 4, 1, '63922_320417701394284_1293122904_a.jpg', '43', 116);
+INSERT INTO usuario VALUES (33, 'jabulane', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 76, 1, 1, '08784652438', '9879879879', 6, NULL, 2, 1, NULL, '', NULL);
+INSERT INTO usuario VALUES (30, 'testando', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 71, 1, 1, '08784652438', '9879879879', 6, NULL, 2, 1, NULL, '', NULL);
+INSERT INTO usuario VALUES (31, 'testandoo', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 72, 1, 1, '08784652438', '9879879879', 6, NULL, 2, 1, NULL, '', NULL);
+INSERT INTO usuario VALUES (32, 'testandooo', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 73, 1, 1, '08784652438', '9879879879', 6, NULL, 2, 1, NULL, '', NULL);
+INSERT INTO usuario VALUES (29, 'teste', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 70, 1, 1, '08784652438', '787687', 6, NULL, 2, 1, NULL, '', NULL);
+INSERT INTO usuario VALUES (26, 'gerente', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 1, '', NULL, NULL, 66, 1, 1, '', '', 7, NULL, 1, 1, 'Penguins.jpg', '26', NULL);
+INSERT INTO usuario VALUES (27, 'usuario', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 1, '', NULL, NULL, 68, 1, 1, '', '', 8, NULL, 2, 0, 'Jellyfish.jpg', '27', NULL);
+INSERT INTO usuario VALUES (28, 'emanoel', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 1, '', NULL, NULL, 67, 1, 1, '', '', 6, NULL, 3, 0, 'Tulips.jpg', '28', 121);
+INSERT INTO usuario VALUES (40, 'gasgdjhags', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 107, 1, 1, '12312312', '312312', 6, NULL, 2, 1, NULL, '', 107);
+INSERT INTO usuario VALUES (41, 'uahsuahsu', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 108, 1, 1, '12312312', '312312', 6, NULL, 2, 1, NULL, '', 108);
+INSERT INTO usuario VALUES (42, 'dasdasdasd', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 109, 1, 1, '12312312', '312312', 6, NULL, 2, 1, NULL, '', 109);
+INSERT INTO usuario VALUES (34, 'aiusdiuads', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 75, 1, 1, '123123', '1231231', 6, NULL, 1, 1, NULL, '', NULL);
+INSERT INTO usuario VALUES (38, 'testezinho', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 105, 1, 1, '987987987', 'i9879879', 7, NULL, 2, 1, NULL, '', 105);
+INSERT INTO usuario VALUES (37, 'teste', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 0, '', NULL, NULL, 115, 1, 1, '987987987', 'i9879879', 7, NULL, 2, 1, NULL, '', 104);
+INSERT INTO usuario VALUES (25, 'admin', '2b4b67757812b3f81e2b0cb4b203dfd2c7c1a003', 1, '', NULL, NULL, 69, 1, 1, '897987979', '98797987', 11, NULL, 1, 0, 'Koala.jpg', '25', 120);
+
+
+--
+-- TOC entry 2591 (class 0 OID 0)
+-- Dependencies: 209
+-- Name: usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('usuario_id_seq', 45, true);
+
+
+--
+-- TOC entry 2430 (class 0 OID 33343)
+-- Dependencies: 210
+-- Data for Name: vinculo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO vinculo VALUES (1, 'Afiliado', 1, NULL, NULL);
+
+
+--
+-- TOC entry 2592 (class 0 OID 0)
+-- Dependencies: 211
+-- Name: vinculo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('vinculo_id_seq', 1, true);
+
+
+--
+-- TOC entry 2253 (class 2606 OID 33372)
+-- Name: acao_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY acao
+    ADD CONSTRAINT acao_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2255 (class 2606 OID 33374)
+-- Name: acao_plano_acao_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY acao_plano_acao
+    ADD CONSTRAINT acao_plano_acao_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2257 (class 2606 OID 33376)
+-- Name: acos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY acos
+    ADD CONSTRAINT acos_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2310 (class 2606 OID 42005)
+-- Name: anomalia_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY anomalia
+    ADD CONSTRAINT anomalia_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2262 (class 2606 OID 33378)
+-- Name: aros_acos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY aros_acos
+    ADD CONSTRAINT aros_acos_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2259 (class 2606 OID 33380)
+-- Name: aros_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY aros
+    ADD CONSTRAINT aros_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2330 (class 2606 OID 66966)
+-- Name: auditoria_campos_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auditoria_campos
+    ADD CONSTRAINT auditoria_campos_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2328 (class 2606 OID 66950)
+-- Name: auditoria_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY auditoria
+    ADD CONSTRAINT auditoria_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2264 (class 2606 OID 33382)
+-- Name: cargo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY cargo
+    ADD CONSTRAINT cargo_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2266 (class 2606 OID 33384)
+-- Name: comentario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY comentario
+    ADD CONSTRAINT comentario_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2268 (class 2606 OID 33386)
+-- Name: comunicacao_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY comunicacao
+    ADD CONSTRAINT comunicacao_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2270 (class 2606 OID 33388)
+-- Name: departamento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY departamento
+    ADD CONSTRAINT departamento_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2272 (class 2606 OID 33390)
+-- Name: dimensao_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY dimensao
+    ADD CONSTRAINT dimensao_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2274 (class 2606 OID 33392)
+-- Name: empresa_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY empresa
+    ADD CONSTRAINT empresa_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2276 (class 2606 OID 33394)
+-- Name: endereco_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY endereco
+    ADD CONSTRAINT endereco_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2296 (class 2606 OID 33539)
+-- Name: faixa_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY faixa
+    ADD CONSTRAINT faixa_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2278 (class 2606 OID 33396)
+-- Name: grupo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY grupo
+    ADD CONSTRAINT grupo_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2304 (class 2606 OID 33674)
+-- Name: indicador_autorizado_visualizar_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY indicador_autorizado_visualizar
+    ADD CONSTRAINT indicador_autorizado_visualizar_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2306 (class 2606 OID 33762)
+-- Name: indicador_meta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY indicador_meta
+    ADD CONSTRAINT indicador_meta_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2298 (class 2606 OID 33557)
+-- Name: indicador_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY indicador
+    ADD CONSTRAINT indicador_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2308 (class 2606 OID 33775)
+-- Name: indicador_realizado_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY indicador_realizado
+    ADD CONSTRAINT indicador_realizado_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2302 (class 2606 OID 33628)
+-- Name: indicador_responsavel_meta_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY indicador_responsavel_meta
+    ADD CONSTRAINT indicador_responsavel_meta_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2300 (class 2606 OID 33610)
+-- Name: indicador_responsavel_realizado_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY indicador_responsavel_realizado
+    ADD CONSTRAINT indicador_responsavel_realizado_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2280 (class 2606 OID 33398)
+-- Name: objetivo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY objetivo
+    ADD CONSTRAINT objetivo_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2284 (class 2606 OID 33400)
+-- Name: pessoa_comunicacao_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pessoa_comunicacao
+    ADD CONSTRAINT pessoa_comunicacao_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2282 (class 2606 OID 33402)
+-- Name: pessoa_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY pessoa
+    ADD CONSTRAINT pessoa_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2286 (class 2606 OID 33404)
+-- Name: plano_acao_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY plano_acao
+    ADD CONSTRAINT plano_acao_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2288 (class 2606 OID 33406)
+-- Name: plano_acao_projeto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY plano_acao_projeto
+    ADD CONSTRAINT plano_acao_projeto_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2326 (class 2606 OID 58730)
+-- Name: post_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY post
+    ADD CONSTRAINT post_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2314 (class 2606 OID 50345)
+-- Name: procedimento_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY procedimento
+    ADD CONSTRAINT procedimento_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2290 (class 2606 OID 33408)
+-- Name: projeto_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY projeto
+    ADD CONSTRAINT projeto_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2322 (class 2606 OID 50438)
+-- Name: reuniao_conhecedor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY reuniao_conhecedor
+    ADD CONSTRAINT reuniao_conhecedor_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2324 (class 2606 OID 50457)
+-- Name: reuniao_email_externo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY reuniao_email_externo
+    ADD CONSTRAINT reuniao_email_externo_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2320 (class 2606 OID 50420)
+-- Name: reuniao_participante_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY reuniao_participante
+    ADD CONSTRAINT reuniao_participante_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2318 (class 2606 OID 50407)
+-- Name: reuniao_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY reuniao
+    ADD CONSTRAINT reuniao_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2312 (class 2606 OID 50266)
+-- Name: setor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY setor
+    ADD CONSTRAINT setor_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2316 (class 2606 OID 50376)
+-- Name: terefa_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tarefa
+    ADD CONSTRAINT terefa_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2292 (class 2606 OID 33410)
+-- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT usuario_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2294 (class 2606 OID 33412)
+-- Name: vinculo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY vinculo
+    ADD CONSTRAINT vinculo_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 2260 (class 1259 OID 33413)
+-- Name: aro_aco_key; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE UNIQUE INDEX aro_aco_key ON aros_acos USING btree (aro_id, aco_id);
+
+
+--
+-- TOC entry 2331 (class 2606 OID 66910)
+-- Name: acao_acao_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY acao
+    ADD CONSTRAINT acao_acao_id_fkey FOREIGN KEY (acao_id) REFERENCES acao(id);
+
+
+--
+-- TOC entry 2332 (class 2606 OID 66915)
+-- Name: acao_anomalia_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY acao
+    ADD CONSTRAINT acao_anomalia_id_fkey FOREIGN KEY (anomalia_id) REFERENCES anomalia(id);
+
+
+--
+-- TOC entry 2333 (class 2606 OID 66920)
+-- Name: acao_objetivo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY acao
+    ADD CONSTRAINT acao_objetivo_id_fkey FOREIGN KEY (objetivo_id) REFERENCES objetivo(id);
+
+
+--
+-- TOC entry 2337 (class 2606 OID 33419)
+-- Name: acao_plano_acao_acao_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY acao_plano_acao
+    ADD CONSTRAINT acao_plano_acao_acao_id_fkey FOREIGN KEY (acao_id) REFERENCES acao(id);
+
+
+--
+-- TOC entry 2338 (class 2606 OID 33424)
+-- Name: acao_plano_acao_plano_acao_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY acao_plano_acao
+    ADD CONSTRAINT acao_plano_acao_plano_acao_id_fkey FOREIGN KEY (plano_acao_id) REFERENCES plano_acao(id);
+
+
+--
+-- TOC entry 2336 (class 2606 OID 66935)
+-- Name: acao_projeto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY acao
+    ADD CONSTRAINT acao_projeto_id_fkey FOREIGN KEY (projeto_id) REFERENCES projeto(id) DEFERRABLE;
+
+
+--
+-- TOC entry 2334 (class 2606 OID 66925)
+-- Name: acao_responsavel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY acao
+    ADD CONSTRAINT acao_responsavel_id_fkey FOREIGN KEY (responsavel_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2335 (class 2606 OID 66930)
+-- Name: acao_supervisor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY acao
+    ADD CONSTRAINT acao_supervisor_id_fkey FOREIGN KEY (supervisor_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2371 (class 2606 OID 50228)
+-- Name: anomalia_indicador_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY anomalia
+    ADD CONSTRAINT anomalia_indicador_id_fkey FOREIGN KEY (indicador_id) REFERENCES indicador(id);
+
+
+--
+-- TOC entry 2387 (class 2606 OID 67027)
+-- Name: auditoria_campos_auditoria_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auditoria_campos
+    ADD CONSTRAINT auditoria_campos_auditoria_id_fkey FOREIGN KEY (auditoria_id) REFERENCES auditoria(id);
+
+
+--
+-- TOC entry 2386 (class 2606 OID 75259)
+-- Name: auditoria_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY auditoria
+    ADD CONSTRAINT auditoria_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2339 (class 2606 OID 33439)
+-- Name: comentario_acao_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comentario
+    ADD CONSTRAINT comentario_acao_id_fkey FOREIGN KEY (acao_id) REFERENCES acao(id);
+
+
+--
+-- TOC entry 2340 (class 2606 OID 33444)
+-- Name: comentario_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY comentario
+    ADD CONSTRAINT comentario_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2341 (class 2606 OID 33449)
+-- Name: dimensao_empresa_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY dimensao
+    ADD CONSTRAINT dimensao_empresa_id_fkey FOREIGN KEY (empresa_id) REFERENCES empresa(id);
+
+
+--
+-- TOC entry 2342 (class 2606 OID 33454)
+-- Name: empresa_empresa_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY empresa
+    ADD CONSTRAINT empresa_empresa_id_fkey FOREIGN KEY (empresa_id) REFERENCES empresa(id);
+
+
+--
+-- TOC entry 2343 (class 2606 OID 33459)
+-- Name: empresa_pessoa_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY empresa
+    ADD CONSTRAINT empresa_pessoa_id_fkey FOREIGN KEY (pessoa_id) REFERENCES pessoa(id);
+
+
+--
+-- TOC entry 2368 (class 2606 OID 33690)
+-- Name: indicador_autorizado_visualizar_indicador_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador_autorizado_visualizar
+    ADD CONSTRAINT indicador_autorizado_visualizar_indicador_id_fkey FOREIGN KEY (indicador_id) REFERENCES indicador(id);
+
+
+--
+-- TOC entry 2367 (class 2606 OID 33685)
+-- Name: indicador_autorizado_visualizar_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador_autorizado_visualizar
+    ADD CONSTRAINT indicador_autorizado_visualizar_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2359 (class 2606 OID 33735)
+-- Name: indicador_faixa_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador
+    ADD CONSTRAINT indicador_faixa_id_fkey FOREIGN KEY (faixa_id) REFERENCES faixa(id);
+
+
+--
+-- TOC entry 2360 (class 2606 OID 33740)
+-- Name: indicador_indicador_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador
+    ADD CONSTRAINT indicador_indicador_id_fkey FOREIGN KEY (indicador_id) REFERENCES indicador(id);
+
+
+--
+-- TOC entry 2369 (class 2606 OID 41970)
+-- Name: indicador_meta_indicador_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador_meta
+    ADD CONSTRAINT indicador_meta_indicador_id_fkey FOREIGN KEY (indicador_id) REFERENCES indicador(id);
+
+
+--
+-- TOC entry 2361 (class 2606 OID 33745)
+-- Name: indicador_objetivo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador
+    ADD CONSTRAINT indicador_objetivo_id_fkey FOREIGN KEY (objetivo_id) REFERENCES objetivo(id);
+
+
+--
+-- TOC entry 2370 (class 2606 OID 41978)
+-- Name: indicador_realizado_indicador_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador_realizado
+    ADD CONSTRAINT indicador_realizado_indicador_id_fkey FOREIGN KEY (indicador_id) REFERENCES indicador(id);
+
+
+--
+-- TOC entry 2366 (class 2606 OID 33634)
+-- Name: indicador_responsavel_meta_indicador_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador_responsavel_meta
+    ADD CONSTRAINT indicador_responsavel_meta_indicador_id_fkey FOREIGN KEY (indicador_id) REFERENCES indicador(id);
+
+
+--
+-- TOC entry 2365 (class 2606 OID 33629)
+-- Name: indicador_responsavel_meta_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador_responsavel_meta
+    ADD CONSTRAINT indicador_responsavel_meta_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2364 (class 2606 OID 33616)
+-- Name: indicador_responsavel_realizado_indicador_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador_responsavel_realizado
+    ADD CONSTRAINT indicador_responsavel_realizado_indicador_id_fkey FOREIGN KEY (indicador_id) REFERENCES indicador(id);
+
+
+--
+-- TOC entry 2363 (class 2606 OID 33611)
+-- Name: indicador_responsavel_realizado_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador_responsavel_realizado
+    ADD CONSTRAINT indicador_responsavel_realizado_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2362 (class 2606 OID 33750)
+-- Name: indicador_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicador
+    ADD CONSTRAINT indicador_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2344 (class 2606 OID 41957)
+-- Name: objetivo_dimensao_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY objetivo
+    ADD CONSTRAINT objetivo_dimensao_id_fkey FOREIGN KEY (dimensao_id) REFERENCES dimensao(id);
+
+
+--
+-- TOC entry 2345 (class 2606 OID 41962)
+-- Name: objetivo_objetivo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY objetivo
+    ADD CONSTRAINT objetivo_objetivo_id_fkey FOREIGN KEY (objetivo_id) REFERENCES objetivo(id);
+
+
+--
+-- TOC entry 2346 (class 2606 OID 33469)
+-- Name: pessoa_comunicacao_comunicacao_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pessoa_comunicacao
+    ADD CONSTRAINT pessoa_comunicacao_comunicacao_id_fkey FOREIGN KEY (comunicacao_id) REFERENCES comunicacao(id);
+
+
+--
+-- TOC entry 2347 (class 2606 OID 33474)
+-- Name: pessoa_comunicacao_pessoa_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pessoa_comunicacao
+    ADD CONSTRAINT pessoa_comunicacao_pessoa_id_fkey FOREIGN KEY (pessoa_id) REFERENCES pessoa(id);
+
+
+--
+-- TOC entry 2348 (class 2606 OID 33484)
+-- Name: plano_acao_objetivo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY plano_acao
+    ADD CONSTRAINT plano_acao_objetivo_id_fkey FOREIGN KEY (objetivo_id) REFERENCES objetivo(id);
+
+
+--
+-- TOC entry 2349 (class 2606 OID 33489)
+-- Name: plano_acao_projeto_plano_acao_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY plano_acao_projeto
+    ADD CONSTRAINT plano_acao_projeto_plano_acao_id_fkey FOREIGN KEY (plano_acao_id) REFERENCES plano_acao(id);
+
+
+--
+-- TOC entry 2350 (class 2606 OID 33494)
+-- Name: plano_acao_projeto_projeto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY plano_acao_projeto
+    ADD CONSTRAINT plano_acao_projeto_projeto_id_fkey FOREIGN KEY (projeto_id) REFERENCES projeto(id);
+
+
+--
+-- TOC entry 2383 (class 2606 OID 58766)
+-- Name: post_acao_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY post
+    ADD CONSTRAINT post_acao_id_fkey FOREIGN KEY (acao_id) REFERENCES acao(id);
+
+
+--
+-- TOC entry 2384 (class 2606 OID 58771)
+-- Name: post_post_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY post
+    ADD CONSTRAINT post_post_id_fkey FOREIGN KEY (post_id) REFERENCES post(id);
+
+
+--
+-- TOC entry 2385 (class 2606 OID 58776)
+-- Name: post_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY post
+    ADD CONSTRAINT post_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2372 (class 2606 OID 50359)
+-- Name: procedimento_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY procedimento
+    ADD CONSTRAINT procedimento_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2351 (class 2606 OID 33499)
+-- Name: projeto_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY projeto
+    ADD CONSTRAINT projeto_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2380 (class 2606 OID 50486)
+-- Name: reuniao_conhecedor_reuniao_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reuniao_conhecedor
+    ADD CONSTRAINT reuniao_conhecedor_reuniao_id_fkey FOREIGN KEY (reuniao_id) REFERENCES reuniao(id);
+
+
+--
+-- TOC entry 2381 (class 2606 OID 50491)
+-- Name: reuniao_conhecedor_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reuniao_conhecedor
+    ADD CONSTRAINT reuniao_conhecedor_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2382 (class 2606 OID 50458)
+-- Name: reuniao_email_externo_reuniao_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reuniao_email_externo
+    ADD CONSTRAINT reuniao_email_externo_reuniao_id_fkey FOREIGN KEY (reuniao_id) REFERENCES reuniao(id);
+
+
+--
+-- TOC entry 2378 (class 2606 OID 50476)
+-- Name: reuniao_participante_reuniao_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reuniao_participante
+    ADD CONSTRAINT reuniao_participante_reuniao_id_fkey FOREIGN KEY (reuniao_id) REFERENCES reuniao(id);
+
+
+--
+-- TOC entry 2379 (class 2606 OID 50481)
+-- Name: reuniao_participante_usuario_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reuniao_participante
+    ADD CONSTRAINT reuniao_participante_usuario_id_fkey FOREIGN KEY (usuario_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2377 (class 2606 OID 50506)
+-- Name: reuniao_projeto_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reuniao
+    ADD CONSTRAINT reuniao_projeto_id_fkey FOREIGN KEY (projeto_id) REFERENCES projeto(id);
+
+
+--
+-- TOC entry 2376 (class 2606 OID 76604)
+-- Name: tarefa_acao_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tarefa
+    ADD CONSTRAINT tarefa_acao_id_fkey FOREIGN KEY (acao_id) REFERENCES acao(id);
+
+
+--
+-- TOC entry 2373 (class 2606 OID 76589)
+-- Name: tarefa_reuniao_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tarefa
+    ADD CONSTRAINT tarefa_reuniao_id_fkey FOREIGN KEY (reuniao_id) REFERENCES reuniao(id);
+
+
+--
+-- TOC entry 2374 (class 2606 OID 76594)
+-- Name: terefa_responsavel_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tarefa
+    ADD CONSTRAINT terefa_responsavel_id_fkey FOREIGN KEY (responsavel_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2375 (class 2606 OID 76599)
+-- Name: terefa_supervisor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tarefa
+    ADD CONSTRAINT terefa_supervisor_id_fkey FOREIGN KEY (supervisor_id) REFERENCES usuario(id);
+
+
+--
+-- TOC entry 2352 (class 2606 OID 75219)
+-- Name: usuario_cargo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT usuario_cargo_id_fkey FOREIGN KEY (cargo_id) REFERENCES cargo(id);
+
+
+--
+-- TOC entry 2353 (class 2606 OID 75224)
+-- Name: usuario_departamento_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT usuario_departamento_id_fkey FOREIGN KEY (departamento_id) REFERENCES departamento(id);
+
+
+--
+-- TOC entry 2354 (class 2606 OID 75229)
+-- Name: usuario_endereco_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT usuario_endereco_id_fkey FOREIGN KEY (endereco_id) REFERENCES endereco(id);
+
+
+--
+-- TOC entry 2355 (class 2606 OID 75234)
+-- Name: usuario_grupo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT usuario_grupo_id_fkey FOREIGN KEY (grupo_id) REFERENCES grupo(id);
+
+
+--
+-- TOC entry 2356 (class 2606 OID 75239)
+-- Name: usuario_pessoa_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT usuario_pessoa_id_fkey FOREIGN KEY (pessoa_id) REFERENCES pessoa(id);
+
+
+--
+-- TOC entry 2357 (class 2606 OID 75244)
+-- Name: usuario_setor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT usuario_setor_id_fkey FOREIGN KEY (setor_id) REFERENCES setor(id);
+
+
+--
+-- TOC entry 2358 (class 2606 OID 75249)
+-- Name: usuario_vinculo_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT usuario_vinculo_id_fkey FOREIGN KEY (vinculo_id) REFERENCES vinculo(id);
+
+
+--
+-- TOC entry 2474 (class 0 OID 0)
+-- Dependencies: 6
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- TOC entry 2479 (class 0 OID 0)
+-- Dependencies: 227
+-- Name: anomalia; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE anomalia FROM PUBLIC;
+REVOKE ALL ON TABLE anomalia FROM postgres;
+GRANT ALL ON TABLE anomalia TO postgres;
+GRANT ALL ON TABLE anomalia TO PUBLIC;
+
+
+--
+-- TOC entry 2481 (class 0 OID 0)
+-- Dependencies: 226
+-- Name: anomalia_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE anomalia_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE anomalia_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE anomalia_id_seq TO postgres;
+GRANT ALL ON SEQUENCE anomalia_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2484 (class 0 OID 0)
+-- Dependencies: 245
+-- Name: auditoria; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE auditoria FROM PUBLIC;
+REVOKE ALL ON TABLE auditoria FROM postgres;
+GRANT ALL ON TABLE auditoria TO postgres;
+GRANT ALL ON TABLE auditoria TO PUBLIC;
+
+
+--
+-- TOC entry 2485 (class 0 OID 0)
+-- Dependencies: 247
+-- Name: auditoria_campos; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE auditoria_campos FROM PUBLIC;
+REVOKE ALL ON TABLE auditoria_campos FROM postgres;
+GRANT ALL ON TABLE auditoria_campos TO postgres;
+GRANT ALL ON TABLE auditoria_campos TO PUBLIC;
+
+
+--
+-- TOC entry 2487 (class 0 OID 0)
+-- Dependencies: 246
+-- Name: auditoria_campos_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE auditoria_campos_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE auditoria_campos_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE auditoria_campos_id_seq TO postgres;
+GRANT ALL ON SEQUENCE auditoria_campos_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2489 (class 0 OID 0)
+-- Dependencies: 244
+-- Name: auditoria_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE auditoria_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE auditoria_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE auditoria_id_seq TO postgres;
+GRANT ALL ON SEQUENCE auditoria_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2497 (class 0 OID 0)
+-- Dependencies: 213
+-- Name: faixa; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE faixa FROM PUBLIC;
+REVOKE ALL ON TABLE faixa FROM postgres;
+GRANT ALL ON TABLE faixa TO postgres;
+GRANT ALL ON TABLE faixa TO PUBLIC;
+
+
+--
+-- TOC entry 2499 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: faixa_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE faixa_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE faixa_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE faixa_id_seq TO postgres;
+GRANT ALL ON SEQUENCE faixa_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2501 (class 0 OID 0)
+-- Dependencies: 215
+-- Name: indicador; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE indicador FROM PUBLIC;
+REVOKE ALL ON TABLE indicador FROM postgres;
+GRANT ALL ON TABLE indicador TO postgres;
+GRANT ALL ON TABLE indicador TO PUBLIC;
+
+
+--
+-- TOC entry 2502 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: indicador_autorizado_visualizar; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE indicador_autorizado_visualizar FROM PUBLIC;
+REVOKE ALL ON TABLE indicador_autorizado_visualizar FROM postgres;
+GRANT ALL ON TABLE indicador_autorizado_visualizar TO postgres;
+GRANT ALL ON TABLE indicador_autorizado_visualizar TO PUBLIC;
+
+
+--
+-- TOC entry 2504 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: indicador_autorizado_visualizar_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE indicador_autorizado_visualizar_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE indicador_autorizado_visualizar_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE indicador_autorizado_visualizar_id_seq TO postgres;
+GRANT ALL ON SEQUENCE indicador_autorizado_visualizar_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2506 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: indicador_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE indicador_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE indicador_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE indicador_id_seq TO postgres;
+GRANT ALL ON SEQUENCE indicador_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2507 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: indicador_meta; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE indicador_meta FROM PUBLIC;
+REVOKE ALL ON TABLE indicador_meta FROM postgres;
+GRANT ALL ON TABLE indicador_meta TO postgres;
+GRANT ALL ON TABLE indicador_meta TO PUBLIC;
+
+
+--
+-- TOC entry 2509 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: indicador_meta_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE indicador_meta_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE indicador_meta_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE indicador_meta_id_seq TO postgres;
+GRANT ALL ON SEQUENCE indicador_meta_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2510 (class 0 OID 0)
+-- Dependencies: 225
+-- Name: indicador_realizado; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE indicador_realizado FROM PUBLIC;
+REVOKE ALL ON TABLE indicador_realizado FROM postgres;
+GRANT ALL ON TABLE indicador_realizado TO postgres;
+GRANT ALL ON TABLE indicador_realizado TO PUBLIC;
+
+
+--
+-- TOC entry 2512 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: indicador_realizado_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE indicador_realizado_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE indicador_realizado_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE indicador_realizado_id_seq TO postgres;
+GRANT ALL ON SEQUENCE indicador_realizado_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2514 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: indicador_responsavel_meta; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE indicador_responsavel_meta FROM PUBLIC;
+REVOKE ALL ON TABLE indicador_responsavel_meta FROM postgres;
+GRANT ALL ON TABLE indicador_responsavel_meta TO postgres;
+GRANT ALL ON TABLE indicador_responsavel_meta TO PUBLIC;
+
+
+--
+-- TOC entry 2516 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: indicador_responsavel_meta_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE indicador_responsavel_meta_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE indicador_responsavel_meta_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE indicador_responsavel_meta_id_seq TO postgres;
+GRANT ALL ON SEQUENCE indicador_responsavel_meta_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2517 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: indicador_responsavel_realizado; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE indicador_responsavel_realizado FROM PUBLIC;
+REVOKE ALL ON TABLE indicador_responsavel_realizado FROM postgres;
+GRANT ALL ON TABLE indicador_responsavel_realizado TO postgres;
+GRANT ALL ON TABLE indicador_responsavel_realizado TO PUBLIC;
+
+
+--
+-- TOC entry 2519 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: indicador_responsavel_realizado_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE indicador_responsavel_realizado_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE indicador_responsavel_realizado_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE indicador_responsavel_realizado_id_seq TO postgres;
+GRANT ALL ON SEQUENCE indicador_responsavel_realizado_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2526 (class 0 OID 0)
+-- Dependencies: 243
+-- Name: post; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE post FROM PUBLIC;
+REVOKE ALL ON TABLE post FROM postgres;
+GRANT ALL ON TABLE post TO postgres;
+GRANT ALL ON TABLE post TO PUBLIC;
+
+
+--
+-- TOC entry 2528 (class 0 OID 0)
+-- Dependencies: 242
+-- Name: post_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE post_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE post_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE post_id_seq TO postgres;
+GRANT ALL ON SEQUENCE post_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2529 (class 0 OID 0)
+-- Dependencies: 231
+-- Name: procedimento; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE procedimento FROM PUBLIC;
+REVOKE ALL ON TABLE procedimento FROM postgres;
+GRANT ALL ON TABLE procedimento TO postgres;
+GRANT ALL ON TABLE procedimento TO PUBLIC;
+
+
+--
+-- TOC entry 2531 (class 0 OID 0)
+-- Dependencies: 230
+-- Name: procedimento_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE procedimento_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE procedimento_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE procedimento_id_seq TO postgres;
+GRANT ALL ON SEQUENCE procedimento_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2533 (class 0 OID 0)
+-- Dependencies: 235
+-- Name: reuniao; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE reuniao FROM PUBLIC;
+REVOKE ALL ON TABLE reuniao FROM postgres;
+GRANT ALL ON TABLE reuniao TO postgres;
+GRANT ALL ON TABLE reuniao TO PUBLIC;
+
+
+--
+-- TOC entry 2534 (class 0 OID 0)
+-- Dependencies: 239
+-- Name: reuniao_conhecedor; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE reuniao_conhecedor FROM PUBLIC;
+REVOKE ALL ON TABLE reuniao_conhecedor FROM postgres;
+GRANT ALL ON TABLE reuniao_conhecedor TO postgres;
+GRANT ALL ON TABLE reuniao_conhecedor TO PUBLIC;
+
+
+--
+-- TOC entry 2536 (class 0 OID 0)
+-- Dependencies: 238
+-- Name: reuniao_conhecedor_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE reuniao_conhecedor_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE reuniao_conhecedor_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE reuniao_conhecedor_id_seq TO postgres;
+GRANT ALL ON SEQUENCE reuniao_conhecedor_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2537 (class 0 OID 0)
+-- Dependencies: 241
+-- Name: reuniao_email_externo; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE reuniao_email_externo FROM PUBLIC;
+REVOKE ALL ON TABLE reuniao_email_externo FROM postgres;
+GRANT ALL ON TABLE reuniao_email_externo TO postgres;
+GRANT ALL ON TABLE reuniao_email_externo TO PUBLIC;
+
+
+--
+-- TOC entry 2539 (class 0 OID 0)
+-- Dependencies: 240
+-- Name: reuniao_email_externo_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE reuniao_email_externo_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE reuniao_email_externo_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE reuniao_email_externo_id_seq TO postgres;
+GRANT ALL ON SEQUENCE reuniao_email_externo_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2541 (class 0 OID 0)
+-- Dependencies: 234
+-- Name: reuniao_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE reuniao_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE reuniao_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE reuniao_id_seq TO postgres;
+GRANT ALL ON SEQUENCE reuniao_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2542 (class 0 OID 0)
+-- Dependencies: 237
+-- Name: reuniao_participante; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE reuniao_participante FROM PUBLIC;
+REVOKE ALL ON TABLE reuniao_participante FROM postgres;
+GRANT ALL ON TABLE reuniao_participante TO postgres;
+GRANT ALL ON TABLE reuniao_participante TO PUBLIC;
+
+
+--
+-- TOC entry 2544 (class 0 OID 0)
+-- Dependencies: 236
+-- Name: reuniao_participante_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE reuniao_participante_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE reuniao_participante_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE reuniao_participante_id_seq TO postgres;
+GRANT ALL ON SEQUENCE reuniao_participante_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2545 (class 0 OID 0)
+-- Dependencies: 229
+-- Name: setor; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE setor FROM PUBLIC;
+REVOKE ALL ON TABLE setor FROM postgres;
+GRANT ALL ON TABLE setor TO postgres;
+GRANT ALL ON TABLE setor TO PUBLIC;
+
+
+--
+-- TOC entry 2547 (class 0 OID 0)
+-- Dependencies: 228
+-- Name: setor_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE setor_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE setor_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE setor_id_seq TO postgres;
+GRANT ALL ON SEQUENCE setor_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 2548 (class 0 OID 0)
+-- Dependencies: 233
+-- Name: tarefa; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE tarefa FROM PUBLIC;
+REVOKE ALL ON TABLE tarefa FROM postgres;
+GRANT ALL ON TABLE tarefa TO postgres;
+GRANT ALL ON TABLE tarefa TO PUBLIC;
+
+
+--
+-- TOC entry 2550 (class 0 OID 0)
+-- Dependencies: 232
+-- Name: terefa_id_seq; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON SEQUENCE terefa_id_seq FROM PUBLIC;
+REVOKE ALL ON SEQUENCE terefa_id_seq FROM postgres;
+GRANT ALL ON SEQUENCE terefa_id_seq TO postgres;
+GRANT ALL ON SEQUENCE terefa_id_seq TO PUBLIC;
+
+
+--
+-- TOC entry 1735 (class 826 OID 33531)
+-- Name: DEFAULT PRIVILEGES FOR SEQUENCES; Type: DEFAULT ACL; Schema: -; Owner: postgres
+--
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres REVOKE ALL ON SEQUENCES  FROM PUBLIC;
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres REVOKE ALL ON SEQUENCES  FROM postgres;
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT ALL ON SEQUENCES  TO postgres;
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT ALL ON SEQUENCES  TO PUBLIC;
+
+
+--
+-- TOC entry 1734 (class 826 OID 33530)
+-- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: -; Owner: postgres
+--
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres REVOKE ALL ON TABLES  FROM PUBLIC;
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres REVOKE ALL ON TABLES  FROM postgres;
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT ALL ON TABLES  TO postgres;
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT ALL ON TABLES  TO PUBLIC;
+
+
+-- Completed on 2014-01-24 21:21:43
+
+--
+-- PostgreSQL database dump complete
+--
+

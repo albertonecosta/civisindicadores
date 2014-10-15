@@ -1,0 +1,81 @@
+@import 'base.less';
+// ==========================================================================
+//   jQuery Ui Theme Smoothness
+// ==========================================================================
+
+.ui-dialog{
+  .box-shadow(0 0 5px #ccc);
+
+  .ui-dialog-titlebar-close{
+    .transition(none);
+  }
+
+  .ui-dialog-buttonpane{
+    margin: 0;
+    border-color:#dfdfdf;
+  }
+
+  p{
+    margin:10px 0 0 0;
+    font-size:14px;
+  }
+}
+
+.ui-button-text-only .ui-button-text{
+  padding: 0;
+  font-size:13px;
+}
+
+.ui-corner-all{
+  .border-radius(3px);
+}
+.ui-widget{
+  font-family:inherit;
+  font-size:0.875em;
+}
+.ui-widget-content{
+  //color:@cor-texto;
+}
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button{
+  font-size:1em;
+  //background:@background-input;
+  //font-family: @font-normal;
+  //padding:@padding-input;
+  //border: @borda-input;
+}
+.ui-spinner{
+  border:0;
+  overflow:auto;
+  padding-right:16px;
+  background: none;
+}
+.ui-spinner a.ui-spinner-button{
+  border:1px solid #e9e9e9;
+}
+.ui-spinner-input{
+  margin:0;
+}
+.ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled {
+  opacity: 0.55;
+  filter: Alpha(Opacity=55);
+  background-image: none;
+}
+.ui-menu .ui-menu-item a{
+  font-size:1em;
+  //color: @cor-texto;
+}
+.ui-datepicker-trigger{
+  padding:6px;
+  margin-left: 2px;
+}
+.ui-datepicker{
+  font-size:0.8125em;
+  .ui-datepicker-header{
+    a{
+      .transition(none);
+    }
+  }
+  select{
+    padding:3px;
+  }
+}
