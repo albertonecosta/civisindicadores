@@ -10,75 +10,62 @@ App::uses('CakeEmail', 'Network/Email');
  */
 class AcaoController extends AppController {
 	
+	/**
+	 * (non-PHPdoc)
+	 * @see AppController::beforeFilter()
+	 */
 	public function beforeFilter(){
 		parent::beforeFilter();
-    	$this->Auth->allowedActions = array('ajaxAdicionar', "ajaxAdicionarComObjetivo", "ajaxAdicionarComProjeto", "visualizarTodosResponsavel", "visualizarTodosSupervisor");
 	}
 
-/**
- * index method
- *
- * @return void
- */
+	/**
+	 * index method
+	 *
+	 * @return void
+	 */
 	public function index() {
 		
-		$verifica_permissao = $this->Acl->check(array('model' => 'Grupo',
-				'foreign_key' => $_SESSION['Auth']['User']['Grupo']['id']
-		),
-				'Acao/index');
+		$this->FilterResults->addFilters(
+	        array(
+	            'filter1' => array(
+	                'Acao.titulo' => array(
+	                    'operator' => 'ILIKE',
+	        			'explode' => array(
+	        				'character' => ' ',
+	        				'concatenate' => 'OR'
+	        			),
+	                    'value' => array(
+	                        'before' => '%', // opcional
+	                        'after'  => '%'  // opcional
+	                    )
+	                )
+	            )
+	        )
+	    );
 		
-		if($verifica_permissao){
+		$limit = 10;
+		if(count($_POST) > 0){
+			$limit = $_POST['limit'];
+		}		
 		
-			$this->FilterResults->addFilters(
-		        array(
-		            'filter1' => array(
-		                'Acao.titulo' => array(
-		                    'operator' => 'ILIKE',
-		        			'explode' => array(
-		        				'character' => ' ',
-		        				'concatenate' => 'OR'
-		        			),
-		                    'value' => array(
-		                        'before' => '%', // opcional
-		                        'after'  => '%'  // opcional
-		                    )
-		                )
-		            )
-		        )
-		    );
-			
-			$limit = 10;
-			if(count($_POST) > 0){
-				$limit = $_POST['limit'];
-			}		
-			
-		    // Define conditions
-	    	$filtro = $this->FilterResults->getConditions();
-			
-			$this->Acao->recursive = 2;
-			
-			//Usamos o metodo find como alternativa para poder exibir dois blocos de dados, pois o cake não dá suporte para dupla paginação
-			$acoes = $this->Acao->find('all', array('conditions' => array('Acao.status != ' => Util::INATIVO, 'Acao.responsavel_id = ' => $this->Auth->user("id"), isset($filtro[0]) ? $filtro[0]: ""), 'limit' => $limit));
-			$this->set('acoes', $acoes);
-			
-			//Usamos o metodo find como alternativa para poder exibir dois blocos de dados, pois o cake não dá suporte para dupla paginação
-			$acoes2 = $this->Acao->find('all', array('conditions' => array('Acao.status != ' => Util::INATIVO, 'Acao.supervisor_id = ' => $this->Auth->user("id"), isset($filtro[0]) ? $filtro[0]: ""), 'limit' => $limit));
-			$this->set('acoes2', $acoes2);
-	
-			$this->set("limit", $limit);
-			
-		}else{
-			$this->Session->setFlash("Você não tem acesso ao item Ação", 'alert');
-			$this->redirect(array('controller'=> 'aplicacao' ,'action' => 'index'));
-		}
+	    // Define conditions
+    	$filtro = $this->FilterResults->getConditions();
+		$this->Acao->recursive = 2;
+		//Usamos o metodo find como alternativa para poder exibir dois blocos de dados, pois o cake não dá suporte para dupla paginação
+		$acoes = $this->Acao->find('all', array('conditions' => array('Acao.status != ' => Util::INATIVO, 'Acao.responsavel_id = ' => $this->Auth->user("id"), isset($filtro[0]) ? $filtro[0]: ""), 'limit' => $limit));
+		$this->set('acoes', $acoes);
+		//Usamos o metodo find como alternativa para poder exibir dois blocos de dados, pois o cake não dá suporte para dupla paginação
+		$acoes2 = $this->Acao->find('all', array('conditions' => array('Acao.status != ' => Util::INATIVO, 'Acao.supervisor_id = ' => $this->Auth->user("id"), isset($filtro[0]) ? $filtro[0]: ""), 'limit' => $limit));
+		$this->set('acoes2', $acoes2);
+		$this->set("limit", $limit);
 	}
 
-/**
- * ImprimirIndex method
- *
- * @param int $limit
- * @return void
- */
+	/**
+	 * ImprimirIndex method
+	 *
+	 * @param int $limit
+	 * @return void
+	 */
 	public function imprimirIndex($limit = null) {
 		
 		$this->layout = "ajax";
@@ -117,11 +104,11 @@ class AcaoController extends AppController {
 		$this->set("limit", $limit);
 	}
 
-/**
- * visualizarTodosResponsavel method
- *
- * @return void
- */
+	/**
+	 * visualizarTodosResponsavel method
+	 *
+	 * @return void
+	 */
 	public function visualizarTodosResponsavel() {
 		
 		$this->FilterResults->addFilters(
@@ -152,11 +139,11 @@ class AcaoController extends AppController {
 		$this->set('acao', $this->paginate());
 	}
 
-/**
- * imprimirTodosResponsavel method
- *
- * @return void
- */
+	/**
+	 * imprimirTodosResponsavel method
+	 *
+	 * @return void
+	 */
 	public function imprimirTodosResponsavel() {
 		
 		$this->layout = "ajax";
@@ -190,11 +177,11 @@ class AcaoController extends AppController {
 		$this->set('acao', $this->paginate());
 	}
 	
-/**
- * visualizarTodosSupervisor method
- *
- * @return void
- */
+	/**
+	 * visualizarTodosSupervisor method
+	 *
+	 * @return void
+	 */
 	public function visualizarTodosSupervisor() {
 		
 		$this->FilterResults->addFilters(
@@ -226,11 +213,11 @@ class AcaoController extends AppController {
 		$this->set('acao', $this->paginate());
 	}
 	
-/**
- * imprimirTodosSupervisor method
- *
- * @return void
- */
+	/**
+	 * imprimirTodosSupervisor method
+	 *
+	 * @return void
+	 */
 	public function imprimirTodosSupervisor() {
 		
 		$this->layout = "ajax";
@@ -264,130 +251,107 @@ class AcaoController extends AppController {
 		$this->set('acao', $this->paginate());
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param int $id
- * @return void
- */
+	/**
+	 * view method
+	 *
+	 * @throws NotFoundException
+	 * @param int $id
+	 * @return void
+	 */
 	public function visualizar($id = null) {
 		
-		$verifica_permissao = $this->Acl->check(array('model' => 'Grupo',
-				'foreign_key' => $_SESSION['Auth']['User']['Grupo']['id']
-		),
-				'Acao/visualizar');
-		
-		if($verifica_permissao){
-		
-			$this->Acao->id = $id;
-			if (!$this->Acao->exists()) {
-				throw new NotFoundException(__(Util::REGISTRO_NAO_ENCONTRADO));
-			}
-			$this->Acao->recursive = 2;
-			
-			$this->loadModel("Post");
-			$this->Post->recursive = 2;
-			$posts = $this->Post->find('all', array('conditions' => array('Post.status' => Util::ATIVO, 'Post.post_id' => null, 'Post.acao_id' => $id)));
-			/* carregando os dados da pessoa dentro do array do post dos filhos, pois o ORM não conseguiu chegar até esse nível */
-			$this->loadModel('Usuario');
-			foreach($posts as $keyPost=>$post){
-				foreach($post['Filhos'] as $keyFilho=>$filho){
-					$usuario = $this->Usuario->find('first', array('conditions'=>array('Usuario.id'=>$filho['usuario_id'])));
-					$posts[$keyPost]["Filhos"][$keyFilho]["Usuario"]["Pessoa"] = $usuario["Pessoa"];
-				}
-			}
-			$this->set('acao', $this->Acao->read(null, $id));
-			$this->set('posts', $posts);
-			
-				
-			$this->loadModel("Tarefa");
-			$this->Tarefa->recursive = 2;
-			$tarefas = $this->Tarefa->find('all', array('conditions' => array('Tarefa.acao_id' => $id)));
-			$this->set('acao', $this->Acao->read(null, $id));
-			$this->set('tarefas', $tarefas);
-			
-			
-			//Buscamos pelo metodo find('all') para poder buscar pelos campos dos models da relação
-			$usuarios2 = $this->Usuario->find('all', array('conditions' => array('Usuario.status' => Util::ATIVO), 'fields' => array('Usuario.id', 'Pessoa.titulo')));
-			$usuarios = array();
-			foreach($usuarios2 as $usuario){
-				$usuarios[$usuario['Usuario']['id']] = $usuario['Pessoa']['titulo'];
-			}
-			$this->set('usuarios',$usuarios);
-			$status = array(Util::NAO_INICIADO => 'Não Iniciada', Util::EM_ANDAMENTO => 'Em Andamento', Util::AGUARDANDO_OUTRA_PESSOA => 'Aguardando outra pessoa', Util::CONCLUIDO => 'Concluida', Util::CANCELADO => 'Cancelada');
-			$prioridades = array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F');
-			$this->set('status', $status);
-			$this->set('prioridades', $prioridades);
-			$this->set('acao_id', $id);
-		
-		}else{
-			$this->Session->setFlash("Você não tem permissão de visualizar Acao", 'alert');
-			$this->redirect(array('action' => 'index'));
+		$this->Acao->id = $id;
+		if (!$this->Acao->exists()) {
+			throw new NotFoundException(__(Util::REGISTRO_NAO_ENCONTRADO));
 		}
+		$this->Acao->recursive = 2;
+		
+		$this->loadModel("Post");
+		$this->Post->recursive = 2;
+		$posts = $this->Post->find('all', array('conditions' => array('Post.status' => Util::ATIVO, 'Post.post_id' => null, 'Post.acao_id' => $id)));
+		/* carregando os dados da pessoa dentro do array do post dos filhos, pois o ORM não conseguiu chegar até esse nível */
+		$this->loadModel('Usuario');
+		foreach($posts as $keyPost=>$post){
+			foreach($post['Filhos'] as $keyFilho=>$filho){
+				$usuario = $this->Usuario->find('first', array('conditions'=>array('Usuario.id'=>$filho['usuario_id'])));
+				$posts[$keyPost]["Filhos"][$keyFilho]["Usuario"]["Pessoa"] = $usuario["Pessoa"];
+			}
+		}
+		$this->set('acao', $this->Acao->read(null, $id));
+		$this->set('posts', $posts);
+		
+			
+		$this->loadModel("Tarefa");
+		$this->Tarefa->recursive = 2;
+		$tarefas = $this->Tarefa->find('all', array('conditions' => array('Tarefa.acao_id' => $id)));
+		$this->set('acao', $this->Acao->read(null, $id));
+		$this->set('tarefas', $tarefas);
+		
+		
+		//Buscamos pelo metodo find('all') para poder buscar pelos campos dos models da relação
+		$usuarios2 = $this->Usuario->find('all', array('conditions' => array('Usuario.status' => Util::ATIVO), 'fields' => array('Usuario.id', 'Pessoa.titulo')));
+		$usuarios = array();
+		foreach($usuarios2 as $usuario){
+			$usuarios[$usuario['Usuario']['id']] = $usuario['Pessoa']['titulo'];
+		}
+		$this->set('usuarios',$usuarios);
+		$status = array(Util::NAO_INICIADO => 'Não Iniciada', Util::EM_ANDAMENTO => 'Em Andamento', Util::AGUARDANDO_OUTRA_PESSOA => 'Aguardando outra pessoa', Util::CONCLUIDO => 'Concluida', Util::CANCELADO => 'Cancelada');
+		$prioridades = array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F');
+		$this->set('status', $status);
+		$this->set('prioridades', $prioridades);
+		$this->set('acao_id', $id);
 		
 	}
 
-/**
- * add method
- *
- * @return void
- */
+	/**
+	 * add method
+	 *
+	 * @return void
+	 */
 	public function adicionar() {
-		
-		$verifica_permissao = $this->Acl->check(array('model' => 'Grupo',
-				'foreign_key' => $_SESSION['Auth']['User']['Grupo']['id']
-		),
-				'Acao/adicionar');
-		
-		if($verifica_permissao){
-		
-			if ($this->request->is('post')) {
-				$this->Acao->create();
-				if ($this->Acao->save($this->request->data)) {
-					$this->enviarEmails(@$this->Acao->id,$this->request->data,"novo");
-					$this->Audit->salvar($this->request->data, "Acao", array(), "adicionar", true, $this->Acao->id, $this->Auth->user("id"));				
-					$this->Session->setFlash(__(Util::REGISTRO_ADICIONADO_SUCESSO), 'success');
-					$this->redirect(array('action' => 'index'));
-				} else {
-					$this->Session->setFlash(__(Util::REGISTRO_ADICIONADO_FALHA), 'alert');
-				}
+	
+		if ($this->request->is('post')) {
+			$this->Acao->create();
+			if ($this->Acao->save($this->request->data)) {
+				$this->enviarEmails(@$this->Acao->id,$this->request->data,"novo");
+				$this->Audit->salvar($this->request->data, "Acao", array(), "adicionar", true, $this->Acao->id, $this->Auth->user("id"));				
+				$this->Session->setFlash(__(Util::REGISTRO_ADICIONADO_SUCESSO), 'success');
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__(Util::REGISTRO_ADICIONADO_FALHA), 'alert');
 			}
-			
-			$this->loadModel('Usuario');
-			//Buscamos pelo metodo find('all') para poder buscar pelos campos dos models da relação
-			$usuarios2 = $this->Usuario->find('all', array('conditions' => array('Usuario.status' => Util::ATIVO), 'fields' => array('Usuario.id', 'Pessoa.titulo'),'order' => array('Pessoa.titulo')));
-			$usuarios = array();
-			foreach($usuarios2 as $usuario){
-				$usuarios[$usuario['Usuario']['id']] = $usuario['Pessoa']['titulo'];
-			}
-			$this->loadModel('Objetivo');
-			$objetivos = $this->Objetivo->find('list', array('conditions' => array('Objetivo.status' => Util::ATIVO), 'fields' => array('Objetivo.id', 'Objetivo.titulo')));
-			
-			$acoes = $this->Acao->find('list', array('conditions' => array('Acao.status !=' =>Util::INATIVO), 'fields' => array('Acao.id', 'Acao.titulo')));
-			
-			$status = array(Util::NAO_INICIADO => 'Não Iniciada', Util::EM_ANDAMENTO => 'Em Andamento', Util::AGUARDANDO_OUTRA_PESSOA => 'Aguardando outra pessoa', Util::CONCLUIDO => 'Concluida', Util::CANCELADO => 'Cancelada');
-			$prioridades = array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F');
-			$andamento = array('0%' => '0%', '10%' => '10%', '25%' => '25%', '50%' => '50%', '75%' => '75%', '100%' => '100%');;
-			
-			$this->set('usuarios', $usuarios);
-			$this->set('acoes', $acoes);
-			$this->set('objetivos', $objetivos);
-			$this->set('status', $status);
-			$this->set('prioridades', $prioridades);
-			$this->set('andamento', $andamento);
-			
-		}else{
-			$this->Session->setFlash("Você não tem permissão de adicionar Ação", 'alert');
-			$this->redirect(array('action' => 'index'));
 		}
+		
+		$this->loadModel('Usuario');
+		//Buscamos pelo metodo find('all') para poder buscar pelos campos dos models da relação
+		$usuarios2 = $this->Usuario->find('all', array('conditions' => array('Usuario.status' => Util::ATIVO), 'fields' => array('Usuario.id', 'Pessoa.titulo'),'order' => array('Pessoa.titulo')));
+		$usuarios = array();
+		foreach($usuarios2 as $usuario){
+			$usuarios[$usuario['Usuario']['id']] = $usuario['Pessoa']['titulo'];
+		}
+		$this->loadModel('Objetivo');
+		$objetivos = $this->Objetivo->find('list', array('conditions' => array('Objetivo.status' => Util::ATIVO), 'fields' => array('Objetivo.id', 'Objetivo.titulo')));
+		
+		$acoes = $this->Acao->find('list', array('conditions' => array('Acao.status !=' =>Util::INATIVO), 'fields' => array('Acao.id', 'Acao.titulo')));
+		
+		$status = array(Util::NAO_INICIADO => 'Não Iniciada', Util::EM_ANDAMENTO => 'Em Andamento', Util::AGUARDANDO_OUTRA_PESSOA => 'Aguardando outra pessoa', Util::CONCLUIDO => 'Concluida', Util::CANCELADO => 'Cancelada');
+		$prioridades = array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F');
+		$andamento = array('0%' => '0%', '10%' => '10%', '25%' => '25%', '50%' => '50%', '75%' => '75%', '100%' => '100%');;
+		
+		$this->set('usuarios', $usuarios);
+		$this->set('acoes', $acoes);
+		$this->set('objetivos', $objetivos);
+		$this->set('status', $status);
+		$this->set('prioridades', $prioridades);
+		$this->set('andamento', $andamento);
+		
 	}
 
-/**
- * add method
- *
- * @return void
- */
+	/**
+	 * add method
+	 *
+	 * @return void
+	 */
 	public function ajaxAdicionar($idAnomalia) {
 		$this->layout = "ajax";
 		if ($this->request->is('post')) {
@@ -427,11 +391,11 @@ class AcaoController extends AppController {
 		$this->set('andamento', $andamento);
 	}
 
-/**
- * add method
- *
- * @return void
- */
+	/**
+	 * add method
+	 *
+	 * @return void
+	 */
 	public function ajaxAdicionarComProjeto() {
 		$this->layout = "ajax";
 		if ($this->request->is('post')) {
@@ -468,11 +432,11 @@ class AcaoController extends AppController {
 		$this->set('andamento', $andamento);
 	}
 
-/**
- * add method
- *
- * @return void
- */
+	/**
+	 * add method
+	 *
+	 * @return void
+	 */
 	public function ajaxAdicionarComObjetivo() {
 		$this->layout = "ajax";
 		if ($this->request->is('post')) {
@@ -512,113 +476,88 @@ class AcaoController extends AppController {
 		$this->set('andamento', $andamento);
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * edit method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
 	public function editar($id = null) {
 		
-		$verifica_permissao = $this->Acl->check(array('model' => 'Grupo',
-				'foreign_key' => $_SESSION['Auth']['User']['Grupo']['id']
-		),
-				'Acao/editar');
+		$this->Acao->id = $id;
 		
-		if($verifica_permissao){
-		
-			$this->Acao->id = $id;
-			
-			if (!$this->Acao->exists()) {
-				throw new NotFoundException(__(Util::REGISTRO_NAO_ENCONTRADO));
-			}
-			if ($this->request->is('post') || $this->request->is('put')) {
-				
-				if ($this->Acao->save($this->request->data)) {
-					$this->enviarEmails(@$this->Acao->id,$this->request->data,"edição");
-					$this->Audit->salvar($this->request->data, "Acao", array(), "editar", false, $id, $this->Auth->user("id"));				
-					$this->Session->setFlash(__(Util::REGISTRO_EDITADO_SUCESSO), 'success');
-					$this->redirect(array('action' => 'index'));
-				} else {
-					$this->Session->setFlash(__(Util::REGISTRO_EDITADO_FALHA), 'alert');
-				}
-			}		
-			
-			$this->loadModel('Usuario');
-			//Buscamos pelo metodo find('all') para poder buscar pelos campos dos models da relação
-			$usuarios2 = $this->Usuario->find('all', array('conditions' => array('Usuario.status' => Util::ATIVO), 'fields' => array('Usuario.id', 'Pessoa.titulo'),'order' => array('Pessoa.titulo')));
-			$usuarios = array();
-			foreach($usuarios2 as $usuario){
-				$usuarios[$usuario['Usuario']['id']] = $usuario['Pessoa']['titulo'];
-			}
-			$this->loadModel('Objetivo');
-			$objetivos = $this->Objetivo->find('list', array('conditions' => array('Objetivo.status' => Util::ATIVO), 'fields' => array('Objetivo.id', 'Objetivo.titulo')));
-			
-			$this->loadModel('Projeto');
-			$projetos = $this->Projeto->find('list', array('conditions' => array('Projeto.status' => Util::ATIVO), 'fields' => array('Projeto.id', 'Projeto.titulo')));
-			
-			
-			$acoes = $this->Acao->find('list', array('conditions' => array('Acao.status !=' => Util::INATIVO, 'Acao.id !=' => $id), 'fields' => array('Acao.id', 'Acao.titulo')));
-			
-			$status = array(Util::NAO_INICIADO => 'Não Iniciada', Util::EM_ANDAMENTO => 'Em Andamento', Util::AGUARDANDO_OUTRA_PESSOA => 'Aguardando outra pessoa', Util::CONCLUIDO => 'Concluida', Util::CANCELADO => 'Cancelada');
-			$prioridades = array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F');
-			$andamento = array('0%' => '0%', '10%' => '10%', '25%' => '25%', '50%' => '50%', '75%' => '75%', '100%' => '100%');;
-			
-			$this->request->data = $this->Acao->read(null, $id);
-			$this->Audit->setDadosAntes($this->request->data);
-			
-			$this->set('usuarios', $usuarios);
-			$this->set('projetos', $projetos);
-			$this->set('acoes', $acoes);
-			$this->set('objetivos', $objetivos);
-			$this->set('status', $status);
-			$this->set('prioridades', $prioridades);
-			$this->set('andamento', $andamento);
-			
-		}else{
-			$this->Session->setFlash("Você não tem permissão de editar Ação", 'alert');
-			$this->redirect(array('action' => 'index'));
+		if (!$this->Acao->exists()) {
+			throw new NotFoundException(__(Util::REGISTRO_NAO_ENCONTRADO));
 		}
+		if ($this->request->is('post') || $this->request->is('put')) {
+			
+			if ($this->Acao->save($this->request->data)) {
+				$this->enviarEmails(@$this->Acao->id,$this->request->data,"edição");
+				$this->Audit->salvar($this->request->data, "Acao", array(), "editar", false, $id, $this->Auth->user("id"));				
+				$this->Session->setFlash(__(Util::REGISTRO_EDITADO_SUCESSO), 'success');
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(__(Util::REGISTRO_EDITADO_FALHA), 'alert');
+			}
+		}		
+		
+		$this->loadModel('Usuario');
+		//Buscamos pelo metodo find('all') para poder buscar pelos campos dos models da relação
+		$usuarios2 = $this->Usuario->find('all', array('conditions' => array('Usuario.status' => Util::ATIVO), 'fields' => array('Usuario.id', 'Pessoa.titulo'),'order' => array('Pessoa.titulo')));
+		$usuarios = array();
+		foreach($usuarios2 as $usuario){
+			$usuarios[$usuario['Usuario']['id']] = $usuario['Pessoa']['titulo'];
+		}
+		$this->loadModel('Objetivo');
+		$objetivos = $this->Objetivo->find('list', array('conditions' => array('Objetivo.status' => Util::ATIVO), 'fields' => array('Objetivo.id', 'Objetivo.titulo')));
+		
+		$this->loadModel('Projeto');
+		$projetos = $this->Projeto->find('list', array('conditions' => array('Projeto.status' => Util::ATIVO), 'fields' => array('Projeto.id', 'Projeto.titulo')));
+		
+		
+		$acoes = $this->Acao->find('list', array('conditions' => array('Acao.status !=' => Util::INATIVO, 'Acao.id !=' => $id), 'fields' => array('Acao.id', 'Acao.titulo')));
+		
+		$status = array(Util::NAO_INICIADO => 'Não Iniciada', Util::EM_ANDAMENTO => 'Em Andamento', Util::AGUARDANDO_OUTRA_PESSOA => 'Aguardando outra pessoa', Util::CONCLUIDO => 'Concluida', Util::CANCELADO => 'Cancelada');
+		$prioridades = array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F');
+		$andamento = array('0%' => '0%', '10%' => '10%', '25%' => '25%', '50%' => '50%', '75%' => '75%', '100%' => '100%');;
+		
+		$this->request->data = $this->Acao->read(null, $id);
+		$this->Audit->setDadosAntes($this->request->data);
+		
+		$this->set('usuarios', $usuarios);
+		$this->set('projetos', $projetos);
+		$this->set('acoes', $acoes);
+		$this->set('objetivos', $objetivos);
+		$this->set('status', $status);
+		$this->set('prioridades', $prioridades);
+		$this->set('andamento', $andamento);
 		
 	}
 
-/**
- * delete method
- *
- * @throws MethodNotAllowedException
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+	/**
+	 * delete method
+	 *
+	 * @throws MethodNotAllowedException
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
 	public function excluir($id = null) {
-		
-		$verifica_permissao = $this->Acl->check(array('model' => 'Grupo',
-				'foreign_key' => $_SESSION['Auth']['User']['Grupo']['id']
-		),
-				'Acao/excluir');
-		
-		if($verifica_permissao){
-		
-			if (!$this->request->is('post')) {
-				throw new MethodNotAllowedException();
-			}
-			$this->Acao->id = $id;
-			if (!$this->Acao->exists()) {
-				throw new NotFoundException(__(Util::REGISTRO_NAO_ENCONTRADO));
-			}
-			if ($this->Acao->saveField('status', Util::INATIVO)) {
-				$this->Audit->salvar("", "Acao", array(), "excluir", false, $id, $this->Auth->user("id"));
-				$this->Session->setFlash(__(Util::REGISTRO_DELETADO_SUCESSO), 'success');
-				$this->redirect(array('action' => 'index'));
-			}
-			$this->Session->setFlash(__(Util::REGISTRO_DELETADO_FALHA), 'error');
-			$this->redirect(array('action' => 'index'));
-			
-		}else{
-			$this->Session->setFlash("Você não tem permissão de excluir Ação", 'alert');
+		if (!$this->request->is('post')) {
+			throw new MethodNotAllowedException();
+		}
+		$this->Acao->id = $id;
+		if (!$this->Acao->exists()) {
+			throw new NotFoundException(__(Util::REGISTRO_NAO_ENCONTRADO));
+		}
+		if ($this->Acao->saveField('status', Util::INATIVO)) {
+			$this->Audit->salvar("", "Acao", array(), "excluir", false, $id, $this->Auth->user("id"));
+			$this->Session->setFlash(__(Util::REGISTRO_DELETADO_SUCESSO), 'success');
 			$this->redirect(array('action' => 'index'));
 		}
+		$this->Session->setFlash(__(Util::REGISTRO_DELETADO_FALHA), 'error');
+		$this->redirect(array('action' => 'index'));
 	}
 	
 

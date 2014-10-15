@@ -54045,3 +54045,474 @@ DETAIL:  Failing row contains (20, Indicador teste, null, 1, 153, 25, 2, null, 0
 #8 /Users/tulio/Sites/civisdaniel/lib/Cake/Routing/Dispatcher.php(161): Dispatcher->_invoke(Object(IndicadorController), Object(CakeRequest), Object(CakeResponse))
 #9 /Users/tulio/Sites/civisdaniel/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
 #10 {main}
+2014-10-15 11:07:54 Error: [MissingControllerException] Controller class FilesController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:08:30 Error: [MissingPluginException] Plugin  could not be found.
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Filter/AssetDispatcher.php(74): CakePlugin::path('')
+#1 [internal function]: AssetDispatcher->beforeDispatch(Object(CakeEvent))
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Event/CakeEventManager.php(246): call_user_func(Array, Object(CakeEvent))
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(141): CakeEventManager->dispatch(Object(CakeEvent))
+#4 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2014-10-15 11:08:40 Error: Fatal Error (1): Call to a member function check() on a non-object in [/Users/tulio/Sites/civisindicadores/app/Controller/ProjetoController.php, line 23]
+2014-10-15 11:08:40 Error: [FatalErrorException] Call to a member function check() on a non-object
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/Users/tulio/Si...', 23)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 11:08:50 Error: Fatal Error (1): Call to a member function check() on a non-object in [/Users/tulio/Sites/civisindicadores/app/Controller/OrganogramaController.php, line 23]
+2014-10-15 11:08:50 Error: [FatalErrorException] Call to a member function check() on a non-object
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/Users/tulio/Si...', 23)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 11:11:34 Error: [PDOException] SQLSTATE[23502]: Not null violation: 7 ERROR:  null value in column "desdobramento" violates not-null constraint
+DETAIL:  Failing row contains (21, Primeiro indicador, null, 1, 153, 25, 2, null, 0, null, 0, 1, 1, 2014, Recife, null).
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(459): PDOStatement->execute(Array)
+#1 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(425): DboSource->_execute('INSERT INTO "pu...', Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(1007): DboSource->execute('INSERT INTO "pu...')
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Model.php(1734): DboSource->create(Object(Indicador), Array, Array)
+#4 /Users/tulio/Sites/civisindicadores/app/Controller/IndicadorController.php(111): Model->save(Array)
+#5 [internal function]: IndicadorController->adicionar()
+#6 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(485): ReflectionMethod->invokeArgs(Object(IndicadorController), Array)
+#7 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(186): Controller->invokeAction(Object(CakeRequest))
+#8 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(161): Dispatcher->_invoke(Object(IndicadorController), Object(CakeRequest), Object(CakeResponse))
+#9 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2014-10-15 11:13:41 Error: [MissingControllerException] Controller class FilesController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:13:46 Error: [MissingControllerException] Controller class CssController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:14:27 Error: [MissingControllerException] Controller class FilesController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:18:54 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:19:46 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:24:54 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:25:30 Error: Fatal Error (1): Call to a member function check() on a non-object in [/Users/tulio/Sites/civisindicadores/app/Controller/AcaoController.php, line 25]
+2014-10-15 11:25:30 Error: [FatalErrorException] Call to a member function check() on a non-object
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/Users/tulio/Si...', 25)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/Users/tulio/Si...', 25, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/Users/tulio/Si...', 25, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 11:25:32 Error: Fatal Error (1): Call to a member function check() on a non-object in [/Users/tulio/Sites/civisindicadores/app/Controller/FaixaController.php, line 18]
+2014-10-15 11:25:32 Error: [FatalErrorException] Call to a member function check() on a non-object
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/Users/tulio/Si...', 18)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/Users/tulio/Si...', 18, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/Users/tulio/Si...', 18, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 11:25:34 Error: Fatal Error (1): Call to a member function check() on a non-object in [/Users/tulio/Sites/civisindicadores/app/Controller/AnomaliaController.php, line 23]
+2014-10-15 11:25:34 Error: [FatalErrorException] Call to a member function check() on a non-object
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/Users/tulio/Si...', 23)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 11:25:36 Error: Fatal Error (1): Call to a member function check() on a non-object in [/Users/tulio/Sites/civisindicadores/app/Controller/OrganogramaController.php, line 23]
+2014-10-15 11:25:36 Error: [FatalErrorException] Call to a member function check() on a non-object
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/Users/tulio/Si...', 23)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 11:25:44 Error: Fatal Error (1): Call to a member function check() on a non-object in [/Users/tulio/Sites/civisindicadores/app/Controller/ProjetoController.php, line 23]
+2014-10-15 11:25:44 Error: [FatalErrorException] Call to a member function check() on a non-object
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/Users/tulio/Si...', 23)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 11:25:47 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:25:51 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:25:59 Error: [MissingControllerException] Controller class MarcadorController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:26:15 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:26:17 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:26:25 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:26:30 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:30:36 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:38:24 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:38:29 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:38:46 Error: Fatal Error (1): Call to a member function check() on a non-object in [/Users/tulio/Sites/civisindicadores/app/Controller/AcaoController.php, line 25]
+2014-10-15 11:38:46 Error: [FatalErrorException] Call to a member function check() on a non-object
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/Users/tulio/Si...', 25)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/Users/tulio/Si...', 25, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/Users/tulio/Si...', 25, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 11:41:59 Error: [MissingControllerException] Controller class CssController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:42:19 Error: [MissingControllerException] Controller class CssController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:43:27 Error: Fatal Error (1): Call to a member function check() on a non-object in [/Users/tulio/Sites/civisindicadores/app/Controller/FaixaController.php, line 18]
+2014-10-15 11:43:27 Error: [FatalErrorException] Call to a member function check() on a non-object
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/Users/tulio/Si...', 18)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/Users/tulio/Si...', 18, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/Users/tulio/Si...', 18, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 11:48:59 Error: Fatal Error (1): Call to a member function check() on a non-object in [/Users/tulio/Sites/civisindicadores/app/Controller/AnomaliaController.php, line 23]
+2014-10-15 11:48:59 Error: [FatalErrorException] Call to a member function check() on a non-object
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/Users/tulio/Si...', 23)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 11:53:41 Error: [PDOException] SQLSTATE[42703]: Undefined column: 7 ERROR:  column Anomalia.titulo does not exist
+LINE 1: ...omalia"."indicador_id" = "Indicador"."id")  WHERE "Anomalia"...
+                                                             ^
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(459): PDOStatement->execute(Array)
+#1 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(425): DboSource->_execute('SELECT "Anomali...', Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(669): DboSource->execute('SELECT "Anomali...', Array, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(1080): DboSource->fetchAll('SELECT "Anomali...', false)
+#4 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Model.php(2641): DboSource->read(Object(Anomalia), Array)
+#5 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Component/PaginatorComponent.php(173): Model->find('all', Array)
+#6 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(1081): PaginatorComponent->paginate(NULL, Array, Array)
+#7 /Users/tulio/Sites/civisindicadores/app/Controller/AnomaliaController.php(53): Controller->paginate()
+#8 [internal function]: AnomaliaController->index()
+#9 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(485): ReflectionMethod->invokeArgs(Object(AnomaliaController), Array)
+#10 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(186): Controller->invokeAction(Object(CakeRequest))
+#11 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(161): Dispatcher->_invoke(Object(AnomaliaController), Object(CakeRequest), Object(CakeResponse))
+#12 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#13 {main}
+2014-10-15 11:54:16 Error: [PDOException] SQLSTATE[42703]: Undefined column: 7 ERROR:  column Anomalia.titulo does not exist
+LINE 1: ...omalia"."indicador_id" = "Indicador"."id")  WHERE "Anomalia"...
+                                                             ^
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(459): PDOStatement->execute(Array)
+#1 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(425): DboSource->_execute('SELECT "Anomali...', Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(669): DboSource->execute('SELECT "Anomali...', Array, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(1080): DboSource->fetchAll('SELECT "Anomali...', false)
+#4 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Model.php(2641): DboSource->read(Object(Anomalia), Array)
+#5 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Component/PaginatorComponent.php(173): Model->find('all', Array)
+#6 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(1081): PaginatorComponent->paginate(NULL, Array, Array)
+#7 /Users/tulio/Sites/civisindicadores/app/Controller/AnomaliaController.php(53): Controller->paginate()
+#8 [internal function]: AnomaliaController->index()
+#9 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(485): ReflectionMethod->invokeArgs(Object(AnomaliaController), Array)
+#10 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(186): Controller->invokeAction(Object(CakeRequest))
+#11 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(161): Dispatcher->_invoke(Object(AnomaliaController), Object(CakeRequest), Object(CakeResponse))
+#12 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#13 {main}
+2014-10-15 11:54:31 Error: [PDOException] SQLSTATE[42703]: Undefined column: 7 ERROR:  column Anomalia.titulo does not exist
+LINE 1: ...omalia"."indicador_id" = "Indicador"."id")  WHERE "Anomalia"...
+                                                             ^
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(459): PDOStatement->execute(Array)
+#1 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(425): DboSource->_execute('SELECT "Anomali...', Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(669): DboSource->execute('SELECT "Anomali...', Array, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Datasource/DboSource.php(1080): DboSource->fetchAll('SELECT "Anomali...', false)
+#4 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Model.php(2641): DboSource->read(Object(Anomalia), Array)
+#5 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Component/PaginatorComponent.php(173): Model->find('all', Array)
+#6 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(1081): PaginatorComponent->paginate(NULL, Array, Array)
+#7 /Users/tulio/Sites/civisindicadores/app/Controller/AnomaliaController.php(53): Controller->paginate()
+#8 [internal function]: AnomaliaController->index()
+#9 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(485): ReflectionMethod->invokeArgs(Object(AnomaliaController), Array)
+#10 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(186): Controller->invokeAction(Object(CakeRequest))
+#11 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(161): Dispatcher->_invoke(Object(AnomaliaController), Object(CakeRequest), Object(CakeResponse))
+#12 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#13 {main}
+2014-10-15 11:55:58 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:56:41 Error: [MissingControllerException] Controller class CssController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 11:56:58 Error: Fatal Error (1): Call to a member function check() on a non-object in [/Users/tulio/Sites/civisindicadores/app/Controller/ProjetoController.php, line 23]
+2014-10-15 11:56:58 Error: [FatalErrorException] Call to a member function check() on a non-object
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/Users/tulio/Si...', 23)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 12:03:06 Warning: Warning (512): Callback parentNode() not defined in PessoaComunicacao in [/Users/tulio/Sites/civisindicadores/lib/Cake/Model/Behavior/AclBehavior.php, line 65]
+Trace:
+AclBehavior::setup() - CORE/Cake/Model/Behavior/AclBehavior.php, line 65
+BehaviorCollection::load() - CORE/Cake/Model/BehaviorCollection.php, line 148
+BehaviorCollection::init() - CORE/Cake/Model/BehaviorCollection.php, line 68
+Model::__construct() - CORE/Cake/Model/Model.php, line 737
+ReflectionClass::newInstance() - [internal], line ??
+ClassRegistry::init() - CORE/Cake/Utility/ClassRegistry.php, line 156
+Model::_constructLinkedModel() - CORE/Cake/Model/Model.php, line 1020
+Model::__isset() - CORE/Cake/Model/Model.php, line 846
+Model::__get() - CORE/Cake/Model/Model.php, line 876
+DboSource::queryAssociation() - CORE/Cake/Model/Datasource/DboSource.php, line 1282
+DboSource::read() - CORE/Cake/Model/Datasource/DboSource.php, line 1115
+Model::find() - CORE/Cake/Model/Model.php, line 2641
+ProjetoController::visualizar() - APP/Controller/ProjetoController.php, line 204
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 186
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-15 12:03:06 Warning: Warning (2): Division by zero in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 327]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 327
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-15 12:03:06 Warning: Warning (2): Division by zero in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 458]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 458
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-15 12:03:06 Warning: Warning (2): Division by zero in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 470]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 470
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-15 12:03:45 Error: Fatal Error (1): Call to a member function check() on a non-object in [/Users/tulio/Sites/civisindicadores/app/Controller/OrganogramaController.php, line 23]
+2014-10-15 12:03:45 Error: [FatalErrorException] Call to a member function check() on a non-object
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/Users/tulio/Si...', 23)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 12:04:55 Error: [MissingHelperException] Helper class PermissionsHelper could not be found.
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/View/View.php(862): HelperCollection->load('Permissions', Array)
+#1 /Users/tulio/Sites/civisindicadores/lib/Cake/View/View.php(469): View->loadHelpers()
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(956): View->render(NULL, NULL)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(193): Controller->render()
+#4 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(161): Dispatcher->_invoke(Object(UsuarioController), Object(CakeRequest), Object(CakeResponse))
+#5 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2014-10-15 12:05:07 Error: Fatal Error (1): Class 'AppHelper' not found in [/Users/tulio/Sites/civisindicadores/lib/Cake/View/Helper/JsHelper.php, line 34]
+2014-10-15 12:05:07 Error: [FatalErrorException] Class 'AppHelper' not found
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Class 'AppHelpe...', '/Users/tulio/Si...', 34)
+#1 [internal function]: ErrorHandler::handleError(1, 'Class 'AppHelpe...', '/Users/tulio/Si...', 34, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Class 'AppHelpe...', '/Users/tulio/Si...', 34, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 12:05:22 Error: Fatal Error (1): Class 'AppHelper' not found in [/Users/tulio/Sites/civisindicadores/lib/Cake/View/Helper/JsHelper.php, line 34]
+2014-10-15 12:05:22 Error: [FatalErrorException] Class 'AppHelper' not found
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Class 'AppHelpe...', '/Users/tulio/Si...', 34)
+#1 [internal function]: ErrorHandler::handleError(1, 'Class 'AppHelpe...', '/Users/tulio/Si...', 34, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Class 'AppHelpe...', '/Users/tulio/Si...', 34, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 12:07:33 Error: [MissingHelperException] Helper class PermissionsHelper could not be found.
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/View/View.php(862): HelperCollection->load('Permissions', Array)
+#1 /Users/tulio/Sites/civisindicadores/lib/Cake/View/View.php(469): View->loadHelpers()
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(956): View->render(NULL, NULL)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(193): Controller->render()
+#4 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(161): Dispatcher->_invoke(Object(UsuarioController), Object(CakeRequest), Object(CakeResponse))
+#5 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2014-10-15 12:09:03 Error: Fatal Error (1): Call to a member function check() on a non-object in [/Users/tulio/Sites/civisindicadores/app/Controller/OrganogramaController.php, line 23]
+2014-10-15 12:09:03 Error: [FatalErrorException] Call to a member function check() on a non-object
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Error/ErrorHandler.php(161): ErrorHandler::handleFatalError(1, 'Call to a membe...', '/Users/tulio/Si...', 23)
+#1 [internal function]: ErrorHandler::handleError(1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(926): call_user_func('ErrorHandler::h...', 1, 'Call to a membe...', '/Users/tulio/Si...', 23, Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Core/App.php(899): App::_checkFatalError()
+#4 [internal function]: App::shutdown()
+#5 {main}
+2014-10-15 12:09:49 Error: [MissingControllerException] Controller class FilesController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 12:09:58 Error: [MissingControllerException] Controller class FilesController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 12:10:03 Warning: Warning (512): Callback parentNode() not defined in PessoaComunicacao in [/Users/tulio/Sites/civisindicadores/lib/Cake/Model/Behavior/AclBehavior.php, line 65]
+Trace:
+AclBehavior::setup() - CORE/Cake/Model/Behavior/AclBehavior.php, line 65
+BehaviorCollection::load() - CORE/Cake/Model/BehaviorCollection.php, line 148
+BehaviorCollection::init() - CORE/Cake/Model/BehaviorCollection.php, line 68
+Model::__construct() - CORE/Cake/Model/Model.php, line 737
+ReflectionClass::newInstance() - [internal], line ??
+ClassRegistry::init() - CORE/Cake/Utility/ClassRegistry.php, line 156
+Model::_constructLinkedModel() - CORE/Cake/Model/Model.php, line 1020
+Model::__isset() - CORE/Cake/Model/Model.php, line 846
+Model::__get() - CORE/Cake/Model/Model.php, line 876
+DboSource::queryAssociation() - CORE/Cake/Model/Datasource/DboSource.php, line 1282
+DboSource::read() - CORE/Cake/Model/Datasource/DboSource.php, line 1115
+Model::find() - CORE/Cake/Model/Model.php, line 2641
+OrganogramaController::ajaxPainelResumo() - APP/Controller/OrganogramaController.php, line 115
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 186
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-15 12:10:15 Warning: Warning (512): Callback parentNode() not defined in PessoaComunicacao in [/Users/tulio/Sites/civisindicadores/lib/Cake/Model/Behavior/AclBehavior.php, line 65]
+Trace:
+AclBehavior::setup() - CORE/Cake/Model/Behavior/AclBehavior.php, line 65
+BehaviorCollection::load() - CORE/Cake/Model/BehaviorCollection.php, line 148
+BehaviorCollection::init() - CORE/Cake/Model/BehaviorCollection.php, line 68
+Model::__construct() - CORE/Cake/Model/Model.php, line 737
+ReflectionClass::newInstance() - [internal], line ??
+ClassRegistry::init() - CORE/Cake/Utility/ClassRegistry.php, line 156
+Model::_constructLinkedModel() - CORE/Cake/Model/Model.php, line 1020
+Model::__isset() - CORE/Cake/Model/Model.php, line 846
+Model::__get() - CORE/Cake/Model/Model.php, line 876
+DboSource::queryAssociation() - CORE/Cake/Model/Datasource/DboSource.php, line 1282
+DboSource::read() - CORE/Cake/Model/Datasource/DboSource.php, line 1115
+Model::find() - CORE/Cake/Model/Model.php, line 2641
+OrganogramaController::ajaxPainelResumo() - APP/Controller/OrganogramaController.php, line 115
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 186
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-15 12:10:16 Error: [MissingControllerException] Controller class FilesController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-15 12:10:18 Warning: Warning (512): Callback parentNode() not defined in PessoaComunicacao in [/Users/tulio/Sites/civisindicadores/lib/Cake/Model/Behavior/AclBehavior.php, line 65]
+Trace:
+AclBehavior::setup() - CORE/Cake/Model/Behavior/AclBehavior.php, line 65
+BehaviorCollection::load() - CORE/Cake/Model/BehaviorCollection.php, line 148
+BehaviorCollection::init() - CORE/Cake/Model/BehaviorCollection.php, line 68
+Model::__construct() - CORE/Cake/Model/Model.php, line 737
+ReflectionClass::newInstance() - [internal], line ??
+ClassRegistry::init() - CORE/Cake/Utility/ClassRegistry.php, line 156
+Model::_constructLinkedModel() - CORE/Cake/Model/Model.php, line 1020
+Model::__isset() - CORE/Cake/Model/Model.php, line 846
+Model::__get() - CORE/Cake/Model/Model.php, line 876
+DboSource::queryAssociation() - CORE/Cake/Model/Datasource/DboSource.php, line 1282
+DboSource::read() - CORE/Cake/Model/Datasource/DboSource.php, line 1115
+Model::find() - CORE/Cake/Model/Model.php, line 2641
+OrganogramaController::ajaxPainelResumo() - APP/Controller/OrganogramaController.php, line 115
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 186
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-15 12:10:22 Warning: Warning (512): Callback parentNode() not defined in PessoaComunicacao in [/Users/tulio/Sites/civisindicadores/lib/Cake/Model/Behavior/AclBehavior.php, line 65]
+Trace:
+AclBehavior::setup() - CORE/Cake/Model/Behavior/AclBehavior.php, line 65
+BehaviorCollection::load() - CORE/Cake/Model/BehaviorCollection.php, line 148
+BehaviorCollection::init() - CORE/Cake/Model/BehaviorCollection.php, line 68
+Model::__construct() - CORE/Cake/Model/Model.php, line 737
+ReflectionClass::newInstance() - [internal], line ??
+ClassRegistry::init() - CORE/Cake/Utility/ClassRegistry.php, line 156
+Model::_constructLinkedModel() - CORE/Cake/Model/Model.php, line 1020
+Model::__isset() - CORE/Cake/Model/Model.php, line 846
+Model::__get() - CORE/Cake/Model/Model.php, line 876
+DboSource::queryAssociation() - CORE/Cake/Model/Datasource/DboSource.php, line 1282
+DboSource::read() - CORE/Cake/Model/Datasource/DboSource.php, line 1115
+Model::find() - CORE/Cake/Model/Model.php, line 2641
+ProjetoController::visualizar() - APP/Controller/ProjetoController.php, line 204
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 186
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-15 12:10:22 Warning: Warning (2): Division by zero in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 327]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 327
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-15 12:10:22 Warning: Warning (2): Division by zero in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 458]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 458
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-15 12:10:22 Warning: Warning (2): Division by zero in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 470]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 470
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-15 12:10:32 Warning: Warning (512): Callback parentNode() not defined in PessoaComunicacao in [/Users/tulio/Sites/civisindicadores/lib/Cake/Model/Behavior/AclBehavior.php, line 65]
+Trace:
+AclBehavior::setup() - CORE/Cake/Model/Behavior/AclBehavior.php, line 65
+BehaviorCollection::load() - CORE/Cake/Model/BehaviorCollection.php, line 148
+BehaviorCollection::init() - CORE/Cake/Model/BehaviorCollection.php, line 68
+Model::__construct() - CORE/Cake/Model/Model.php, line 737
+ReflectionClass::newInstance() - [internal], line ??
+ClassRegistry::init() - CORE/Cake/Utility/ClassRegistry.php, line 156
+Model::_constructLinkedModel() - CORE/Cake/Model/Model.php, line 1020
+Model::__isset() - CORE/Cake/Model/Model.php, line 846
+Model::__get() - CORE/Cake/Model/Model.php, line 876
+DboSource::queryAssociation() - CORE/Cake/Model/Datasource/DboSource.php, line 1282
+DboSource::read() - CORE/Cake/Model/Datasource/DboSource.php, line 1115
+Model::find() - CORE/Cake/Model/Model.php, line 2641
+OrganogramaController::ajaxPainelResumo() - APP/Controller/OrganogramaController.php, line 115
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 186
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+

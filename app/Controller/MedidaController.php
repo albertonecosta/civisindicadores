@@ -120,6 +120,7 @@ class MedidaController extends AppController {
 		$this->set('situacao', $situacao);
 			
 	}
+	
 	public function painel_acoes() {
 		
 		if(!empty($this->request->data)) {			
@@ -224,6 +225,7 @@ class MedidaController extends AppController {
 		$this->set('status_medida', $status_medida);
 			
 	}
+	
 	public function indice_revisao() {
 		
 		if(!empty($this->request->data)) {			
@@ -451,14 +453,14 @@ class MedidaController extends AppController {
 	
 	}
 
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
- /*
+	/**
+	 * edit method
+	 *
+	 * @throws NotFoundException
+	 * @param string $id
+	 * @return void
+	 */
+	 /*
 	public function editar2($id = null) {
 		
 		$this->Medida->id = $id;

@@ -42,7 +42,7 @@ class AppController extends Controller {
 	
 	public $usuarioLogado = null;
 	
-	public $helpers = array('Js' => array('Jquery'), 'FilterResults.FilterForm', 'Permissions');
+	public $helpers = array('Js' => array('Jquery'), 'FilterResults.FilterForm');
 	
 	public $components = array(
 		'Session',
