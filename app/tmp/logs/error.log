@@ -54516,3 +54516,6 @@ Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 186
 Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
 [main] - APP/webroot/index.php, line 92
 
+2014-10-15 12:14:18 Error: [MissingControllerException] Controller class MarcadorController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
