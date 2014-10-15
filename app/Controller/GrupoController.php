@@ -9,6 +9,12 @@ App::uses('AppController', 'Controller');
 class GrupoController extends AppController {
 	
 	/**
+	 * Models usados no controller
+	 * @var array
+	 */
+	var $uses = array("Grupo", "Permissao", "Regra");
+	
+	/**
 	 * (non-PHPdoc)
 	 * @see Controller::beforeFilter()
 	 */
@@ -87,33 +93,53 @@ class GrupoController extends AppController {
 	 * @return void
 	 */
 	public function adicionar() {
-		$acos = $this->Grupo->query("select * from acos");
-		$this->set("acos", $acos);
+		
 		if ($this->request->is('post')) {
-			if ($this->Grupo->save($this->request->data)) {
-				$grupo = $this->Grupo;
-				//Definindo as permissões padrões do sistema
-				$this->Acl->deny($grupo, "controllers");
-				$this->Acl->allow($grupo, "controllers/Usuario/login");
-				$this->Acl->allow($grupo, "controllers/Usuario/logout");
-				//Definindo as permissões escolhidas pelo usuário
-				foreach($this->request->data['ModuloAcao'] as $moduloAcao){
-					if(isset($moduloAcao['acao_alias'])){
-						$aco = "controllers/".$moduloAcao['modulo_alias'][0];
-						$this->Acl->deny($grupo, $aco);
-						foreach($moduloAcao['acao_alias'] as $acaoAlias){
-							$aco = "controllers/".$moduloAcao['modulo_alias'][0]."/".$acaoAlias;
-							$this->Acl->allow($grupo, $aco);
+			
+			$this->Grupo->begin(); // iniciando transação
+			
+			try{
+				
+				if ($this->Grupo->save($this->request->data)) {
+					
+					if(isset($this->request->data['permissoes']) && is_array($this->request->data['permissoes'])){
+						foreach($this->request->data['permissoes'] as $chave => $flag){
+							foreach($flag as $acao){
+								$grupoPermissoes = $this->ControleDeAcesso->getRestricoesPorChave($chave. "." . $acao);
+								if(count($grupoPermissoes)>0){
+									$this->Permissao->create(array('grupo_id'=>$this->Grupo->id, 'descricao'=>$chave. "." . $acao));
+									$respPermissao = $this->Permissao->save();
+									if(!$respPermissao){
+										throw new Exception("Erro ao salvar permissão",null);
+									}
+									foreach($grupoPermissoes as $permissao){
+										$this->Regra->create(array('permissao_id'=>$respPermissao['Permissao']['id'], 'descricao'=>$permissao));
+										if(!$this->Regra->save()){
+											throw new Exception("Erro ao salvar regra",null);
+										}
+									}
+								}
+									
+							}
 						}
-					}				
+					}
+					
+					$this->Audit->salvar($this->request->data, "Grupo", array(), "adicionar", true, $this->Grupo->id, $this->Auth->user("id"));				
+					$this->Session->setFlash(__(Util::REGISTRO_ADICIONADO_SUCESSO), 'success');
+					$this->Grupo->commit();
+					$this->redirect(array('action' => 'index'));
+					
+				} else {
+					$this->Grupo->rollback();
+					$this->Session->setFlash(__(Util::REGISTRO_ADICIONADO_FALHA), 'alert');
 				}
-				$this->Audit->salvar($this->request->data, "Grupo", array(), "adicionar", true, $this->Grupo->id, $this->Auth->user("id"));				
-				$this->Session->setFlash(__(Util::REGISTRO_ADICIONADO_SUCESSO), 'success');
-				$this->redirect(array('action' => 'index'));
-			} else {
+				
+			}catch(Exception $e){
 				$this->Session->setFlash(__(Util::REGISTRO_ADICIONADO_FALHA), 'alert');
+				$this->Grupo->rollback();
 			}
 		}
+		$this->set('restricoes', $this->ControleDeAcesso->getRestricoes());
 	}
 
 	/**
@@ -126,55 +152,72 @@ class GrupoController extends AppController {
 	public function editar($id = null) {
 		
 		$this->Grupo->id = $id;		
-		
-		//Buscamos por todos os modulos e ações do sistema
-		$acos = $this->Grupo->query("select * from acos");
-		$this->set("acos", $acos);
-		
-		//Buscamos pelas permissões do aro em questão para comparar no select da view
-		$aro = $this->Grupo->query("select id from aros where model = 'Grupo' and foreign_key = $id");
-		$aroId = $aro[0][0]['id'];
-		$arosAcos = $this->Grupo->query("select * from aros_acos where aro_id = $aroId");
-		$idAcos = array();
-		foreach($arosAcos as $aroAco){
-			$idAcos[] = $aroAco[0]['aco_id'];
-		}
-		$this->set("idAcos", $idAcos);
-		
 		if (!$this->Grupo->exists()) {
 			throw new NotFoundException(__(Util::REGISTRO_NAO_ENCONTRADO));
 		}
-		if ($this->request->is('post') || $this->request->is('put')) {		
-			if ($this->Grupo->save($this->request->data)) {
-				//deletamos as relações antigas
-				$this->Grupo->query("delete from aros_acos where aro_id = $aroId");			
-				$grupo = $this->Grupo;
-				//Definindo as permissões padrões do sistema
-				$this->Acl->deny($grupo, "controllers");
-				$this->Acl->allow($grupo, "controllers/Usuario/login");
-				$this->Acl->allow($grupo, "controllers/Usuario/logout");
-				//Definindo as permissões escolhidas pelo usuário
-				foreach($this->request->data['ModuloAcao'] as $moduloAcao){
-					if(isset($moduloAcao['acao_alias'])){
-						$aco = "controllers/".$moduloAcao['modulo_alias'][0];
-						$this->Acl->deny($grupo, $aco);
-						foreach($moduloAcao['acao_alias'] as $acaoAlias){
-							$aco = "controllers/".$moduloAcao['modulo_alias'][0]."/".$acaoAlias;
-							$this->Acl->allow($grupo, $aco);
+		
+		if ($this->request->is('post') || $this->request->is('put')) {	
+			$this->Grupo->begin();
+			try{	
+				if ($this->Grupo->save($this->request->data)) {
+					
+					// DELETANDO AS REGRAS, PARA QUE POSSAM SER INSERIDAS NOVAMENTE
+					$this->Grupo->query("DELETE FROM regras WHERE permissao_id IN (SELECT id FROM permissoes WHERE grupo_id = $id)");
+					
+					// DELETANDO AS PERMISSÕES, PARA QUE POSSAM SER INSERIDAS NOVAMENTE
+					$this->Grupo->query("DELETE FROM permissoes WHERE grupo_id = $id");
+						
+					// INSERINDO AS REGRAS DE PERMISSÃO NO PERFIL
+					if(isset($this->request->data['permissoes']) && is_array($this->request->data['permissoes'])){
+						foreach($this->request->data['permissoes'] as $chave => $flag){
+							foreach($flag as $acao){
+								$grupoPermissoes = $this->ControleDeAcesso->getRestricoesPorChave($chave. "." . $acao);
+								if(count($grupoPermissoes)>0){
+									$this->Permissao->create(array('grupo_id'=>$id, 'descricao'=>$chave. "." . $acao));
+									$respPermissao = $this->Permissao->save();
+									if(!$respPermissao){
+										throw new Exception("Erro ao salvar permissão",null);
+									}
+									foreach($grupoPermissoes as $permissao){
+										$this->Regra->create(array('permissao_id'=>$respPermissao['Permissao']['id'], 'descricao'=>$permissao));
+										if(!$this->Regra->save()){
+											throw new Exception("Erro ao salvar regra",null);
+										}
+									}
+								}
+									
+							}
 						}
-					}			
+					}
+					
+					$this->Audit->salvar($this->request->data, "Grupo", array(), "editar", false, $id, $this->Auth->user("id"));
+					$this->Session->setFlash(__(Util::REGISTRO_EDITADO_SUCESSO), 'success');
+					$this->Grupo->commit();
+					$this->redirect(array('action' => 'index'));
+					
+				} else {
+					
+					$this->Session->setFlash(__(Util::REGISTRO_EDITADO_FALHA), 'erro');
+					$this->Grupo->rollback();
 				}
-				$this->Audit->salvar($this->request->data, "Grupo", array(), "editar", false, $id, $this->Auth->user("id"));
-				$this->Session->setFlash(__(Util::REGISTRO_EDITADO_SUCESSO), 'success');
-				$this->redirect(array('action' => 'index'));
-			} else {
+			}catch(Exception $e){
+				echo $e->getMessage();
+				die;
 				$this->Session->setFlash(__(Util::REGISTRO_EDITADO_FALHA), 'alert');
+				$this->Grupo->rollback();
 			}
 		}
 		
 		$this->request->data = $this->Grupo->read(null, $id);
 		$this->Audit->setDadosAntes($this->request->data);
-		
+		$permissoes = array() ;
+		if(isset($this->request->data['Permissao']) && count($this->request->data['Permissao'])>0){
+			foreach($this->request->data['Permissao'] as $permissao){
+				$permissoes[] = $permissao['descricao'];
+			}
+		}
+		$this->set('permissoes', $permissoes);
+		$this->set('restricoes', $this->ControleDeAcesso->getRestricoes());
 	}
 
 	/**

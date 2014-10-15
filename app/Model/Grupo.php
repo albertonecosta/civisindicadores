@@ -7,14 +7,12 @@ App::uses('AppModel', 'Model');
  * @property Comunicacao $Comunicacao
  */
 class Grupo extends AppModel {
-	
-	public $actsAs = array('Acl' => array('type' => 'requester'));
 
-/**
- * Validation rules
- *
- * @var array
- */
+	/**
+	 * Validation rules
+	 *
+	 * @var array
+	 */
 	public $validate = array(
 		'titulo' => array(
 			'Obrigatório' => array(
@@ -30,12 +28,13 @@ class Grupo extends AppModel {
 	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
-/**
- * hasMany associations
- *
- * @var array
- */
+	/**
+	 * hasMany associations
+	 *
+	 * @var array
+	 */
 	public $hasMany = array(
+		'Permissao',
 		'PessoaComunicacao' => array(
 			'className' => 'Usuario',
 			'foreignKey' => 'grupo_id',
@@ -51,7 +50,4 @@ class Grupo extends AppModel {
 		)
 	);
 	
-	public function parentNode() {
-        return null;
-    }
 }

@@ -1,60 +1,43 @@
 <div class="container">
-<?php
-$modulos = Util::procurarFilhos(1, $acos);
-
-?>
-
-
 <?php echo $this->Form->create('Grupo'); ?>
 	<fieldset>
  		<legend>Cadastro Grupo</legend>
  		<div class="row">
  			<div class="span12"> 
-	<?php
-		echo $this->Form->input('titulo', array('class'=>'input-xlarge'));
-	?>
-	<?php 
-	$count = 0;
-	foreach($modulos as $modulo){
-	$acoes = Util::procurarFilhos($modulo[0]['id'], $acos);
-	$count++;
-	?>	
-	<?php 
-		/**
-		 * Adicionamos no 'if' logo abaixo, os modulos que queremos que não apareça
-		 * para que o usuário.
-		 */
-	?>
-	<?php if ($modulo[0]['alias'] != "Pages" && $modulo[0]['alias'] != "AclExtras" && $modulo[0]['alias'] != "FilterResults"){?>
-	<label for="Modulo<?php echo $count;?>"><?php echo $modulo[0]['alias'];?></label>
-	<input type="hidden" name="data[ModuloAcao][AcaoModuloPerfil<?php echo $count;?>][modulo_alias][]" value="<?php echo $modulo[0]['alias'];?>">
-	<select multiple="multiple" id="Modulo<?php echo $count;?>" name="data[ModuloAcao][AcaoModuloPerfil<?php echo $count;?>][acao_alias][]" class="input-xlarge multi-select">						
-		<?php foreach($acoes as $acao){ ?>
-			<?php 
-				/**
-				 * Por motivo logico, as ações login e logout abaixo, serão por padrão habilitadas para todos
-				 * os usuarios. (Habilitamos essa ação no controller)
-				 */
-			?>
-			<?php if($acao[0]['alias'] != "login" && $acao[0]['alias'] != "logout"){?>
-				<option value="<?php echo $acao[0]['alias']?>"><?php echo $acao[0]['alias'] == "index" ? "listar" : $acao[0]['alias']; ?></option>
-			<?php }?>
-		<?php }?>
-	</select>
-	<?php }?>
-<?php }?>
+				<?php
+					echo $this->Form->input('titulo', array('class'=>'input-xlarge', 'div'=>array('class'=>false)));
+				?>
 			</div>
+			<div class="span12" style="padding:0;margin:0">
+				<?php 
+					$count = 0;
+					foreach($restricoes as $sessao => $listaPermissoes){ 
+					$count++;
+				?>
+				<div class="span3">
+					<div class="form-group">
+						<label for="Modulo<?php echo $count;?>"><?php echo $sessao;?></label>
+						<select multiple="multiple" id="Modulo<?php echo $count;?>" name="data[permissoes][<?php echo $sessao;?>][]" style="height: 150px" class="form-control">						
+							<?php foreach($listaPermissoes as $nomePermissao => $item){?>
+								<option value="<?php echo $nomePermissao;?>"><?php echo $nomePermissao;?></option>					
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+				<?php }?>
+            </div>
  		</div>
 		 <div class="row">
 		 	<div class="span12">
 		 		<div class="form-actions">
 		  			<button type="submit" class="btn btn-primary">Salvar</button>
 				</div>
-		 		</div>
+		 	</div>
 		 </div>
 	</fieldset>
-	<script type="text/javascript" src="<?php echo $this->base?>/js/libs/jquery.lwMultiSelect.min.js"></script>
-	<script type="text/javascript" src="http://code.jquery.com/jquery.min.js" charset="utf-8"></script>
+</div>
+<script type="text/javascript" src="<?php echo $this->base?>/js/libs/jquery.lwMultiSelect.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo $this->base?>/js/jquery-te-1.4.0.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {

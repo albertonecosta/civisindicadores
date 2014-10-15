@@ -65,7 +65,7 @@ class AplicacaoController extends AppController {
 		$somaAndamento = 0;
 		$qtdeAcoesInformadas = 0;
 		
-		foreach ($medidas as $medida){					
+		foreach ($medidas as $medida){			
 			if ($medida['andamento'] <> ""){
 				$qtdeAcoesInformadas++;
 				$somaAndamento += str_replace("%", "", $medida['andamento']);

@@ -45,6 +45,7 @@ class AppController extends Controller {
 	public $helpers = array('Js' => array('Jquery'), 'FilterResults.FilterForm');
 	
 	public $components = array(
+		'ControleDeAcesso',
 		'Session',
 		'Audit',
 		'FilterResults.FilterResults' => array(
@@ -76,6 +77,10 @@ class AppController extends Controller {
 	);
 
 	public function beforeRender(){
+		if(!$this->ControleDeAcesso->validaAcessoAcao()){
+			$this->Session->setFlash("Você não tem permissão para essa ação!");
+			$this->redirect(array('controller'=>'aplicacao','action'=>'index'));
+		}
 		$this->set('title_for_layout', $this->title);
 		$this->set('tituloPagina', $this->tituloPagina);
 		$this->set('controller', $this->request->params['controller']);

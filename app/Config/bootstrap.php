@@ -188,3 +188,5 @@ include dirname(__FILE__) . DS . 'inflections.php';
 define('BASE', str_replace("/app/webroot", "", dirname($_SERVER['PHP_SELF']) == "/" ? "" : dirname($_SERVER['PHP_SELF'])));
 
 define('BASE_SISTEMA', BASE . '/sistema');
+
+session_start();
