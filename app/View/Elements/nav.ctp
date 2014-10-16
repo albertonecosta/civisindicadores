@@ -1,3 +1,22 @@
+<?php
+	// COMUNICAÇÃO
+	$isReuniao = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Reuniao');
+	$isTarefa = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Tarefa');
+	$isMarcador = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Marcador');
+	$isProcedimento = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Procedimento');
+	$isCOMUNICACAO = ($isReuniao || $isTarefa || $isMarcador || $isProcedimento);
+	
+	// CADASTROS
+	$isUsuario = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Usuario');
+	$isEmpresa = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Empresa');
+	$isGrupo = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Grupo');
+	$isCargo = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Cargo');
+	$isVinculo = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Vinculo');
+	$isSetor = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Setor');
+	$isDepartamento = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Departamento');
+	$isCADASTROS = ($isUsuario || $isEmpresa || $isGrupo || $isCargo || $isVinculo || $isSetor || $isDepartamento);
+	
+?>
 <div class="navbar navbar-static-top" style="position:relative; !important;">
   <div class="navbar-inner">
     <div class="container">
@@ -11,95 +30,61 @@
           <li class="">
             <a href="<?php echo $this->base;?>/Aplicacao">Home</a>
           </li>
+          
+          <?php if($isCOMUNICACAO){?>
           <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-            	Comunicação
-		        <b class="caret"></b>
-		    </a>
-		    <ul class="dropdown-menu">
-		      <li>
-		      	<?php 
-		      		echo $this->Html->link(__('Reuniões'), array('controller' => 'Reuniao','action' => 'index'));
-		      	?>
-		      </li>
-		      <li>
-		      	<?php 
-		      		echo $this->Html->link(__('Tarefas'), array('controller' => 'Tarefa','action' => 'index'));
-				?>
-		      </li>
-		      <li>
-		      <?php 
-	            	echo $this->Html->link(__('Marcadores'), array('controller' => 'Marcador','action' => 'index'));
-	            ?>
-	          </li>  
-		      <li>
-		      	<?php 
-		      			echo $this->Html->link(__('Procedimentos'), array('controller' => 'Procedimento','action' => 'index'));
-					
-				?>
-		      </li>
-		    </ul>
+	          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+		          Comunicação
+				  <b class="caret"></b>
+			  </a>
+			  <ul class="dropdown-menu">
+			  	<?php if($isReuniao){?>
+					<li><?php echo $this->Html->link(__('Reuniões'), array('controller' => 'Reuniao','action' => 'index'));?></li>
+				<?php }?>
+				<?php if($isTarefa){?>
+					<li><?php echo $this->Html->link(__('Tarefas'), array('controller' => 'Tarefa','action' => 'index'));?></li>
+				<?php }?>
+				<?php if($isMarcador){?>
+					<li><?php echo $this->Html->link(__('Marcadores'), array('controller' => 'Marcador','action' => 'index'));?></li>
+				<?php }?>
+				<?php if($isProcedimento){?>
+					<li><?php echo $this->Html->link(__('Procedimentos'), array('controller' => 'Procedimento','action' => 'index'));?></li>
+				<?php }?>
+			  </ul>
           </li>
+          <?php }?>
           
-          
+          <?php if($isCADASTROS){?>
 		  <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             	Cadastros
 		        <b class="caret"></b>
 		    </a>
 		    <ul class="dropdown-menu">
-		      <li>
-		      	<?php 
-		      		
-		      			echo $this->Html->link(__('Usuários'), array('controller' => 'Usuario','action' => 'index'));
-					
-				?>
-		      </li>
-		      <li>
-		      	<?php 
-		      		
-		      			echo $this->Html->link(__('Empresas'), array('controller' => 'Empresa','action' => 'index'));
-					
-				?>
-		      </li>
-		      <li>
-		      	<?php 
-			      	
-			      		echo $this->Html->link(__('Grupos'), array('controller' => 'Grupo','action' => 'index'));
-					
-				?>
-		      </li>
-		      <li>
-		      	<?php 
-		      		
-		      			echo $this->Html->link(__('Cargos'), array('controller' => 'Cargo','action' => 'index'));
-					
-				?>
-		      </li>
-		      <li>
-		      	<?php 
-		      		
-		      			echo $this->Html->link(__('Vinculos'), array('controller' => 'Vinculo','action' => 'index'));
-					
-				?>
-		      </li>
-		      <li>
-		      	<?php 
-		      		
-						echo $this->Html->link(__('Setores'), array('controller' => 'Setor','action' => 'index'));
-					
-				?>
-		      </li>
-		      <li>
-		      	<?php 
-		      		
-						echo $this->Html->link(__('Departamentos'), array('controller' => 'Departamento','action' => 'index'));
-					
-				?>
-		      </li>
-		      
+		    	<?php if($isUsuario){?>
+			      <li><?php echo $this->Html->link(__('Usuários'), array('controller' => 'Usuario','action' => 'index'));?></li>
+			    <?php }?>
+			    <?php if($isEmpresa){?>
+			      <li><?php echo $this->Html->link(__('Empresas'), array('controller' => 'Empresa','action' => 'index'));?></li>
+			    <?php }?>
+			   	<?php if($isGrupo){?>
+			      <li><?php echo $this->Html->link(__('Grupos'), array('controller' => 'Grupo','action' => 'index'));?></li>
+			    <?php }?>
+			    <?php if($isCargo){?>
+			      <li><?php echo $this->Html->link(__('Cargos'), array('controller' => 'Cargo','action' => 'index'));?></li>
+			    <?php }?>
+			    <?php if($isVinculo){?>
+			      <li><?php echo $this->Html->link(__('Vinculos'), array('controller' => 'Vinculo','action' => 'index'));?></li>
+			    <?php }?>
+			    <?php if($isSetor){?>
+			      <li><?php echo $this->Html->link(__('Setores'), array('controller' => 'Setor','action' => 'index'));?></li>
+			   	<?php }?>
+			   	<?php if($isDepartamento){?>
+			      <li><?php echo $this->Html->link(__('Departamentos'), array('controller' => 'Departamento','action' => 'index'));?></li>
+			    <?php }?>
 		    </ul>
           </li>
+          <?php }?>
 		  
 		  
           <li class="dropdown">

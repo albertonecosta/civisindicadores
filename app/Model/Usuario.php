@@ -10,9 +10,6 @@ App::uses('AppModel', 'Model');
 class Usuario extends AppModel {
 	
 	public $actsAs = array(
-		'Acl' => array(
-			'type' => 'requester'
-		),
 		'Upload.Upload' => array(
             'imagem_perfil' => array(
             	'fields' => array(

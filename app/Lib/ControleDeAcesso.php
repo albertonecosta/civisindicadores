@@ -12,6 +12,7 @@ class ControleDeAcesso{
 	private $nomeAcao;
 	private $nomeControlador;
 	private $acesso;
+	
 	/*Controller.action_OR_element.type
 	* Exp action:  Principal.addVeiculo.action
 	* Exp element: Principal.addVeiculo.element
@@ -35,6 +36,56 @@ class ControleDeAcesso{
 			'Editar'=>array('Cargo.editar.action', 'Cargo.editar.element'),
 			'Listar'=>array('Cargo.index.action', 'Cargo.listar.element'),
 			'Visualizar'=>array('Cargo.visualizar.action', 'Cargo.visualizar.element')
+		),'Reuniões'=>array(
+			'Adicionar'=>array('Reuniao.adicionar.action', 'Reuniao.adicionar.element'),
+			'Excluir'=>array('Reuniao.excluir.action', 'Reuniao.excluir.element'),
+			'Editar'=>array('Reuniao.editar.action', 'Reuniao.editar.element'),
+			'Listar'=>array('Reuniao.index.action', 'Reuniao.listar.element'),
+			'Visualizar'=>array('Reuniao.visualizar.action', 'Reuniao.visualizar.element'),
+			'Enviar Email'=>array('Reuniao.enviar.action', 'Reuniao.enviar_email.element'),
+			'Imprimir'=>array('Reuniao.imprimir.action', 'Reuniao.imprimir.element')
+		),'Tarefas'=>array(
+			'Adicionar'=>array('Tarefa.adicionar.action', 'Tarefa.adicionar.element'),
+			'Excluir'=>array('Tarefa.excluir.action', 'Tarefa.excluir.element'),
+			'Editar'=>array('Tarefa.editar.action', 'Tarefa.editar.element'),
+			'Listar'=>array('Tarefa.index.action', 'Tarefa.listar.element'),
+			'Visualizar'=>array('Tarefa.visualizar.action', 'Tarefa.visualizar.element')
+		),'Marcadores'=>array(
+			'Adicionar'=>array('Marcador.adicionar.action', 'Marcador.adicionar.element'),
+			'Excluir'=>array('Marcador.excluir.action', 'Marcador.excluir.element'),
+			'Editar'=>array('Marcador.editar.action', 'Marcador.editar.element'),
+			'Listar'=>array('Marcador.index.action', 'Marcador.listar.element'),
+			'Visualizar'=>array('Marcador.visualizar.action', 'Marcador.visualizar.element')
+		),'Procedimentos'=>array(
+			'Adicionar'=>array('Procedimento.adicionar.action', 'Procedimento.adicionar.element'),
+			'Excluir'=>array('Procedimento.excluir.action', 'Procedimento.excluir.element'),
+			'Editar'=>array('Procedimento.editar.action', 'Procedimento.editar.element'),
+			'Listar'=>array('Procedimento.index.action', 'Procedimento.listar.element'),
+			'Visualizar'=>array('Procedimento.visualizar.action', 'Procedimento.visualizar.element')
+		),'Grupos'=>array(
+			'Adicionar'=>array('Grupo.adicionar.action', 'Grupo.adicionar.element'),
+			'Excluir'=>array('Grupo.excluir.action', 'Grupo.excluir.element'),
+			'Editar'=>array('Grupo.editar.action', 'Grupo.editar.element'),
+			'Listar'=>array('Grupo.index.action', 'Grupo.listar.element'),
+			'Visualizar'=>array('Grupo.visualizar.action', 'Grupo.visualizar.element')
+		),'Setores'=>array(
+			'Adicionar'=>array('Setor.adicionar.action', 'Setor.adicionar.element'),
+			'Excluir'=>array('Setor.excluir.action', 'Setor.excluir.element'),
+			'Editar'=>array('Setor.editar.action', 'Setor.editar.element'),
+			'Listar'=>array('Setor.index.action', 'Setor.listar.element'),
+			'Visualizar'=>array('Setor.visualizar.action', 'Setor.visualizar.element')
+		),'Vínculos'=>array(
+			'Adicionar'=>array('Vinculo.adicionar.action', 'Vinculo.adicionar.element'),
+			'Excluir'=>array('Vinculo.excluir.action', 'Vinculo.excluir.element'),
+			'Editar'=>array('Vinculo.editar.action', 'Vinculo.editar.element'),
+			'Listar'=>array('Vinculo.index.action', 'Vinculo.listar.element'),
+			'Visualizar'=>array('Vinculo.visualizar.action', 'Vinculo.visualizar.element')
+		),'Departamentos'=>array(
+			'Adicionar'=>array('Departamento.adicionar.action', 'Departamento.adicionar.element'),
+			'Excluir'=>array('Departamento.excluir.action', 'Departamento.excluir.element'),
+			'Editar'=>array('Departamento.editar.action', 'Departamento.editar.element'),
+			'Listar'=>array('Departamento.index.action', 'Departamento.listar.element'),
+			'Visualizar'=>array('Departamento.visualizar.action', 'Departamento.visualizar.element')
 		)
 	);
 

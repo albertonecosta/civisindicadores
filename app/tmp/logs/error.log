@@ -54699,3 +54699,114 @@ Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
 2014-10-15 15:36:16 Error: [MissingControllerException] Controller class PrincipalController could not be found.
 #0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
 #1 {main}
+2014-10-16 10:12:53 Error: [MissingHelperException] Helper class PermissionsHelper could not be found.
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/View/HelperCollection.php(62): HelperCollection->load('Permissions')
+#1 /Users/tulio/Sites/civisindicadores/lib/Cake/View/View.php(813): HelperCollection->__isset('Permissions')
+#2 /Users/tulio/Sites/civisindicadores/app/View/Vinculo/index.ctp(57): View->__get('Permissions')
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/View/View.php(921): include('/Users/tulio/Si...')
+#4 /Users/tulio/Sites/civisindicadores/lib/Cake/View/View.php(884): View->_evaluate('/Users/tulio/Si...', Array)
+#5 /Users/tulio/Sites/civisindicadores/lib/Cake/View/View.php(476): View->_render('/Users/tulio/Si...')
+#6 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(956): View->render(NULL, NULL)
+#7 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(193): Controller->render()
+#8 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(161): Dispatcher->_invoke(Object(VinculoController), Object(CakeRequest), Object(CakeResponse))
+#9 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2014-10-16 10:18:23 Error: [MissingHelperException] Helper class PermissionsHelper could not be found.
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/View/HelperCollection.php(62): HelperCollection->load('Permissions')
+#1 /Users/tulio/Sites/civisindicadores/lib/Cake/View/View.php(813): HelperCollection->__isset('Permissions')
+#2 /Users/tulio/Sites/civisindicadores/app/View/Vinculo/index.ctp(57): View->__get('Permissions')
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/View/View.php(921): include('/Users/tulio/Si...')
+#4 /Users/tulio/Sites/civisindicadores/lib/Cake/View/View.php(884): View->_evaluate('/Users/tulio/Si...', Array)
+#5 /Users/tulio/Sites/civisindicadores/lib/Cake/View/View.php(476): View->_render('/Users/tulio/Si...')
+#6 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(956): View->render(NULL, NULL)
+#7 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(193): Controller->render()
+#8 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(161): Dispatcher->_invoke(Object(VinculoController), Object(CakeRequest), Object(CakeResponse))
+#9 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2014-10-16 10:35:42 Error: [MissingTableException] Table aros for model Aro was not found in datasource default.
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Model.php(3190): Model->setSource('aros')
+#1 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/AclNode.php(62): Model->getDataSource()
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Behavior/AclBehavior.php(89): AclNode->node(Array)
+#3 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Behavior/AclBehavior.php(107): AclBehavior->node(Object(Usuario), Array, 'Aro')
+#4 [internal function]: AclBehavior->afterSave(Object(Usuario), true, Array)
+#5 /Users/tulio/Sites/civisindicadores/lib/Cake/Utility/ObjectCollection.php(130): call_user_func_array(Array, Array)
+#6 [internal function]: ObjectCollection->trigger(Object(CakeEvent))
+#7 /Users/tulio/Sites/civisindicadores/lib/Cake/Event/CakeEventManager.php(246): call_user_func(Array, Object(CakeEvent))
+#8 /Users/tulio/Sites/civisindicadores/lib/Cake/Model/Model.php(1758): CakeEventManager->dispatch(Object(CakeEvent))
+#9 /Users/tulio/Sites/civisindicadores/app/Controller/UsuarioController.php(119): Model->save(Array)
+#10 [internal function]: UsuarioController->adicionar()
+#11 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(485): ReflectionMethod->invokeArgs(Object(UsuarioController), Array)
+#12 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(186): Controller->invokeAction(Object(CakeRequest))
+#13 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(161): Dispatcher->_invoke(Object(UsuarioController), Object(CakeRequest), Object(CakeResponse))
+#14 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#15 {main}
+2014-10-16 11:27:32 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-16 11:42:47 Error: [MissingControllerException] Controller class FilesController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-16 11:42:48 Error: [MissingControllerException] Controller class FilesController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-16 11:44:46 Error: [MissingControllerException] Controller class GraficosController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-16 11:52:18 Error: [MissingControllerException] Controller class CssController could not be found.
+#0 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2014-10-16 12:01:25 Error: [SocketException] php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Network/Email/SmtpTransport.php(95): CakeSocket->connect()
+#1 /Users/tulio/Sites/civisindicadores/lib/Cake/Network/Email/SmtpTransport.php(60): SmtpTransport->_connect()
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Network/Email/CakeEmail.php(1059): SmtpTransport->send(Object(CakeEmail))
+#3 /Users/tulio/Sites/civisindicadores/app/Controller/ReuniaoController.php(229): CakeEmail->send()
+#4 [internal function]: ReuniaoController->enviar('2')
+#5 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(485): ReflectionMethod->invokeArgs(Object(ReuniaoController), Array)
+#6 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(186): Controller->invokeAction(Object(CakeRequest))
+#7 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(161): Dispatcher->_invoke(Object(ReuniaoController), Object(CakeRequest), Object(CakeResponse))
+#8 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2014-10-16 12:01:40 Error: [SocketException] php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known
+#0 /Users/tulio/Sites/civisindicadores/lib/Cake/Network/Email/SmtpTransport.php(95): CakeSocket->connect()
+#1 /Users/tulio/Sites/civisindicadores/lib/Cake/Network/Email/SmtpTransport.php(60): SmtpTransport->_connect()
+#2 /Users/tulio/Sites/civisindicadores/lib/Cake/Network/Email/CakeEmail.php(1059): SmtpTransport->send(Object(CakeEmail))
+#3 /Users/tulio/Sites/civisindicadores/app/Controller/ReuniaoController.php(229): CakeEmail->send()
+#4 [internal function]: ReuniaoController->enviar('2')
+#5 /Users/tulio/Sites/civisindicadores/lib/Cake/Controller/Controller.php(485): ReflectionMethod->invokeArgs(Object(ReuniaoController), Array)
+#6 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(186): Controller->invokeAction(Object(CakeRequest))
+#7 /Users/tulio/Sites/civisindicadores/lib/Cake/Routing/Dispatcher.php(161): Dispatcher->_invoke(Object(ReuniaoController), Object(CakeRequest), Object(CakeResponse))
+#8 /Users/tulio/Sites/civisindicadores/app/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2014-10-16 12:14:08 Warning: Warning (2): Division by zero in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 327]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 327
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-16 12:14:08 Warning: Warning (2): Division by zero in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 458]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 458
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-16 12:14:08 Warning: Warning (2): Division by zero in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 470]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 470
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+

@@ -1,3 +1,16 @@
+<?php
+	$adicionarReuniao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Reuniao');
+	$visualizarReuniao = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Reuniao');
+	$editarReuniao = $this->ControleDeAcesso->validaAcessoElemento('editar', 'Reuniao');
+	$excluirReuniao = $this->ControleDeAcesso->validaAcessoElemento('excluir', 'Reuniao');
+	$emailReuniao = $this->ControleDeAcesso->validaAcessoElemento('enviar_email', 'Reuniao');
+	$imprimirReuniao = $this->ControleDeAcesso->validaAcessoElemento('imprimir', 'Reuniao');
+	
+	$visualizarProjeto = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Projeto');
+	
+	$visualizarTarefa = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Tarefa');
+	$adicionarTarefa = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Tarefa');
+?>
 <script type="text/javascript">
   $(function() {
     $('.footable').footable();
@@ -39,8 +52,10 @@
 					?>
 				</div>
 			</div><!-- /.list-filters -->
-				<div class="list-actions-buttons pull-right">				
+				<div class="list-actions-buttons pull-right">
+				<?php if($adicionarReuniao){?>			
 				<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>Reuniao/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>
+				<?php }?>
 			</div><!-- /.list-actions -->
 			<!-- end Filtros -->
 		</div>
@@ -57,18 +72,37 @@
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Projeto.titulo', 'Projeto'); ?></th>
 				<th data-hide="phone,tablet"><?php echo "Participantes"; ?></th>
 				<th data-hide="phone,tablet"><?php echo "Tarefas"; ?></th>
+				<?php if($editarReuniao || $excluirReuniao || $imprimirReuniao || $emailReuniao){?>
 				<th><center><?php echo __('Ações'); ?></center></th>
+				<?php }?>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach($reuniao as $reuniao){?>
 			<tr>
-				<td><?php echo $this->Html->link($reuniao['Reuniao']['titulo'], array('action' => 'visualizar', $reuniao['Reuniao']['id'])); ?>&nbsp;</td>
+				<td>
+					<?php 
+						if($visualizarReuniao){
+							echo $this->Html->link($reuniao['Reuniao']['titulo'], array('action' => 'visualizar', $reuniao['Reuniao']['id']));
+						}else{
+							echo $reuniao['Reuniao']['titulo'];
+						} 
+					?>
+					&nbsp;
+				</td>
 				<td><?php echo $reuniao['Reuniao']['data']; ?>&nbsp;</td>
 				<td><?php echo $reuniao['Reuniao']['local']; ?>&nbsp;</td>
 				<td><?php echo $reuniao['Reuniao']['hora_inicio']; ?>&nbsp;</td>
 				<td><?php echo $reuniao['Reuniao']['pauta']; ?>&nbsp;</td>
-				<td><?php echo $this->Html->link($reuniao['Projeto']['titulo'], array('controller' => 'Projeto', 'action' => 'visualizar', $reuniao['Projeto']['id'])); ?>&nbsp;</td>
+				<td>
+					<?php 
+					if($visualizarProjeto){
+						echo $this->Html->link($reuniao['Projeto']['titulo'], array('controller' => 'Projeto', 'action' => 'visualizar', $reuniao['Projeto']['id']));
+					}else{
+						echo $reuniao['Projeto']['titulo'];
+					} ?>
+					&nbsp;
+				</td>
 				<td>
 					<ul>
 						<?php foreach($reuniao['Participantes'] as $value){?>
@@ -83,45 +117,64 @@
 					if(isset($reuniao['Tarefa'])){
 						foreach ($reuniao['Tarefa'] as $key => $value) {
 						?>
-							<li><?php echo $this->Html->link($value['titulo'], array('controller' => 'Tarefa', 'action' => 'visualizar', $value['id'])); ?></li>
+							<li>
+							<?php 
+								if($visualizarTarefa){
+									echo $this->Html->link($value['titulo'], array('controller' => 'Tarefa', 'action' => 'visualizar', $value['id']));
+								}else{
+									echo "<a href='javascript:void(0);'>" . $value['titulo'] . "</a>";
+								}  
+							?>
+							</li>
 						<?php
 						}
 					}
 					?>
+					<?php if($adicionarTarefa){?>
 					<div class="row-fluid" style="margin-top: 10px;">
 						<button class="btn btn-mini" type="button" onclick="abrirModal(<?php echo $reuniao['Reuniao']['id']; ?>)">Adicionar</button>
 					</div>
+					<?php }?>
 					</ul>
 					&nbsp;
 				</td>
+				<?php if($editarReuniao || $excluirReuniao || $imprimirReuniao || $emailReuniao){?>
 				<td width="7%" nowrap="nowrap">
 					<div class="row-fluid">
 					<center>
 					<?php 
+					if($editarReuniao){
 						echo $this->Html->link(
 							__(""),
 							array('action' => 'editar', $reuniao['Reuniao']['id']),
 							array('class'=>'icon-edit')
 						);
 						echo "&nbsp;";
+					}
 					?>
+					<?php if($emailReuniao){?>
 					<a href="javascript:enviarEmail(<?php echo $reuniao['Reuniao']['id']; ?>)" title="Enviar email para os participantes"><i class="icon-envelope"></i></a>
+					&nbsp;
+					<?php }?>
 					<?php
-						echo "&nbsp;";
+						if($imprimirReuniao){
 						echo $this->Html->link(
 							__(""),
 							array('action' => 'imprimir', $reuniao['Reuniao']['id']),
 							array('class'=>'icon-print')
 						);
 						echo "&nbsp;";
+					}
 					?>
 					<?php
+					if($excluirReuniao){
 						echo $this->Form->postLink(
 							__(""), 
 							array('action' => 'excluir', $reuniao['Reuniao']['id']), 
 							array('class'=>'icon-trash'),
 							__(Util::MENSAGEM_DELETAR, $reuniao['Reuniao']['id'])
 						); 
+					}
 					?>
 					</center>
 					</div>
@@ -131,6 +184,7 @@
 						</center>
 					</div>
 				</td>
+				<?php } ?>
 			</tr>
 			<?php } ?>
 		</tbody>
