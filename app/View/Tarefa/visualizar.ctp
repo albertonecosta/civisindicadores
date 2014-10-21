@@ -2,6 +2,12 @@
 	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar', 'Tarefa');
 	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir', 'Tarefa');
 	$visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Usuario');
+	$visualizarAcao = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Acao');
+	
+	$listarForum = $this->ControleDeAcesso->validaAcessoElemento('listar_forum', 'Tarefa');
+	$adicionarForum = $this->ControleDeAcesso->validaAcessoElemento('adicionar_forum', 'Tarefa');
+	
+	
 ?>
 <div class="container">
 	<legend>Visualizar Tarefa</legend>
@@ -96,7 +102,13 @@
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Atividade'); ?></strong></td>
-						<td><?php echo $this->Html->link($tarefa['Acao']['titulo'], array('controller' => 'Acao','action' => 'visualizar', $tarefa['Acao']['id']));?></td>
+						<td><?php 
+						if($visualizarAcao){
+							echo $this->Html->link($tarefa['Acao']['titulo'], array('controller' => 'Acao','action' => 'visualizar', $tarefa['Acao']['id']));
+						}else{
+							echo $tarefa['Acao']['titulo'];
+						}
+						?></td>
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Data de conclusão'); ?></strong></td>
@@ -114,7 +126,10 @@
 			</table>			
 		</div>
 	</div>
+	<?php if($listarForum || $adicionarForum){?>
 	<legend>Fórum</legend>
+	<?php }?>
+	<?php if($listarForum){?>
 	<div class="row">
 		<div class="span12">
 			<table cellpadding="0" cellspacing="0" class="table table-bordered table-hover table-condensed">
@@ -155,6 +170,8 @@
 			</table>
 		</div>		
 	</div>
+	<?php }?>
+	<?php if($adicionarForum){?>
 	<div class="row-fluid">
 		<div class="span6">
 			<legend><small>Criar um novo post</small></legend>
@@ -174,4 +191,5 @@
  			</form>
 		</div>
 	</div>
+	<?php }?>
 </div>

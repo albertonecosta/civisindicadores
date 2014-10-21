@@ -8,11 +8,11 @@
 					<h2 class="title"><span>Entrar no</span> Civis Indicadores</h2>
 				</div>
 			    <div class="users form">
-					<?php echo $this->Form->create('Usuario', array('controller'=>'usuario', 'action'=>'login'));?>
+					<form method="post">
 					    <fieldset>
 					        <?php 
-					        echo $this->Form->input('login');
-					        echo $this->Form->input('senha', array('type'=>'password'));
+					        echo $this->Form->input('Usuario.login');
+					        echo $this->Form->input('Usuario.senha', array('type'=>'password'));
 					    	?>
 					    </fieldset>
 						<button type="submit" class="btn btn-primary">Logar</button>

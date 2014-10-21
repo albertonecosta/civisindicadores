@@ -1,3 +1,10 @@
+<?php
+	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Marcador');
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Marcador');
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar', 'Marcador');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir', 'Marcador');
+	$visualizarMedida = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Medida');
+?>
 <script type="text/javascript">
   $(function() {
     $('.footable').footable();
@@ -39,8 +46,10 @@
 					?>
 				</div>
 			</div><!-- /.list-filters -->
-				<div class="list-actions-buttons pull-right">				
+				<div class="list-actions-buttons pull-right">		
+				<?php if($adicionar){?>		
 				<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>Marcador/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>
+				<?php }?>
 			</div><!-- /.list-actions -->
 			<!-- end Filtros -->
 		</div>
@@ -50,7 +59,9 @@
 		<thead>
 			<tr>
 				<th data-class="phone,tablet"><?php echo $this->Paginator->sort('Marcador.titulo', 'Título'); ?></th>
+				<?php if($editar || $excluir){?>
 				<th data-hide="phone,tablet"><?php echo __('Ações Associadas'); ?></th>
+				<?php }?>
 			</tr>
 		</thead>
 		<tbody>
@@ -58,7 +69,13 @@
 		foreach($marcador as $marcador){?>
 			<tr>
 			
-				<td><?php echo $this->Html->link($marcador['Marcador']['titulo'], array('action' => 'visualizar', $marcador['Marcador']['id'])); ?>&nbsp;</td>
+				<td><?php
+						if($visualizar){
+							echo $this->Html->link($marcador['Marcador']['titulo'], array('action' => 'visualizar', $marcador['Marcador']['id']));
+						}else{
+							echo $marcador['Marcador']['titulo'];
+						} 
+					?>&nbsp;</td>
 				<td class="no-padding">
 					<ul class="list-inner">
 					<?php
@@ -73,7 +90,13 @@
 								<div class="wrapper">
 								<div class="text">
 										<abbr>
-										<?php echo $this->Html->link($objetivo["Objetivo"]['titulo'], array('controller' => 'Medida', 'action' => 'visualizar', $objetivo["Objetivo"]['id'])); ?>	
+											<?php 
+											if($visualizarMedida){
+												echo $this->Html->link($objetivo["Objetivo"]['titulo'], array('controller' => 'Medida', 'action' => 'visualizar', $objetivo["Objetivo"]['id']));
+											}else{
+												echo $objetivo["Objetivo"]['titulo'];
+											}
+											?>	
 										</abbr>
 									</div>									
 								</div>
@@ -86,24 +109,30 @@
 					</ul>
 					
 				</td>
+				<?php if($editar || $excluir){?>
 				<td width="7%" nowrap="nowrap">
 					<center>
 					<?php 
-						echo $this->Html->link(
-							__(""),
-							array('action' => 'editar', $marcador['Marcador']['id']),
-							array('class'=>'icon-edit')
-						);
+						if($editar){
+							echo $this->Html->link(
+								__(""),
+								array('action' => 'editar', $marcador['Marcador']['id']),
+								array('class'=>'icon-edit')
+							);
 						echo "&nbsp;&nbsp;";
-						echo $this->Form->postLink(
-							__(""), 
-							array('action' => 'excluir', $marcador['Marcador']['id']), 
-							array('class'=>'icon-trash'),
-							__(Util::MENSAGEM_DELETAR, $marcador['Marcador']['id'])
-						); 
+						}
+						if($excluir){
+							echo $this->Form->postLink(
+								__(""), 
+								array('action' => 'excluir', $marcador['Marcador']['id']), 
+								array('class'=>'icon-trash'),
+								__(Util::MENSAGEM_DELETAR, $marcador['Marcador']['id'])
+							);
+						}
 					?>
 					</center>
 				</td>
+				<?php }?>
 			</tr>
 			<?php } ?>
 		</tbody>

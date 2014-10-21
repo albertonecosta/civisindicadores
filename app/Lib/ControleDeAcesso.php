@@ -50,7 +50,9 @@ class ControleDeAcesso{
 			'Editar'=>array('Tarefa.editar.action', 'Tarefa.editar.element'),
 			'Listar'=>array('Tarefa.index.action','Tarefa.jobsNaoIniciados.action','Tarefa.jobsEmAndamento.action','Tarefa.jobsConcluidas.action','Tarefa.listar.element'),
 			'Visualizar'=>array('Tarefa.visualizar.action', 'Tarefa.visualizar.element'),
-			'Imprimir'=>array('Tarefa.imprimirJobsConcluidas.action','Tarefa.imprimirJobsNaoIniciados.action','Tarefa.imprimirJobsEmAndamento.action','Tarefa.imprimir.element')
+			'Imprimir'=>array('Tarefa.imprimirJobsConcluidas.action','Tarefa.imprimirJobsNaoIniciados.action','Tarefa.imprimirJobsEmAndamento.action','Tarefa.imprimir.element'),
+			'Listar Forum'=>array('Tarefa.listar_forum.element'),
+			'Adicionar Forum'=>array('Tarefa.adicionar_forum.element')
 		),'Marcadores'=>array(
 			'Adicionar'=>array('Marcador.adicionar.action', 'Marcador.adicionar.element'),
 			'Excluir'=>array('Marcador.excluir.action', 'Marcador.excluir.element'),
@@ -87,6 +89,12 @@ class ControleDeAcesso{
 			'Editar'=>array('Departamento.editar.action', 'Departamento.editar.element'),
 			'Listar'=>array('Departamento.index.action', 'Departamento.listar.element'),
 			'Visualizar'=>array('Departamento.visualizar.action', 'Departamento.visualizar.element')
+		),'Atividades'=>array(
+			'Adicionar'=>array('Acao.adicionar.action', 'Acao.adicionar.element'),
+			'Excluir'=>array('Acao.excluir.action', 'Acao.excluir.element'),
+			'Editar'=>array('Acao.editar.action', 'Acao.editar.element'),
+			'Listar'=>array('Acao.index.action', 'Acao.listar.element'),
+			'Visualizar'=>array('Acao.visualizar.action', 'Acao.visualizar.element')
 		)
 	);
 
