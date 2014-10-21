@@ -1,0 +1,102 @@
+<html>
+	<head>
+		<title>Alvo</title>
+	</head>
+	<body> 
+	<script type="text/javascript">
+	function $(obj){
+		return window.document.getElementById(obj);
+	}
+	
+	function AtualizaImagem() {
+		params = 'http://189.9.150.83/graficos/alvo.php?';
+		
+		params += 'width='+escape($('altura').value)+'&';
+		params += 'height='+escape($('largura').value)+'&';
+		
+		if ($('exibir_escala').checked){
+			params += 'showscale=1&';
+		}
+		if ($('exibir_label').checked){
+			params += 'showlabel=1&';
+		}
+		
+		params += 'table_data=';
+		for (var i = 0; i < $('items').options.length; i++){
+			params += ($('items').options[i].value);
+			if (i < ($('items').options.length-1)){
+				params += ';'
+			}
+		}
+		
+		params += '';
+		params += '';
+		
+		
+		document.getElementById('alvo').src = params;
+	}
+	
+	
+	function IncluiItem(){			
+		//alert('');
+		
+		var texto = '';
+		
+		texto = $('acao').value + ',' + $('prioridade').value + ',' + $('andamento').value + ',' + $('situacao').value;
+		
+		
+		
+		$('items').options[$('items').options.length] = new Option($('acao').value, texto);
+
+	}
+	</script>
+	<form>
+		<label for="altura">Altura</label>
+		<input type="text" id="altura" name="width" />
+		<br />
+		<label for="largura">Largura</label>
+		<input type="text" id="largura" name="height" />
+		<br />
+		<label for="largura">Exibir Escala</label>
+		<input type="checkbox" id="exibir_escala" name="showscale" value="1">
+		<br />
+		<label for="largura">Exibir Rótulos</label>
+		<input type="checkbox" id="exibir_label" name="showlabel" value="1">
+		<br />
+		<fieldset>
+			<legend>Pontos no Gráfico</legend>
+			
+			<label for="acao">Ação</label>
+			<input type="text" id="acao" name="acao" />
+			
+			<br />
+			
+			<label for="prioridade">Prioridade</label>
+			<input type="text" id="prioridade" name="prioridade" />
+			
+			<br />
+			
+			<label for="andamento">Andamento</label>
+			<input type="text" id="andamento" name="andamento" />
+			
+			<label for="situacao">Situação</label>
+			<input type="text" id="situacao" name="situacao" />
+			
+			<br />
+			
+			<input type="button" value="Inclui Item" onclick="IncluiItem();" />
+			
+			<select id="items" size="10" style="width: 300px">
+				
+			</select>
+			
+		</fieldset>
+		
+		<input type="button" value="Atualizar Gráfico" onclick="AtualizaImagem()" />
+	</form>
+	<img id="alvo" src="http://189.9.150.83/graficos/alvo.php" usemap="#targetmap" />
+	<map id="targetmap" name="targetmap">
+		<area shape="rect" coords="0,0,82,126" href="sun.htm" alt="Sun" />
+	</map>
+	</body>
+</html>

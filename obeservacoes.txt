@@ -1,3 +1,8 @@
 Reuni›es
 	- Campo Data sem m‡scara
 	- Enviar email n‹o funciona
+	
+	
+Tarefas
+	- Busca de tarefas n‹o funciona
+	- Criar um novo post no visualizar da tarefa n‹o est‡ funcionando

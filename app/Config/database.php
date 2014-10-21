@@ -65,7 +65,7 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'postgres',
 		'password' => 'postgres',
-		'database' => 'civisdaniel',
+		'database' => 'indicadores',
 		'prefix' => '',
 		'encoding' => 'utf8'
 	);

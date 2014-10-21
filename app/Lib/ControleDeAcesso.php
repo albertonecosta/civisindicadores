@@ -48,8 +48,9 @@ class ControleDeAcesso{
 			'Adicionar'=>array('Tarefa.adicionar.action', 'Tarefa.adicionar.element'),
 			'Excluir'=>array('Tarefa.excluir.action', 'Tarefa.excluir.element'),
 			'Editar'=>array('Tarefa.editar.action', 'Tarefa.editar.element'),
-			'Listar'=>array('Tarefa.index.action', 'Tarefa.listar.element'),
-			'Visualizar'=>array('Tarefa.visualizar.action', 'Tarefa.visualizar.element')
+			'Listar'=>array('Tarefa.index.action','Tarefa.jobsNaoIniciados.action','Tarefa.jobsEmAndamento.action','Tarefa.jobsConcluidas.action','Tarefa.listar.element'),
+			'Visualizar'=>array('Tarefa.visualizar.action', 'Tarefa.visualizar.element'),
+			'Imprimir'=>array('Tarefa.imprimirJobsConcluidas.action','Tarefa.imprimirJobsNaoIniciados.action','Tarefa.imprimirJobsEmAndamento.action','Tarefa.imprimir.element')
 		),'Marcadores'=>array(
 			'Adicionar'=>array('Marcador.adicionar.action', 'Marcador.adicionar.element'),
 			'Excluir'=>array('Marcador.excluir.action', 'Marcador.excluir.element'),

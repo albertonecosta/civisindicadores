@@ -1,19 +1,28 @@
+<?php
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar', 'Tarefa');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir', 'Tarefa');
+	$visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Usuario');
+?>
 <div class="container">
 	<legend>Visualizar Tarefa</legend>
 	<div class="buttons">
 		<?php
+		if($editar){
 		echo $this->Html->link(
 					__("<i class='fa fa-edit'></i>Editar"),
 					array('action' => 'editar', $tarefa['Tarefa']['id']),
 					array('class'=>'btn btn-small btn-primary pull-right', 'escape' => false)
 				);
 		echo "&nbsp;&nbsp;";
+		}
+		if($excluir){
 		echo $this->Form->postLink(
 					__("<i class='fa fa-trash'></i>Deletar"), 
 					array('action' => 'excluir', $tarefa['Tarefa']['id']), 
 					array('class'=>'btn btn-small btn-primary pull-right', 'escape' => false),
 					__(Util::MENSAGEM_DELETAR, $tarefa['Tarefa']['id'])
 				);
+		}
 		?>
 	</div>
 	<div class="row">
@@ -42,11 +51,22 @@
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Responsável'); ?></strong></td>
-						<td><?php echo $this->Html->link($tarefa['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Responsavel']['id'])); ?></td>
+						<td><?php 
+						if($visualizarUsuario){
+							echo $this->Html->link($tarefa['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Responsavel']['id'])); 
+						}else{
+							echo $tarefa['Responsavel']['Pessoa']['titulo'];
+						}
+						?></td>
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Supervisor'); ?></strong></td>
-						<td><?php echo $this->Html->link($tarefa['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Supervisor']['id']));?></td>
+						<td><?php 
+						if($visualizarUsuario){
+							echo $this->Html->link($tarefa['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Supervisor']['id']));
+						}else{
+							echo $tarefa['Supervisor']['Pessoa']['titulo'];
+						}?></td>
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Status'); ?></strong></td>

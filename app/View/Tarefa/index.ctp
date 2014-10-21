@@ -1,4 +1,11 @@
-
+<?php
+	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Tarefa');
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Tarefa');
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar', 'Tarefa');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir', 'Tarefa');
+	$imprimir = $this->ControleDeAcesso->validaAcessoElemento('imprimir', 'Tarefa');
+	$visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Usuario');
+?>
 <div class="container">
 <script src="<?php echo $this->base?>/js/responsiveTabs.js"></script>
 		<script>
@@ -46,8 +53,10 @@
 					?>
 				</div>
 			</div><!-- /.list-filters -->
-				<div class="list-actions-buttons pull-right">				
+				<div class="list-actions-buttons pull-right">
+				<?php if($adicionar){?>				
 				<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>Tarefa/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>
+				<?php }?>
 			</div><!-- /.list-actions -->
 			<!-- end Filtros -->
 		</div>
@@ -111,43 +120,69 @@
 					<th data-hide="phone,tablet"><?php echo __('data final'); ?></th>
 					<th data-hide="phone,tablet"><?php echo __('responsável'); ?></th>
 					<th data-hide="phone,tablet"><?php echo __('supervisor'); ?></th>
+					<?php if($editar || $excluir){?>
 					<th><center><?php echo __('Ações'); ?></center></th>
+					<?php }?>
 				</tr>
 			</thead>
 			<tbody>
 			<?php foreach($naoIniciadas as $tarefa){?>
 				<tr>
-					<td><?php echo $this->Html->link($tarefa['Tarefa']['titulo'], array('action' => 'visualizar', $tarefa['Tarefa']['id'])); ?>&nbsp;</td>
+					<td><?php
+						if($visualizar){ 
+							echo $this->Html->link($tarefa['Tarefa']['titulo'], array('action' => 'visualizar', $tarefa['Tarefa']['id']));
+						}else{
+							echo $tarefa['Tarefa']['titulo'];
+						}
+						?>&nbsp;</td>
 					<td><?php echo $tarefa['Tarefa']['data_inicio_previsto']; ?>&nbsp;</td>
 					<td><?php echo $tarefa['Tarefa']['data_fim_previsto']; ?>&nbsp;</td>
-					<td><?php echo $this->Html->link($tarefa['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Responsavel']['id'])); ?>&nbsp;</td>
-					<td><?php echo $this->Html->link($tarefa['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Supervisor']['id'])); ?>&nbsp;</td>
+					<td><?php 
+					if($visualizarUsuario){
+					echo $this->Html->link($tarefa['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Responsavel']['id'])); 
+					}else{
+						echo $tarefa['Responsavel']['Pessoa']['titulo'];
+					}
+					?>&nbsp;</td>
+					<td><?php 
+					if($visualizarUsuario){
+						echo $this->Html->link($tarefa['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Supervisor']['id']));
+					}else{
+						echo $tarefa['Supervisor']['Pessoa']['titulo'];
+					}
+					?>&nbsp;</td>
+					<?php if($editar || $excluir){?>
 					<td width="7%" nowrap="nowrap" align=left>
-						
 						<?php 
-							echo $this->Html->link(
-								__(""),
-								array('action' => 'editar', $tarefa['Tarefa']['id']),
-								array('class'=>'icon-edit')
-							);
-							echo "&nbsp;&nbsp;";
-							echo $this->Form->postLink(
-								__(""), 
-								array('action' => 'excluir', $tarefa['Tarefa']['id']), 
-								array('class'=>'icon-trash'),
-								__(Util::MENSAGEM_DELETAR, $tarefa['Tarefa']['id'])
-							); 
+							if($editar){
+								echo $this->Html->link(
+									__(""),
+									array('action' => 'editar', $tarefa['Tarefa']['id']),
+									array('class'=>'icon-edit')
+								);
+								echo "&nbsp;";
+							}
+							if($excluir){
+								echo $this->Form->postLink(
+									__(""), 
+									array('action' => 'excluir', $tarefa['Tarefa']['id']), 
+									array('class'=>'icon-trash'),
+									__(Util::MENSAGEM_DELETAR, $tarefa['Tarefa']['id'])
+								);
+								echo "&nbsp;";
+							}
 							if(count($tarefa['Post']) > 0){
-							echo "&nbsp;&nbsp;";
-							echo $this->Html->link(
-								__(""), 
-								array('action' => 'visualizar', $tarefa['Tarefa']['id']), 
-								array('class'=>'icon-comment')
-							); 
+								if($visualizar){
+									echo $this->Html->link(
+										__(""), 
+										array('action' => 'visualizar', $tarefa['Tarefa']['id']), 
+										array('class'=>'icon-comment')
+									);
+								}
 							}
 						?>
-						
 					</td>
+					<?php }?>
 				</tr>
 				<?php } ?>
 			</tbody>
@@ -168,44 +203,67 @@
 					<th data-hide="phone,tablet"><?php echo __('data final'); ?></th>
 					<th data-hide="phone,tablet"><?php echo __('responsável'); ?></th>
 					<th data-hide="phone,tablet"><?php echo __('supervisor'); ?></th>
+					<?php if($editar || $excluir){?>
 					<th><center><?php echo __('Ações'); ?></center></th>
+					<?php }?>
 				</tr>
 			</thead>
 			<tbody>
 			<?php foreach($iniciadas as $tarefa){?>
 				<tr>
-					<td><?php echo $this->Html->link($tarefa['Tarefa']['titulo'], array('action' => 'visualizar', $tarefa['Tarefa']['id'])); ?>&nbsp;</td>
+					<td><?php if($visualizar){ 
+							echo $this->Html->link($tarefa['Tarefa']['titulo'], array('action' => 'visualizar', $tarefa['Tarefa']['id']));
+						}else{
+							echo $tarefa['Tarefa']['titulo'];
+						} ?>&nbsp;</td>
 					<td><?php echo $tarefa['Tarefa']['data_inicio_previsto']; ?>&nbsp;</td>
 					<td><?php echo $tarefa['Tarefa']['data_fim_previsto']; ?>&nbsp;</td>
-					<td><?php echo $this->Html->link($tarefa['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Responsavel']['id'])); ?>&nbsp;</td>
-					<td><?php echo $this->Html->link($tarefa['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Supervisor']['id'])); ?>&nbsp;</td>
+					<td><?php 
+					if($visualizarUsuario){
+					echo $this->Html->link($tarefa['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Responsavel']['id'])); 
+					}else{
+						echo $tarefa['Responsavel']['Pessoa']['titulo'];
+					}
+					?>&nbsp;</td>
+					<td><?php 
+					if($visualizarUsuario){
+						echo $this->Html->link($tarefa['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Supervisor']['id']));
+					}else{
+						echo $tarefa['Supervisor']['Pessoa']['titulo'];
+					}
+					?>&nbsp;</td>
+					<?php if($editar || $excluir){?>
 					<td width="7%" nowrap="nowrap" align=left>
-					
 						<?php 
-							echo $this->Html->link(
-								__(""),
-								array('action' => 'editar', $tarefa['Tarefa']['id']),
-								array('class'=>'icon-edit')
-							);
-							echo "&nbsp;&nbsp;";
-							echo $this->Form->postLink(
-								__(""), 
-								array('action' => 'excluir', $tarefa['Tarefa']['id']), 
-								array('class'=>'icon-trash'),
-								__(Util::MENSAGEM_DELETAR, $tarefa['Tarefa']['id'])
-							); 
-							
+							if($editar){
+								echo $this->Html->link(
+									__(""),
+									array('action' => 'editar', $tarefa['Tarefa']['id']),
+									array('class'=>'icon-edit')
+								);
+								echo "&nbsp;";
+							}
+							if($excluir){
+								echo $this->Form->postLink(
+									__(""), 
+									array('action' => 'excluir', $tarefa['Tarefa']['id']), 
+									array('class'=>'icon-trash'),
+									__(Util::MENSAGEM_DELETAR, $tarefa['Tarefa']['id'])
+								);
+								echo "&nbsp;";
+							}
 							if(count($tarefa['Post']) > 0){
-							echo "&nbsp;&nbsp;";
-							echo $this->Html->link(
-								__(""), 
-								array('action' => 'visualizar', $tarefa['Tarefa']['id']), 
-								array('class'=>'icon-comment')
-							); 
+								if($visualizar){
+									echo $this->Html->link(
+										__(""), 
+										array('action' => 'visualizar', $tarefa['Tarefa']['id']), 
+										array('class'=>'icon-comment')
+									);
+								}
 							}
 						?>
-					
 					</td>
+					<?php }?>
 				</tr>
 				<?php } ?>
 			</tbody>
@@ -227,44 +285,67 @@
 					<th data-hide="phone,tablet"><?php echo __('data final'); ?></th>
 					<th data-hide="phone,tablet"><?php echo __('responsável'); ?></th>
 					<th data-hide="phone,tablet"><?php echo __('supervisor'); ?></th>
+					<?php if($editar || $excluir){?>
 					<th><center><?php echo __('Ações'); ?></center></th>
+					<?php }?>
 				</tr>
 			</thead>
 			<tbody>
 			<?php foreach($concluidas as $tarefa){?>
 				<tr>
-					<td><?php echo $this->Html->link($tarefa['Tarefa']['titulo'], array('action' => 'visualizar', $tarefa['Tarefa']['id'])); ?>&nbsp;</td>
+					<td><?php if($visualizar){ 
+							echo $this->Html->link($tarefa['Tarefa']['titulo'], array('action' => 'visualizar', $tarefa['Tarefa']['id']));
+						}else{
+							echo $tarefa['Tarefa']['titulo'];
+						} ?>&nbsp;</td>
 					<td><?php echo $tarefa['Tarefa']['data_inicio_previsto']; ?>&nbsp;</td>
 					<td><?php echo $tarefa['Tarefa']['data_fim_previsto']; ?>&nbsp;</td>
-					<td><?php echo $this->Html->link($tarefa['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Responsavel']['id'])); ?>&nbsp;</td>
-					<td><?php echo $this->Html->link($tarefa['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Supervisor']['id'])); ?>&nbsp;</td>
+					<td><?php 
+					if($visualizarUsuario){
+					echo $this->Html->link($tarefa['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Responsavel']['id'])); 
+					}else{
+						echo $tarefa['Responsavel']['Pessoa']['titulo'];
+					}
+					?>&nbsp;</td>
+					<td><?php 
+					if($visualizarUsuario){
+						echo $this->Html->link($tarefa['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $tarefa['Supervisor']['id']));
+					}else{
+						echo $tarefa['Supervisor']['Pessoa']['titulo'];
+					}
+					?>&nbsp;</td>
+					<?php if($editar || $excluir){?>
 					<td width="7%" nowrap="nowrap" align=left>
-						
 						<?php 
-							echo $this->Html->link(
-								__(""),
-								array('action' => 'editar', $tarefa['Tarefa']['id']),
-								array('class'=>'icon-edit')
-							);
-							echo "&nbsp;&nbsp;";
-							echo $this->Form->postLink(
-								__(""), 
-								array('action' => 'excluir', $tarefa['Tarefa']['id']), 
-								array('class'=>'icon-trash'),
-								__(Util::MENSAGEM_DELETAR, $tarefa['Tarefa']['id'])
-							); 
-							
+							if($editar){
+								echo $this->Html->link(
+									__(""),
+									array('action' => 'editar', $tarefa['Tarefa']['id']),
+									array('class'=>'icon-edit')
+								);
+								echo "&nbsp;";
+							}
+							if($excluir){
+								echo $this->Form->postLink(
+									__(""), 
+									array('action' => 'excluir', $tarefa['Tarefa']['id']), 
+									array('class'=>'icon-trash'),
+									__(Util::MENSAGEM_DELETAR, $tarefa['Tarefa']['id'])
+								);
+								echo "&nbsp;";
+							}
 							if(count($tarefa['Post']) > 0){
-							echo "&nbsp;&nbsp;";
-							echo $this->Html->link(
-								__(""), 
-								array('action' => 'visualizar', $tarefa['Tarefa']['id']), 
-								array('class'=>'icon-comment')
-							); 
+								if($visualizar){
+									echo $this->Html->link(
+										__(""), 
+										array('action' => 'visualizar', $tarefa['Tarefa']['id']), 
+										array('class'=>'icon-comment')
+									);
+								}
 							}
 						?>
-						
 					</td>
+					<?php }?>
 				</tr>
 				<?php } ?>
 			</tbody>

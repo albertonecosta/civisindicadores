@@ -79,7 +79,7 @@
 		$parametros = implode(';', $parametros);
 		?>
 		
-		<iframe src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/graficos/ver_alvo.php?showscale=1&width=800&height=800&table_data=<?php echo $parametros;?>" width="100%" height="840" style="border: 0px;" scrolling="no"> </iframe>
+		<iframe src="http://<?php echo $_SERVER['HTTP_HOST'] . $this->base; ?>/graficos/ver_alvo.php?base=<?php echo $this->base;?>&showscale=1&width=800&height=800&table_data=<?php echo $parametros;?>" width="100%" height="840" style="border: 0px;" scrolling="no"> </iframe>
 	</div>
 	
 	

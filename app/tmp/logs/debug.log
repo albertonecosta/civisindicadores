@@ -67121,3 +67121,153 @@ Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
 Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
 [main] - APP/webroot/index.php, line 92
 
+2014-10-20 18:39:29 Notice: Notice (8): Undefined index: data_selecionada in [/Users/tulio/Sites/civisindicadores/app/Controller/ProjetoController.php, line 209]
+Trace:
+ProjetoController::visualizar() - APP/Controller/ProjetoController.php, line 209
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 186
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-20 18:39:29 Notice: Notice (8): Undefined variable: acoes1 in [/Users/tulio/Sites/civisindicadores/app/Controller/ProjetoController.php, line 256]
+Trace:
+ProjetoController::visualizar() - APP/Controller/ProjetoController.php, line 256
+ReflectionMethod::invokeArgs() - [internal], line ??
+Controller::invokeAction() - CORE/Cake/Controller/Controller.php, line 485
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 186
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-20 18:39:29 Notice: Notice (8): Undefined variable: vp in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 190]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 190
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-20 18:39:29 Notice: Notice (8): Undefined variable: va in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 194]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 194
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-20 18:39:29 Notice: Notice (8): Undefined variable: ipd in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 198]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 198
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-20 18:39:29 Notice: Notice (8): Undefined variable: ipd in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 202]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 202
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-20 18:39:29 Notice: Notice (8): Undefined variable: va in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 206]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 206
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-20 18:39:29 Notice: Notice (8): Undefined variable: vp in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 206]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 206
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-20 18:39:29 Notice: Notice (8): Undefined variable: ondeEstaMedia in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 327]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 327
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-20 18:39:29 Notice: Notice (8): Undefined variable: ondeDeveriaMedia in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 327]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 327
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-20 18:39:29 Notice: Notice (8): Undefined variable: ondeEstaTotal in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 458]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 458
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-20 18:39:29 Notice: Notice (8): Undefined variable: qtdAcoes in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 458]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 458
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-20 18:39:29 Notice: Notice (8): Undefined variable: qtdAcoesConcluidas in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 470]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 470
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
+2014-10-20 18:39:29 Notice: Notice (8): Undefined variable: qtdAcoes in [/Users/tulio/Sites/civisindicadores/app/View/Projeto/visualizar.ctp, line 470]
+Trace:
+include - APP/View/Projeto/visualizar.ctp, line 470
+View::_evaluate() - CORE/Cake/View/View.php, line 921
+View::_render() - CORE/Cake/View/View.php, line 884
+View::render() - CORE/Cake/View/View.php, line 476
+Controller::render() - CORE/Cake/Controller/Controller.php, line 956
+Dispatcher::_invoke() - CORE/Cake/Routing/Dispatcher.php, line 193
+Dispatcher::dispatch() - CORE/Cake/Routing/Dispatcher.php, line 161
+[main] - APP/webroot/index.php, line 92
+
