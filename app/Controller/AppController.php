@@ -40,7 +40,7 @@ class AppController extends Controller {
 	
 	public $usuarioLogado = null;
 	
-	public $helpers = array('Js' => array('Jquery'), 'FilterResults.FilterForm');
+	public $helpers = array('Js' => array('Jquery'), 'Form', 'FilterResults.FilterForm');
 	
 	public $components = array(
 		'ControleDeAcesso',

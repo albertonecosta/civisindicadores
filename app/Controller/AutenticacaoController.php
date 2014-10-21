@@ -33,6 +33,7 @@ class AutenticacaoController extends AppController {
 	 * Método de login do usuário no sistema
 	 */
 	public function index(){
+		$this->Usuario->recursive = -1;
 		if($this->request->is('post')){
 			if($this->Auth->login()){
 				$this->redirect(array("controller"=>"aplicacao","action"=>"index"));

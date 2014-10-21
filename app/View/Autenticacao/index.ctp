@@ -11,8 +11,8 @@
 					<form method="post">
 					    <fieldset>
 					        <?php 
-					        echo $this->Form->input('Usuario.login');
-					        echo $this->Form->input('Usuario.senha', array('type'=>'password'));
+						        echo $this->Form->input('Usuario.login');
+						        echo $this->Form->input('Usuario.senha', array('type'=>'password'));
 					    	?>
 					    </fieldset>
 						<button type="submit" class="btn btn-primary">Logar</button>
