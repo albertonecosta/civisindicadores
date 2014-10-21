@@ -48,28 +48,6 @@ class UsuarioController extends AppController {
 		$this->paginate['order'] = array('Pessoa.titulo' => 'asc');
 		$this->set('usuario', $this->paginate());
 	}
-	
-	/**
-	 * Método de login do usuário no sistema
-	 */
-	public function login(){
-		$this->layout = "login";
-		if($this->request->is('post')){
-			if($this->Auth->login()){
-				$this->redirect(array("controller" => "Aplicacao", "action" => "index"));
-			}else{
-				$this->Session->setFlash("Email e/ou senha incorretos", 'alert');
-			}
-		}
-	}
-	
-	/**
-	 * Logout do usuário no sistema
-	 */
-	public function logout(){
-		$this->Session->delete('Auth.Permissions');
-		$this->redirect($this->Auth->logout());
-	}
 
 	/**
 	 * view method

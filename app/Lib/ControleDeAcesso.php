@@ -64,7 +64,8 @@ class ControleDeAcesso{
 			'Excluir'=>array('Procedimento.excluir.action', 'Procedimento.excluir.element'),
 			'Editar'=>array('Procedimento.editar.action', 'Procedimento.editar.element'),
 			'Listar'=>array('Procedimento.index.action', 'Procedimento.listar.element'),
-			'Visualizar'=>array('Procedimento.visualizar.action', 'Procedimento.visualizar.element')
+			'Visualizar'=>array('Procedimento.visualizar.action', 'Procedimento.visualizar.element'),
+			'Imprimir'=>array('Procedimento.imprimir.action','Procedimento.imprimir.element')
 		),'Grupos'=>array(
 			'Adicionar'=>array('Grupo.adicionar.action', 'Grupo.adicionar.element'),
 			'Excluir'=>array('Grupo.excluir.action', 'Grupo.excluir.element'),
@@ -104,8 +105,8 @@ class ControleDeAcesso{
 		$this->Permissao = new Permissao();
 		$this->nomeAcao = $nameAction;
 		$this->nomeControlador = $nameController;
-		if(isset($_SESSION['Auth']['User']))
-			$this->user = $_SESSION['Auth']['User'];
+		if(isset($_SESSION["Auth"]["Indicadores"]))
+			$this->user = $_SESSION["Auth"]["Indicadores"];
 	}
 
 	public function validaAcessoAcao($acao='', $controller=''){	

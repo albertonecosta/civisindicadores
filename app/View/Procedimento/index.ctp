@@ -1,3 +1,11 @@
+<?php
+	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Procedimento');
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Procedimento');
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar', 'Procedimento');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir', 'Procedimento');
+	$imprimir = $this->ControleDeAcesso->validaAcessoElemento('imprimir', 'Procedimento');
+	$visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Usuario');
+?>
 <script type="text/javascript">
   $(function() {
     $('.footable').footable();
@@ -39,8 +47,10 @@
 					?>
 				</div>
 			</div><!-- /.list-filters -->
-				<div class="list-actions-buttons pull-right">				
+				<div class="list-actions-buttons pull-right">
+				<?php if($adicionar){?>				
 				<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>Procedimento/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>
+				<?php }?>
 			</div><!-- /.list-actions -->
 			<!-- end Filtros -->
 		</div>

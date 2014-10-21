@@ -30,6 +30,27 @@ class AutenticacaoController extends AppController {
 	
 	
 	/**
+	 * Método de login do usuário no sistema
+	 */
+	public function index(){
+		if($this->request->is('post')){
+			if($this->Auth->login()){
+				$this->redirect(array("controller"=>"aplicacao","action"=>"index"));
+			}else{
+				$this->Session->setFlash("Email e/ou senha incorretos", 'alert');
+			}
+		}
+	}
+	
+	/**
+	 * Logout do usuário no sistema
+	 */
+	public function logout(){
+		$this->autoRender = false;
+		$this->redirect($this->Auth->logout());
+	}
+	
+	/**
 	 * Método responsável por renderizar a página de Esqueci Minha Senha
 	 */
 	

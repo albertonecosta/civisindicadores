@@ -35,8 +35,6 @@ App::import("Lib", "Util");
 class AppController extends Controller {
 	
 	const PERPAGE = 20;
-	
-	//public $theme = "Cakestrap";
 
 	public $paginate = array();
 	
@@ -59,13 +57,13 @@ class AppController extends Controller {
 	        )
 	    ),
 	    'Auth' => array(
-		        'loginAction' => array(
-		            'controller' => 'usuario',
-		            'action' => 'login'
-		        ),
+	        'loginAction' => array(
+	            'controller' => 'autenticacao',
+	            'action' => 'index'
+	        ),
 	        'authError' => 'Acesso restrito',
-	        'loginRedirect' => array('action'=>'index','controller'=>'Aplicacao'),
-	        'logoutRedirect' => array('action'=>'login','controller'=>'Usuario'),
+	        'loginRedirect' => array('action'=>'index','controller'=>'aplicacao'),
+	        'logoutRedirect' => array('action'=>'index','controller'=>'autenticacao'),
 	        'authenticate' => array(
 	            'Form' => array(
 	                'fields' => array('username' => 'login', 'password' => 'senha'),
@@ -87,12 +85,13 @@ class AppController extends Controller {
 		$this->set('action', $this->request->params['action']);
 		$this->set('body_id', strtolower($this->name . '-body'));
         $this->set('body_class', strtolower('body-' . $this->name . '-' . $this->action));
-        $this->usuarioLogado = $this->Auth->user();
         $this->set('usuarioLogado', $this->usuarioLogado);
 	}
 	
 	function beforeFilter() {
+		AuthComponent::$sessionKey = "Auth.Indicadores";
         $this->paginate['limit'] = 20;
+        $this->usuarioLogado = $this->Auth->user();
     }
     
     public function paginacao($registros, $total, $pagina = 1, $perpage = self::PERPAGE){

@@ -32,7 +32,7 @@
 	    					<div class="links">
 	    						<?php echo $this->Html->link("Alterar Dados", array("controller"=>"usuario","action"=>"editar", $usuarioLogado["id"]));?>	
 	    						<span class="separador"> | </span>
-	    						<?php echo $this->Html->link("Sair", array("controller"=>"usuario","action"=>"logout"));?>		
+	    						<?php echo $this->Html->link("Sair", array("controller"=>"autenticacao","action"=>"logout"));?>		
 	    					</div>
 	    				</div>
 		    			

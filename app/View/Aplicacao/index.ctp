@@ -2,16 +2,16 @@
 	<div class="span3">
 		<div class="application-bar">
 			<div class="application-user">
-				<div class="sector"><?php echo $_SESSION["Auth"]["User"]["Cargo"]["titulo"];?></div>
+				<div class="sector"><?php echo $usuarioLogado["Cargo"]["titulo"];?></div>
 				<div class="application-user-wrap clearfix">
 					<figure class="image">
-						<img src="<?php echo $this->webroot."files/usuario/".$_SESSION["Auth"]["User"]['diretorio_imagem_perfil']."/"."pequeno_".$_SESSION["Auth"]["User"]['imagem_perfil']; ?>" alt="">
+						<img src="<?php echo $this->webroot."files/usuario/".$usuarioLogado['diretorio_imagem_perfil']."/"."pequeno_".$usuarioLogado['imagem_perfil']; ?>" alt="">
 					</figure>
 					<span class="welcome">Olá,</span>
 					<strong class="name">
 					<?php 
 						
-						echo $_SESSION["Auth"]["User"]["Pessoa"]["titulo"];
+						echo $usuarioLogado["Pessoa"]["titulo"];
 					?>
 					</strong>
 					<a href="<?php echo $this->base?>/usuario/logout" class="logout" title="Sair">(Sair)</a>

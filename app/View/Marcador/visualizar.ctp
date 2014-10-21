@@ -1,19 +1,28 @@
+<?php
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar', 'Marcador');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir', 'Marcador');
+	$visualizarMedida = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Medida');
+?>
 <div class="container">
 	<legend>Visualizar Marcador</legend>
 	<div class="buttons">
 		<?php
-		echo $this->Html->link(
+		if($editar){
+			echo $this->Html->link(
 					__("<i class='fa fa-edit'></i>Editar"),
 					array('action' => 'editar', $marcador['Marcador']['id']),
 					array('class'=>'btn btn-small btn-primary pull-right', 'escape' => false)
 				);
-		echo "&nbsp;&nbsp;";
-		echo $this->Form->postLink(
+			echo "&nbsp;&nbsp;";
+		}
+		if($excluir){
+			echo $this->Form->postLink(
 					__("<i class='fa fa-trash'></i>Deletar"), 
 					array('action' => 'excluir', $marcador['Marcador']['id']), 
 					array('class'=>'btn btn-small btn-primary pull-right', 'escape' => false),
 					__(Util::MENSAGEM_DELETAR, $marcador['Marcador']['id'])
 				);
+		}
 		?>
 	</div>
 	<div class="row">
@@ -44,7 +53,12 @@
 										<div class="wrapper">
 										<div class="text">
 												<abbr>
-												<?php echo $this->Html->link($objetivo["Objetivo"]['titulo'], array('controller' => 'Medida', 'action' => 'visualizar', $objetivo["Objetivo"]['id'])); ?>	
+												<?php 
+												if($visualizarMedida){
+													echo $this->Html->link($objetivo["Objetivo"]['titulo'], array('controller' => 'Medida', 'action' => 'visualizar', $objetivo["Objetivo"]['id']));
+												}else{
+													echo $objetivo["Objetivo"]['titulo'];
+												}?>	
 												</abbr>
 											</div>									
 										</div>

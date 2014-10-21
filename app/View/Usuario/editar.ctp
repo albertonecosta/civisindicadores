@@ -26,7 +26,7 @@
 				echo $this->Form->input('Usuario.id', array('type' => 'hidden'));
 				echo $this->Form->input('Usuario.login', array('class' => 'input-xlarge'));
 				
-				if($_SESSION['Auth']['User']['id'] == $_SESSION['dados_a_salvar']['Usuario']['id']){
+				if($usuarioLogado['id'] == $_SESSION['dados_a_salvar']['Usuario']['id']){
 					echo $this->Form->input('Usuario.senha_nova', array('type' => 'password', 'class' => 'input-xlarge', 'value' => '', 'label' => 'Senha'));
 					echo $this->Form->input('Usuario.confirmacao_senha_nova', array('type' => 'password', 'class' => 'input-xlarge', 'label' => 'Confirmacao Senha'));
 					echo $this->Form->input('Usuario.lembrete_senha', array('class' => 'input-xlarge'));

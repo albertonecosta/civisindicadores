@@ -7,12 +7,20 @@ App::uses('AppController', 'Controller');
  * @property SessionComponent $Session
  */
 class AplicacaoController extends AppController {
+	
+	public function beforeFilter(){
+		parent::beforeFilter();
+	}
+	
+	public function beforeRender(){
+		parent::beforeRender();
+	}
 
-/**
- * index method
- *
- * @return void
- */
+	/**
+	 * index method
+	 *
+	 * @return void
+	 */
 	public function index() {
 		$this->loadModel('Projeto');
 		$projeto = $this->Projeto->query("select projeto.id, projeto.titulo, acao.status,count(acao.id) as totalacao from projeto left join acao on acao.projeto_id=projeto.Id where (projeto.status <> ".Util::INATIVO." and acao.status <> ".Util::INATIVO.") group by acao.status,projeto.id,projeto.titulo,projeto.data_inicio_previsto order by projeto.data_inicio_previsto ASC");
@@ -25,12 +33,11 @@ class AplicacaoController extends AppController {
 			
 		}
 		
-		
 		$this->loadModel("Tarefa");
 		$tarefa = $this->Tarefa->query("select tarefa.id,tarefa.titulo as Tarefa,pessoa.titulo as Pessoa,data_fim_previsto 
 										from Tarefa inner join usuario on usuario.id = tarefa.responsavel_id 
 										inner join pessoa on pessoa.id = usuario.pessoa_id
-										where (responsavel_id='".$_SESSION["Auth"]["User"]["id"]."' or supervisor_id='".$_SESSION["Auth"]["User"]["id"]."') and tarefa.status <> 5 and tarefa.status <> ".Util::INATIVO." order by data_fim_previsto ASC");
+										where (responsavel_id='".$this->usuarioLogado["id"]."' or supervisor_id='".$this->usuarioLogado["id"]."') and tarefa.status <> 5 and tarefa.status <> ".Util::INATIVO." order by data_fim_previsto ASC");
 		//$tarefas = $this->Tarefa->find('all', array('conditions' => array('Tarefa.status != ' => Util::INATIVO,'Tarefa.responsavel_id' => '25'), 'order' => array('Tarefa.data_fim_previsto', 'Tarefa.data_fim_previsto DESC'),));
 		$tarefas = array();
 		foreach($tarefa as $vetorTarefa){
