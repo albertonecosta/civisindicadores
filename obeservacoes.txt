@@ -2,7 +2,10 @@ Reuni›es
 	- Campo Data sem m‡scara
 	- Enviar email n‹o funciona
 	
-	
 Tarefas
 	- Busca de tarefas n‹o funciona
 	- Criar um novo post no visualizar da tarefa n‹o est‡ funcionando
+	- Falta colocar a permiss‹o na p‡gina de visualizar para a Atividade e para listagem e adicionar dos posts (adicionar do post n‹o funciona, acredito que seja pq n‹o est‡ enviando email)
+
+
+	
