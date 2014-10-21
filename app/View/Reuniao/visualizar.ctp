@@ -1,21 +1,33 @@
+<?php
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
+	$visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Usuario');
+	$visualizarTarefa = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Tarefa');
+	$adicionarTarefa = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Tarefa');
+?>
 <div class="container">
 	<legend>Visualizar Reunião</legend>
 	<div class="buttons">
 		<?php
+		if($editar){
 		echo $this->Html->link(
 					__("<i class='fa fa-edit'></i>Editar"),
 					array('action' => 'editar', $reuniao[0]['Reuniao']['id']),
 					array('class'=>'btn btn-small btn-primary pull-right', 'escape' => false)
 				);
-			
+		echo "&nbsp;&nbsp;";
+		}
+		if($excluir){
 		echo $this->Form->postLink(
 					__("<i class='fa fa-trash'></i>Deletar"), 
 					array('action' => 'excluir', $reuniao[0]['Reuniao']['id']), 
 					array('class'=>'btn btn-small btn-primary pull-right', 'escape' => false),
 					__(Util::MENSAGEM_DELETAR, $reuniao[0]['Reuniao']['id'])
 				);
+		}
 		?>
 	</div>
+	<br />
 	<div class="row">
 		<div class="span12">
 			<table cellpadding="0" cellspacing="0" class="table table-bordered table-hover table-condensed">
@@ -45,7 +57,14 @@
 						<td>
 							<ul>
 								<?php foreach($reuniao[0]['Participantes'] as $value){?>
-									<li><?php echo $this->Html->link($value['titulo'], array('controller' => 'Usuario', 'action' => 'visualizar', $value['id']));  ?></li>
+									<li><?php 
+										if($visualizarUsuario){
+											echo $this->Html->link($value['titulo'], array('controller' => 'Usuario', 'action' => 'visualizar', $value['id']));
+										}else{
+											echo $value['titulo'];
+										}
+										
+										?></li>
 								<?php } ?>
 							</ul>
 							&nbsp;
@@ -59,13 +78,21 @@
 							if(isset($reuniao[0]['Tarefa'])){
 								foreach ($reuniao[0]['Tarefa'] as $key => $value) {
 								?>
-									<li><?php echo $this->Html->link($value['titulo'], array('controller' => 'Tarefa', 'action' => 'visualizar', $value['id'])); ?></li>
+									<li><?php 
+									if($visualizarTarefa){
+										echo $this->Html->link($value['titulo'], array('controller' => 'Tarefa', 'action' => 'visualizar', $value['id']));
+										}else{
+											echo "<a>". $value['titulo'] . "</a>";
+										}
+									?></li>
 								<?php
 								}
 							}
 							?>
 							<div class="row-fluid" style="margin-top: 10px;">
+								<?php if($adicionarTarefa){?>
 								<button class="btn btn-mini" type="button" onclick="abrirModal(<?php echo $reuniao[0]['Reuniao']['id']; ?>)">Adicionar</button>
+								<?php }?>
 							</div>
 							</ul>
 							&nbsp;	

@@ -14,7 +14,7 @@
 						echo $usuarioLogado["Pessoa"]["titulo"];
 					?>
 					</strong>
-					<a href="<?php echo $this->base?>/usuario/logout" class="logout" title="Sair">(Sair)</a>
+					<a href="<?php echo $this->base?>/autenticacao/logout" class="logout" title="Sair">(Sair)</a>
 				</div>
 			</div><!-- /.application-user -->
 

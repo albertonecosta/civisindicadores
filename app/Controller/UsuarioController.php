@@ -135,6 +135,16 @@ class UsuarioController extends AppController {
 		$this->set("setores", $setores);
 			
 	}
+	
+	/**
+	 * Ação alterar dados que não está como uma ação de permissão pois é sempre permitido para o usuário
+	 * Por isso que chama o método editar
+	 * @param string $id
+	 */
+	public function alterardados(){
+		$this->editar($this->usuarioLogado['id']);
+		$this->render("editar");
+	}
 
 	/**
 	 * edit method
@@ -178,7 +188,9 @@ class UsuarioController extends AppController {
 						
 						
 						$this->Session->setFlash(__(Util::REGISTRO_EDITADO_SUCESSO), 'success');
-						$this->redirect(array('action' => 'index'));
+						$action = ($this->params["action"] == "alterardados") ? "alterardados" : "index";
+						$this->redirect(array('action'=>$action));
+						
 					}else{
 						$this->Session->setFlash(__(Util::REGISTRO_EDITADO_FALHA), 'alert');
 					}

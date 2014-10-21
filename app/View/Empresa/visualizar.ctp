@@ -56,27 +56,27 @@
 				<tbody>
 					<tr>
 						<td><strong><?php echo __('Logradouro'); ?></strong></td>
-						<td><?php echo h($empresa['Pessoa']['Endereco']['logradouro']); ?></td>
+						<td><?php echo h(@$empresa['Pessoa']['Endereco']['logradouro']); ?></td>
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Numero'); ?></strong></td>
-						<td><?php echo h($empresa['Pessoa']['Endereco']['numero']); ?></td>
+						<td><?php echo h(@$empresa['Pessoa']['Endereco']['numero']); ?></td>
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Cep'); ?></strong></td>
-						<td><?php echo h($empresa['Pessoa']['Endereco']['cep']); ?></td>
+						<td><?php echo h(@$empresa['Pessoa']['Endereco']['cep']); ?></td>
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Bairro'); ?></strong></td>
-						<td><?php echo h($empresa['Pessoa']['Endereco']['bairro']); ?></td>
+						<td><?php echo h(@$empresa['Pessoa']['Endereco']['bairro']); ?></td>
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Cidade'); ?></strong></td>
-						<td><?php echo h($empresa['Pessoa']['Endereco']['cidade']); ?></td>
+						<td><?php echo h(@$empresa['Pessoa']['Endereco']['cidade']); ?></td>
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Uf'); ?></strong></td>
-						<td><?php echo h($empresa['Pessoa']['Endereco']['uf']); ?></td>
+						<td><?php echo h(@$empresa['Pessoa']['Endereco']['uf']); ?></td>
 					</tr>		
 				</tbody>				
 			</table>

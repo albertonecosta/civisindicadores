@@ -30,7 +30,7 @@
 	    					<strong class="nome"><?php	echo $usuarioLogado["Pessoa"]["titulo"];	?></strong>
 							<br /><?php	echo $usuarioLogado["Grupo"]["titulo"];	?>
 	    					<div class="links">
-	    						<?php echo $this->Html->link("Alterar Dados", array("controller"=>"usuario","action"=>"editar", $usuarioLogado["id"]));?>	
+	    						<?php echo $this->Html->link("Alterar Dados", array("controller"=>"usuario","action"=>"alterardados"));?>	
 	    						<span class="separador"> | </span>
 	    						<?php echo $this->Html->link("Sair", array("controller"=>"autenticacao","action"=>"logout"));?>		
 	    					</div>

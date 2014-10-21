@@ -1,3 +1,9 @@
+<?php
+	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
+?>
 <script type="text/javascript">
   $(function() {
     $('.footable').footable();
@@ -32,7 +38,7 @@
 						<?php
 							foreach($_SESSION['Search']['Empresa'] as $key => $temo_busca){
 						?>
-							<span class="type-tag"><?php echo $temo_busca['buscar_em']?>: <?php echo $temo_busca['busca']?><?php echo $this->Html->link("", array("action" => "excluirFiltro", $key), array("class" => "fa fa-times")); ?></span>
+							<span class="type-tag"><?php echo $options[$temo_busca['buscar_em']]?>: <?php echo $temo_busca['busca']?><?php echo $this->Html->link("", array("action" => "excluirFiltro", $key), array("class" => "fa fa-times")); ?></span>
 						<?php	
 							}
 						}
@@ -40,8 +46,10 @@
 					?>
 				</div>
 			</div><!-- /.list-filters -->
-				<div class="list-actions-buttons pull-right">				
+				<div class="list-actions-buttons pull-right">
+				<?php if($adicionar){?>				
 				<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>Empresa/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>
+				<?php }?>
 			</div><!-- /.list-actions -->
 			<!-- end Filtros -->
 		</div>
@@ -52,32 +60,46 @@
 			<tr>
 				<th data-class="expand"><?php echo $this->Paginator->sort('Pessoa.titulo', 'Título'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Pessoa.email', "Email"); ?></th>
+				<?php if($editar || $excluir){?>
 				<th><center><?php echo __('Ações'); ?></center></th>
+				<?php }?>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach($empresa as $empresa){?>
 			<tr>
-				<td><?php echo $this->Html->link($empresa['Pessoa']['titulo'], array('action' => 'visualizar', $empresa['Empresa']['id'])); ?>&nbsp;</td>
+				<td><?php 
+				if($visualizar){
+					echo $this->Html->link($empresa['Pessoa']['titulo'], array('action' => 'visualizar', $empresa['Empresa']['id'])); 
+				}else{
+					echo $empresa['Pessoa']['titulo'];
+				}
+				?>&nbsp;</td>
 				<td><?php echo h($empresa['Pessoa']['email']); ?>&nbsp;</td>
+				<?php if($editar || $excluir){?>
 				<td width="7%" nowrap="nowrap">
 					<center>
 					<?php 
+						if($editar){
 						echo $this->Html->link(
 							__(""),
 							array('action' => 'editar', $empresa['Empresa']['id']),
 							array('class'=>'icon-edit')
 						);
 						echo "&nbsp;&nbsp;";
+						}
+						if($excluir){
 						echo $this->Form->postLink(
 							__(""), 
 							array('action' => 'excluir', $empresa['Empresa']['id']), 
 							array('class'=>'icon-trash'),
 							__(Util::MENSAGEM_DELETAR, $empresa['Empresa']['id'])
 						); 
+						}
 					?>
 					</center>
 				</td>
+				<?php }?>
 			</tr>
 			<?php } ?>
 		</tbody>

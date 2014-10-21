@@ -16,6 +16,19 @@
 	$isDepartamento = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Departamento');
 	$isCADASTROS = ($isUsuario || $isEmpresa || $isGrupo || $isCargo || $isVinculo || $isSetor || $isDepartamento);
 	
+	
+	// GESTÃO ESTRATÉGICA
+	$isDimensao = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Dimensao');
+	$isObjetivo = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Objetivo');
+	$isIndicador = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Indicador');
+	$isMedida = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Medida');
+	$isMedidaRevisao = $this->ControleDeAcesso->validaAcessoElemento('listar_revisao', 'Medida');
+	$isMedidaPainel = $this->ControleDeAcesso->validaAcessoElemento('listar_painel', 'Medida');
+	$isAcao = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Acao');
+	$isFaixa = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Faixa');
+	$isAnomalia = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Anomalia');
+	$isGESTAOESTRATEGICA = ($isDimensao || $isObjetivo || $isIndicador || $isMedida || $isMedidaRevisao || $isMedidaPainel || $isAcao || $isFaixa || $isAnomalia);
+	
 ?>
 <div class="navbar navbar-static-top" style="position:relative; !important;">
   <div class="navbar-inner">
@@ -86,75 +99,26 @@
           </li>
           <?php }?>
 		  
-		  
+		  <?php if($isGESTAOESTRATEGICA){?>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             	Gestão Estratégica
 		        <b class="caret"></b>
 		    </a>
 		    <ul class="dropdown-menu">
-		      <li>
-		      	<?php 
-		      		
-						echo $this->Html->link(__('Dimensões'), array('controller' => 'Dimensao','action' => 'index'));
-					
-				?>
-		      </li>
-		      <li>
-		      	<?php 
-		      		
-		      			echo $this->Html->link(__('Objetivos'), array('controller' => 'Objetivo','action' => 'index'));
-		      		
-		      	?>
-		      </li>
-			  <li class="">
-			  	<?php 
-		      		
-						echo $this->Html->link(__('Indicadores'), array('controller' => 'Indicador','action' => 'index'));
-					
-				?>
-			  </li>
-			  <li class="">
-				<?php echo $this->Html->link(__('Ações Estratégicas'), array('controller' => 'Medida','action' => 'index'));?>
-			  </li>
-			  
-			  <li class="">
-				<?php 
-				
-					echo $this->Html->link(__('Revisão das Ações'), array('controller' => 'Medida','action' => 'indice_revisao'));
-				
-				?>				
-			  </li>
-			  <li class="">
-				<?php echo $this->Html->link(__('Painel Geral de Ações'), array('controller' => 'Medida','action' => 'painel_acoes'));?>
-			  </li>
-			  
-		      <li>
-		      	<?php 
-		      		
-		      			echo $this->Html->link(__('Atividades'), array('controller' => 'Acao','action' => 'index'));
-		      		
-		      	?>
-		      </li>
-<!--		      <li>
-		      	<?php echo $this->Html->link(__('Planos de Ação'), array('controller' => 'PlanoAcao','action' => 'index'));?>
-		      </li>-->
-		      <li>
-		      	<?php 
-		      		
-		      			echo $this->Html->link(__('Faixas'), array('controller' => 'Faixa','action' => 'index'));
-		      		
-		      	?>
-		      </li>
-		      <li>
-		      	<?php 
-		      		
-						echo $this->Html->link(__('Anomalia'), array('controller' => 'Anomalia','action' => 'index'));
-					
-				?>
-		      </li>
+		      <li><?php echo $this->Html->link(__('Dimensões'), array('controller' => 'Dimensao','action' => 'index'));?></li>
+		      <li><?php echo $this->Html->link(__('Objetivos'), array('controller' => 'Objetivo','action' => 'index'));?></li>
+			  <li><?php echo $this->Html->link(__('Indicadores'), array('controller' => 'Indicador','action' => 'index'));?></li>
+			  <li><?php echo $this->Html->link(__('Ações Estratégicas'), array('controller' => 'Medida','action' => 'index'));?></li>
+			  <li><?php echo $this->Html->link(__('Revisão das Ações'), array('controller' => 'Medida','action' => 'indice_revisao'));?></li>
+			  <li><?php echo $this->Html->link(__('Painel Geral de Ações'), array('controller' => 'Medida','action' => 'painel_acoes'));?></li>
+		      <li><?php echo $this->Html->link(__('Atividades'), array('controller' => 'Acao','action' => 'index'));?></li>
+			  <?php /*<li><?php echo $this->Html->link(__('Planos de Ação'), array('controller' => 'PlanoAcao','action' => 'index'));?></li> */?>
+		      <li><?php echo $this->Html->link(__('Faixas'), array('controller' => 'Faixa','action' => 'index'));?></li>
+		      <li><?php echo $this->Html->link(__('Anomalia'), array('controller' => 'Anomalia','action' => 'index'));?></li>
 		    </ul>
           </li>
+          <?php }?>
 		
 			<li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -175,16 +139,9 @@
 			</ul>
 		  </li>
 		
-          <li class="">
-            <?php 
-            	echo $this->Html->link(__('Mapa estratégico'), array('controller' => 'MapaEstrategico','action' => 'index'));
-            ?>
-          </li>
-          <li class="">
-            <?php 
-            	echo $this->Html->link(__('Organograma'), array('controller' => 'Organograma','action' => 'index'));
-            ?>
-          </li>
+          <li class=""><?php echo $this->Html->link(__('Mapa estratégico'), array('controller' => 'MapaEstrategico','action' => 'index'));?></li>
+          <li class=""><?php echo $this->Html->link(__('Organograma'), array('controller' => 'Organograma','action' => 'index'));?></li>
+          
         </ul>
       </div>
     </div>

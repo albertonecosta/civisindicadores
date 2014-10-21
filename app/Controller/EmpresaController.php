@@ -192,6 +192,11 @@ class EmpresaController extends AppController {
 		}
 		$this->set('empresas', $empresas);
 		$this->request->data = $this->Empresa->read(null, $id);
+		$this->loadModel("Endereco");
+		$endereco = $this->Endereco->find('first', array('conditions'=>array('id'=>$this->request->data["Pessoa"]["endereco_id"])));
+		if($endereco){
+			$this->request->data["Endereco"] = $endereco["Endereco"];
+		}
 		$this->Audit->setDadosAntes($this->request->data);
 		
 	}

@@ -1,3 +1,9 @@
+<?php
+	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
+?>
 <div class="container">
 	<br />
 	<h4>Grupos</h4>
@@ -25,7 +31,7 @@
 						<?php
 							foreach($_SESSION['Search']['Grupo'] as $key => $temo_busca){
 						?>
-							<span class="type-tag"><?php echo $temo_busca['buscar_em']?>: <?php echo $temo_busca['busca']?><?php echo $this->Html->link("", array("action" => "excluirFiltro", $key), array("class" => "fa fa-times")); ?></span>
+							<span class="type-tag"><?php echo $options[$temo_busca['buscar_em']]?>: <?php echo $temo_busca['busca']?><?php echo $this->Html->link("", array("action" => "excluirFiltro", $key), array("class" => "fa fa-times")); ?></span>
 						<?php	
 							}
 						}
@@ -35,8 +41,10 @@
 			</div>
 			
 			<!-- /.list-filters -->
-				<div class="list-actions-buttons pull-right">				
+				<div class="list-actions-buttons pull-right">
+				<?php if($adicionar){?>				
 				<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>Grupo/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>
+				<?php }?>
 			</div><!-- /.list-actions -->
 			<!-- end Filtros -->
 				
@@ -48,31 +56,45 @@
 		<thead>
 			<tr>
 				<th><?php echo $this->Paginator->sort('titulo'); ?></th>
+				<?php if($editar || $excluir){?>
 				<th><center><?php echo __('Ações'); ?></center></th>
+				<?php }?>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach($grupo as $grupo){?>
 			<tr>
-				<td><?php echo $this->Html->link($grupo['Grupo']['titulo'], array('action' => 'visualizar', $grupo['Grupo']['id'])); ?>&nbsp;</td>
+				<td><?php 
+				if($visualizar){
+					echo $this->Html->link($grupo['Grupo']['titulo'], array('action' => 'visualizar', $grupo['Grupo']['id'])); 
+				}else{
+					echo $grupo['Grupo']['titulo'];
+				}
+				?>&nbsp;</td>
+				<?php if($editar || $excluir){?>
 				<td width="7%" nowrap="nowrap">
 					<center>
 					<?php 
+						if($editar){
 						echo $this->Html->link(
 							__(""),
 							array('action' => 'editar', $grupo['Grupo']['id']),
 							array('class'=>'icon-edit')
 						);
 						echo "&nbsp;&nbsp;";
+						}
+						if($excluir){
 						echo $this->Form->postLink(
 							__(""), 
 							array('action' => 'excluir', $grupo['Grupo']['id']), 
 							array('class'=>'icon-trash'),
 							__(Util::MENSAGEM_DELETAR, $grupo['Grupo']['id'])
-						); 
+						);
+						}
 					?>
 					</center>
 				</td>
+				<?php }?>
 			</tr>
 			<?php } ?>
 		</tbody>

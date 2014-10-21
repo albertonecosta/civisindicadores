@@ -35,12 +35,12 @@ class ReuniaoController extends AppController {
 		//Lemos a sessão se não estiver vázia para aplicar os filtros
 		if(isset($_SESSION['Search']['Reuniao'])){
 			foreach($_SESSION['Search']['Reuniao'] as $termo_busca){
-				if($termo_busca['buscar_em'] == "data"){
-					$buscar_em = 'TO_CHAR(Reuniao.'.$termo_busca['buscar_em'].",'DD/MM/YYYY') ILIKE";
+				if($termo_busca['buscar_em'] == "Reuniao.data"){
+					$buscar_em = 'TO_CHAR('.$termo_busca['buscar_em'].",'DD/MM/YYYY') ILIKE";
 					$busca = '%'.addslashes($termo_busca['busca']).'%';
 					$this->paginate['conditions'][] = array($buscar_em => $busca);
 				}else{
-					$buscar_em = 'Reuniao.'.$termo_busca['buscar_em']." ILIKE";
+					$buscar_em = $termo_busca['buscar_em']." ILIKE";
 					$busca = '%'.addslashes($termo_busca['busca']).'%';
 					$this->paginate['conditions'][] = array($buscar_em => $busca);
 				}

@@ -26,9 +26,9 @@
 			<div class="list-filters pull-left">
 				<div class="with-select">
 					<input name="data[Reuniao][busca]" placeholder="O que você procura?" type="text" id="ReuniaoBusca">
-					<?php $options = array('titulo' => 'Título', 'data' => 'Data', 'local' => 'Local');?>
+					<?php $options = array('Reuniao.titulo' => 'Título', 'Reuniao.data' => 'Data', 'Reuniao.local' => 'Local');?>
 					<select name="data[Reuniao][buscar_em]" id="ReuniaoBuscarEm">
-						<option value="titulo">Filtrar em:</option>					
+						<option value="Reuniao.titulo">Filtrar em:</option>					
 						<?php foreach($options as $key => $value){?>
 						<option value="<?php echo $key; ?>"><?php echo $value;?></option>
 						<?php } ?>
@@ -44,7 +44,7 @@
 						<?php
 							foreach($_SESSION['Search']['Reuniao'] as $key => $temo_busca){
 						?>
-							<span class="type-tag"><?php echo $temo_busca['buscar_em']?>: <?php echo $temo_busca['busca']?><?php echo $this->Html->link("", array("action" => "excluirFiltro", $key), array("class" => "fa fa-times")); ?></span>
+							<span class="type-tag"><?php echo $options[$temo_busca['buscar_em']]?>: <?php echo $temo_busca['busca']?><?php echo $this->Html->link("", array("action" => "excluirFiltro", $key), array("class" => "fa fa-times")); ?></span>
 						<?php	
 							}
 						}

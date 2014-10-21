@@ -5,6 +5,9 @@ Reuni›es
 Tarefas
 	- Busca de tarefas n‹o funciona
 	- Criar um novo post no visualizar da tarefa n‹o est‡ funcionando (pode ser problema de envio de email)
+	
+Usu‡rios
+	- Precisa colocar a busca por sess‹o e precisa de mais filtros
 
 
 	
