@@ -64,41 +64,67 @@
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('resultado_esperado'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Patrocinador.Pessoa.titulo', 'Patrocinador'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('certificado'); ?></th>
+				<?php if($editar || $imprimir || $excluir){?>
 				<th><center><?php echo __('Ações'); ?></center></th>
+				<?php }?>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach($procedimento as $procedimento){?>
 			<tr>
-				<td><?php echo $this->Html->link($procedimento['Procedimento']['titulo'], array('action' => 'visualizar', $procedimento['Procedimento']['id'])); ?>&nbsp;</td>
+				<td>
+					<?php
+						if($visualizar){
+							echo $this->Html->link($procedimento['Procedimento']['titulo'], array('action' => 'visualizar', $procedimento['Procedimento']['id']));
+						}else{
+							echo $procedimento['Procedimento']['titulo'];
+						} 
+					?>&nbsp;
+				</td>
 				<td><?php echo $procedimento['Procedimento']['passos']; ?></td>
 				<td><?php echo $procedimento['Procedimento']['resultado_esperado']; ?></td>
-				<td><?php echo $this->Html->link($procedimento['Patrocinador']['Pessoa']['titulo'], array('controller' => 'Usuario', 'action' => 'visualizar',$procedimento['Patrocinador']['id'])); ?></td>
+				<td>
+					<?php
+						if($visualizarUsuario){ 
+							echo $this->Html->link($procedimento['Patrocinador']['Pessoa']['titulo'], array('controller' => 'Usuario', 'action' => 'visualizar',$procedimento['Patrocinador']['id']));
+						}else{
+							echo $procedimento['Patrocinador']['Pessoa']['titulo'];
+						}
+					?>
+				</td>
 				<td><?php echo $procedimento['Procedimento']['certificado'] == Util::ATIVO? "Sim" : "Não" ; ?></td>
+				<?php if($editar || $imprimir || $excluir){?>
 				<td width="7%" nowrap="nowrap">
 					<center>
 					<?php 
+						if($editar){
 						echo $this->Html->link(
 							__(""),
 							array('action' => 'editar', $procedimento['Procedimento']['id']),
 							array('class'=>'icon-edit')
 						);
 						echo "&nbsp;&nbsp;";
+						}
+						if($imprimir){
 						echo $this->Html->link(
 							__(""),
 							array('action' => 'imprimir', $procedimento['Procedimento']['id']),
 							array('class'=>'icon-print')
 						);
 						echo "&nbsp;&nbsp;";
+						}
+						if($excluir){
 						echo $this->Form->postLink(
 							__(""), 
 							array('action' => 'excluir', $procedimento['Procedimento']['id']), 
 							array('class'=>'icon-trash'),
 							__(Util::MENSAGEM_DELETAR, $procedimento['Procedimento']['id'])
 						); 
+						}
 					?>
 					</center>
 				</td>
+				<?php }?>
 			</tr>
 			<?php } ?>
 		</tbody>

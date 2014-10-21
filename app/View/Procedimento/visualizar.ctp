@@ -1,19 +1,28 @@
+<?php
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar', 'Procedimento');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir', 'Procedimento');
+	$visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Usuario');
+?>
 <div class="container">
 	<legend>Visualizar Procedimento</legend>
 	<div class="buttons">
 		<?php
+		if($editar){
 		echo $this->Html->link(
 					__("<i class='fa fa-edit'></i>Editar"),
 					array('action' => 'editar', $procedimento['Procedimento']['id']),
 					array('class'=>'btn btn-small btn-primary pull-right', 'escape' => false)
 				);
 		echo "&nbsp;&nbsp;";
+		}
+		if($excluir){
 		echo $this->Form->postLink(
 					__("<i class='fa fa-trash'></i>Deletar"), 
 					array('action' => 'excluir', $procedimento['Procedimento']['id']), 
 					array('class'=>'btn btn-small btn-primary pull-right', 'escape' => false),
 					__(Util::MENSAGEM_DELETAR, $procedimento['Procedimento']['id'])
 				);
+		}
 		?>
 	</div>
 	<div class="row">
@@ -34,7 +43,13 @@
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Patrocinador'); ?></strong></td>
-						<td><?php echo $this->Html->link($procedimento['Patrocinador']['Pessoa']['titulo'], array('controller' => 'Usuario', 'action' => 'visualizar',$procedimento['Patrocinador']['id'])); ?></td>
+						<td><?php 
+						if($visualizarUsuario){
+							echo $this->Html->link($procedimento['Patrocinador']['Pessoa']['titulo'], array('controller' => 'Usuario', 'action' => 'visualizar',$procedimento['Patrocinador']['id']));
+						}else{
+							echo $procedimento['Patrocinador']['Pessoa']['titulo'];
+						}
+						?></td>
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Certificado'); ?></strong></td>
