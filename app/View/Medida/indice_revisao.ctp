@@ -1,3 +1,7 @@
+<?php
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
+	$visualizarDimensao = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Dimensao');
+?>
 <script type="text/javascript">
   $(function() {
     $('.footable').footable();
@@ -13,9 +17,9 @@
 			<div class="list-filters pull-left">
 				<div class="with-select">
 					<input name="data[Medida][busca]" placeholder="O que você procura?" type="text" id="MedidaBusca">
-					<?php $options = array('titulo' => 'Título','ano'=>'Ano','situacao'=>'Situação','prioridade'=>'Prioridade', 'Última Atualização'=>'Última Atualização');?>
+					<?php $options = array('Medida.titulo' => 'Título','Medida.ano'=>'Ano','Medida.situacao'=>'Situação','Medida.prioridade'=>'Prioridade', 'Medida.data_ultima_atualizacao'=>'Última Atualização');?>
 					<select name="data[Medida][buscar_em]" id="MedidaBuscarEm">
-						<option value="titulo">Filtrar em:</option>					
+						<option value="Medida.titulo">Filtrar em:</option>					
 						<?php foreach($options as $key => $value){?>
 						<option value="<?php echo $key; ?>"><?php echo $value;?></option>
 						<?php } ?>
@@ -31,7 +35,7 @@
 						<?php
 							foreach($_SESSION['Search']['Medida'] as $key => $temo_busca){
 						?>
-							<span class="type-tag"><?php echo $temo_busca['buscar_em']?>: <?php echo $temo_busca['busca']?><?php echo $this->Html->link("", array("action" => "excluirFiltro", $key, 'indice_revisao'), array("class" => "fa fa-times")); ?></span>
+							<span class="type-tag"><?php echo $options[$temo_busca['buscar_em']]?>: <?php echo $temo_busca['busca']?><?php echo $this->Html->link("", array("action" => "excluirFiltro", $key, 'indice_revisao'), array("class" => "fa fa-times")); ?></span>
 						<?php	
 							}
 						}
@@ -89,8 +93,24 @@
 				echo  $situacaoNome;
 				?>&nbsp;</td>
 				<td><?php echo $medida['Medida']['prioridade'];?></td>
-				<td><?php echo $this->Html->link($medida['Medida']['titulo'], array('action' => 'revisar', $medida['Medida']['id'])); ?>&nbsp;</td>
-				<td><?php echo $this->Html->link($medida['Dimensao']['titulo'], array('controller' => 'Dimensao','action' => 'visualizar', $medida['Dimensao']['id'])); ?>&nbsp;</td>
+				<td>
+					<?php
+					if($visualizar){
+						echo $this->Html->link($medida['Medida']['titulo'], array('action' => 'visualizar', $medida['Medida']['id']));
+					}else{
+						echo $medida['Medida']['titulo'];
+					}
+					?>&nbsp;
+				</td>
+				<td>
+					<?php
+					if($visualizarDimensao){
+						echo $this->Html->link($medida['Dimensao']['titulo'], array('controller' => 'Dimensao','action' => 'visualizar', $medida['Dimensao']['id']));
+					}else{
+						echo $medida['Dimensao']['titulo'];
+					}
+					?>&nbsp;
+				</td>
 				<td><?php echo $medida['Medida']['data_ultima_atualizacao'];?></td>
 				<td><?php echo $medida['Medida']['data_ultima_revisao'];?></td>
 				<!--td><?php echo $medida['Medida']['ano'];?></td-->

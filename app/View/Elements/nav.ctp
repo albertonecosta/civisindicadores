@@ -106,16 +106,43 @@
 		        <b class="caret"></b>
 		    </a>
 		    <ul class="dropdown-menu">
-		      <li><?php echo $this->Html->link(__('Dimensões'), array('controller' => 'Dimensao','action' => 'index'));?></li>
-		      <li><?php echo $this->Html->link(__('Objetivos'), array('controller' => 'Objetivo','action' => 'index'));?></li>
-			  <li><?php echo $this->Html->link(__('Indicadores'), array('controller' => 'Indicador','action' => 'index'));?></li>
-			  <li><?php echo $this->Html->link(__('Ações Estratégicas'), array('controller' => 'Medida','action' => 'index'));?></li>
-			  <li><?php echo $this->Html->link(__('Revisão das Ações'), array('controller' => 'Medida','action' => 'indice_revisao'));?></li>
-			  <li><?php echo $this->Html->link(__('Painel Geral de Ações'), array('controller' => 'Medida','action' => 'painel_acoes'));?></li>
-		      <li><?php echo $this->Html->link(__('Atividades'), array('controller' => 'Acao','action' => 'index'));?></li>
-			  <?php /*<li><?php echo $this->Html->link(__('Planos de Ação'), array('controller' => 'PlanoAcao','action' => 'index'));?></li> */?>
-		      <li><?php echo $this->Html->link(__('Faixas'), array('controller' => 'Faixa','action' => 'index'));?></li>
-		      <li><?php echo $this->Html->link(__('Anomalia'), array('controller' => 'Anomalia','action' => 'index'));?></li>
+		    
+		      <?php if($isDimensao){?>
+		     	<li><?php echo $this->Html->link(__('Dimensões'), array('controller' => 'dimensao','action' => 'index'));?></li>
+		      <?php }?>
+		      
+		      <?php if($isObjetivo){?>
+		      	<li><?php echo $this->Html->link(__('Objetivos'), array('controller' => 'objetivo','action' => 'index'));?></li>
+		      <?php }?>
+		      
+		      <?php if($isIndicador){?>
+			  	<li><?php echo $this->Html->link(__('Indicadores'), array('controller' => 'indicador','action' => 'index'));?></li>
+			  <?php }?>
+			  
+			  <?php if($isMedida){?>
+			  	<li><?php echo $this->Html->link(__('Ações Estratégicas'), array('controller' => 'medida','action' => 'index'));?></li>
+			  <?php }?>
+			  
+			  <?php if($isMedidaRevisao){?>
+			  	<li><?php echo $this->Html->link(__('Revisão das Ações'), array('controller' => 'medida','action' => 'indice_revisao'));?></li>
+			  <?php }?>
+			  
+			  <?php if($isMedidaPainel){?>
+			  	<li><?php echo $this->Html->link(__('Painel Geral de Ações'), array('controller' => 'medida','action' => 'painel_acoes'));?></li>
+			  <?php }?>
+			  
+			  <?php if($isAcao){?>
+		      	<li><?php echo $this->Html->link(__('Atividades'), array('controller' => 'acao','action' => 'index'));?></li>
+		      <?php }?>
+		      
+			  <?php if($isFaixa){?>
+		      	<li><?php echo $this->Html->link(__('Faixas'), array('controller' => 'faixa','action' => 'index'));?></li>
+		      <?php }?>
+		      
+		      <?php if($isAnomalia){?>
+		      	<li><?php echo $this->Html->link(__('Anomalia'), array('controller' => 'anomalia','action' => 'index'));?></li>
+		      <?php }?>
+		      
 		    </ul>
           </li>
           <?php }?>

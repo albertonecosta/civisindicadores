@@ -35,27 +35,26 @@ class MedidaController extends AppController {
         }
 		
 		
-		
 		$situacao_busca = array('não informado' => Util::NAO_INFORMADO,'adequado'  => Util::ADEQUADO,'atenção'  => Util::ATENCAO,'preocupante'  => Util::PREOCUPANTE,'concluído' => Util::CONCLUIDO);
 		
 		//Lemos a sessão se não estiver vázia para aplicar os filtros
 		if(isset($_SESSION['Search']['Medida'])){
 			foreach($_SESSION['Search']['Medida'] as $termo_busca){
-				if($termo_busca['buscar_em'] == "ano"){
-					$buscar_em = 'Medida.'.$termo_busca['buscar_em']." =";
+				if($termo_busca['buscar_em'] == "Medida.ano"){
+					$buscar_em = $termo_busca['buscar_em']." =";
 					$busca = addslashes($termo_busca['busca']);
 				}else{
-					if($termo_busca['buscar_em'] == "Última Atualização"){
+					if($termo_busca['buscar_em'] == "Medida.data_ultima_atualizacao"){
 						$buscar_em = 'Medida.data_ultima_atualizacao'." =";
 						$busca = addslashes(Util::inverteData($termo_busca['busca']));
 					}
 					else {
-						if($termo_busca['buscar_em'] == "situacao"){
-							$buscar_em = 'Medida.'.$termo_busca['buscar_em']." ILIKE";
+						if($termo_busca['buscar_em'] == "Medida.situacao"){
+							$buscar_em = $termo_busca['buscar_em']." ILIKE";
 							$busca = '%'.addslashes($situacao_busca[strtolower($termo_busca['busca'])]).'%';
 						}
 						else {
-							$buscar_em = 'Medida.'.$termo_busca['buscar_em']." ILIKE";
+							$buscar_em = $termo_busca['buscar_em']." ILIKE";
 							$busca = '%'.addslashes($termo_busca['busca']).'%';
 						}
 					}
@@ -69,8 +68,8 @@ class MedidaController extends AppController {
 		
 		
 		
-		if ($_SESSION["Auth"]["User"]["Grupo"]["titulo"] == "Ponto Focal") {
-			$this->paginate['conditions'][] = array('Medida.titulo ILIKE' => ''.$_SESSION["Auth"]["User"]["Departamento"]["titulo"].'__ -%');
+		if ($this->usuarioLogado["Grupo"]["titulo"] == "Ponto Focal") {
+			$this->paginate['conditions'][] = array('Medida.titulo ILIKE' => ''.$this->usuarioLogado["Departamento"]["titulo"].'__ -%');
 		}
 		
 		$this->paginate['conditions'][] = array('Medida.tipo' => 2,'Medida.status !=' => Util::INATIVO );
@@ -141,21 +140,21 @@ class MedidaController extends AppController {
 		//Lemos a sessão se não estiver vázia para aplicar os filtros
 		if(isset($_SESSION['Search']['Medida'])){
 			foreach($_SESSION['Search']['Medida'] as $termo_busca){
-				if($termo_busca['buscar_em'] == "ano"){
-					$buscar_em = 'Medida.'.$termo_busca['buscar_em']." =";
+				if($termo_busca['buscar_em'] == "Medida.ano"){
+					$buscar_em = $termo_busca['buscar_em']." =";
 					$busca = addslashes($termo_busca['busca']);
 				}else{
-					if($termo_busca['buscar_em'] == "Última Atualização"){
+					if($termo_busca['buscar_em'] == "Medida.data_ultima_atualizacao"){
 						$buscar_em = 'Medida.data_ultima_atualizacao'." =";
 						$busca = addslashes(Util::inverteData($termo_busca['busca']));
 					}
 					else {
-						if($termo_busca['buscar_em'] == "situacao"){
-							$buscar_em = 'Medida.'.$termo_busca['buscar_em']." ILIKE";
+						if($termo_busca['buscar_em'] == "Medida.situacao"){
+							$buscar_em = $termo_busca['buscar_em']." ILIKE";
 							$busca = '%'.addslashes($situacao_busca[strtolower($termo_busca['busca'])]).'%';
 						}
 						else {
-							$buscar_em = 'Medida.'.$termo_busca['buscar_em']." ILIKE";
+							$buscar_em = $termo_busca['buscar_em']." ILIKE";
 							$busca = '%'.addslashes($termo_busca['busca']).'%';
 						}
 					}
@@ -169,8 +168,8 @@ class MedidaController extends AppController {
 		
 		
 		
-		if ($_SESSION["Auth"]["User"]["Grupo"]["titulo"] == "Ponto Focal") {
-			$this->paginate['conditions'][] = array('Medida.titulo ILIKE' => ''.$_SESSION["Auth"]["User"]["Departamento"]["titulo"].'__ -%');
+		if ($this->usuarioLogado["Grupo"]["titulo"] == "Ponto Focal") {
+			$this->paginate['conditions'][] = array('Medida.titulo ILIKE' => ''.$this->usuarioLogado["Departamento"]["titulo"].'__ -%');
 		}
 		
 		$this->paginate['conditions'][] = array('Medida.tipo' => 2,'Medida.status !=' => Util::INATIVO );
@@ -242,19 +241,27 @@ class MedidaController extends AppController {
 		//Lemos a sessão se não estiver vázia para aplicar os filtros
 		if(isset($_SESSION['Search']['Medida'])){
 			foreach($_SESSION['Search']['Medida'] as $termo_busca){
-				if($termo_busca['buscar_em'] == "ano"){
-					$buscar_em = 'Medida.'.$termo_busca['buscar_em']." =";
+				if($termo_busca['buscar_em'] == "Medida.ano"){
+					$buscar_em = $termo_busca['buscar_em']." =";
 					$busca = addslashes($termo_busca['busca']);
 				}else{
-					if($termo_busca['buscar_em'] == "Última Atualização"){
+					if($termo_busca['buscar_em'] == "Medida.data_ultima_atualizacao"){
 						$buscar_em = 'Medida.data_ultima_atualizacao'." =";
 						$busca = addslashes(Util::inverteData($termo_busca['busca']));
 					}
 					else {
-						$buscar_em = 'Medida.'.$termo_busca['buscar_em']." ILIKE";
-						$busca = '%'.addslashes($termo_busca['busca']).'%';
+						if($termo_busca['buscar_em'] == "Medida.situacao"){
+							$buscar_em = $termo_busca['buscar_em']." ILIKE";
+							$busca = '%'.addslashes($situacao_busca[strtolower($termo_busca['busca'])]).'%';
+						}
+						else {
+							$buscar_em = $termo_busca['buscar_em']." ILIKE";
+							$busca = '%'.addslashes($termo_busca['busca']).'%';
+						}
 					}
-				}
+				}				
+				
+				
 				$this->paginate['conditions'][] = array($buscar_em => $busca);
 			}
 		}

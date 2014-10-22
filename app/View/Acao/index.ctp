@@ -1,3 +1,11 @@
+<?php
+	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
+	$imprimir = $this->ControleDeAcesso->validaAcessoElemento('imprimir');
+	$visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Usuario');
+?>
 <script type="text/javascript">
   $(function() {
     $('.footable').footable();
@@ -22,10 +30,14 @@
 		</div>
 		<div class="span5">				
 			<div class="span3">
+				<?php if($adicionar){?>
 				<button class="btn btn-small btn-primary pull-right" type="button" onclick="location.href= '<?php echo $this->Html->url(array('controller' => 'Acao', 'action' => 'adicionar'), true);?>' ">Adicionar</button>
+				<?php }?>
 			</div>
 			<div class="span1">
+				<?php if($imprimir){?>
 				<button class="btn btn-small btn-primary pull-left" type="button" onclick="location.href= '<?php echo $this->webroot;?>Acao/imprimirIndex/<?php echo $limit; ?>' ">Imprimir</button>
+				<?php }?>
 			</div>	
 		</div>
 	</div>
@@ -42,17 +54,43 @@
 					<th data-hide="phone,tablet"><?php echo __('responsável'); ?></th>
 					<th data-hide="phone,tablet"><?php echo __('supervisor'); ?></th>
 					<th data-hide="phone,tablet"><?php echo __('andamento'); ?></th>
+					<?php if($editar || $excluir){?>
 					<th><center><?php echo __('Ações'); ?></center></th>
+					<?php }?>
 				</tr>
 			</thead>
 			<tbody>
 			<?php foreach($acoes as $acao){?>
 				<tr>
-					<td><?php echo $this->Html->link($acao['Acao']['titulo'], array('action' => 'visualizar', $acao['Acao']['id'])); ?>&nbsp;</td>
+					<td>
+						<?php
+							if($visualizar){
+								echo $this->Html->link($acao['Acao']['titulo'], array('action' => 'visualizar', $acao['Acao']['id']));
+							}else{
+								echo $acao['Acao']['titulo'];
+							}
+						?>&nbsp;
+					</td>
 					<td><?php echo $acao['Acao']['data_inicio_previsto']; ?>&nbsp;</td>
 					<td><?php echo $acao['Acao']['data_fim_previsto']; ?>&nbsp;</td>
-					<td><?php echo $this->Html->link($acao['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $acao['Responsavel']['id'])); ?>&nbsp;</td>
-					<td><?php echo $this->Html->link($acao['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $acao['Supervisor']['id'])); ?>&nbsp;</td>
+					<td>
+						<?php
+							if($visualizarUsuario){
+								echo $this->Html->link($acao['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $acao['Responsavel']['id']));
+							}else{
+								echo $acao['Responsavel']['Pessoa']['titulo'];
+							}
+						?>&nbsp;
+					</td>
+					<td>
+						<?php
+							if($visualizarUsuario){
+								echo $this->Html->link($acao['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $acao['Supervisor']['id']));
+							}else{
+								echo $acao['Supervisor']['Pessoa']['titulo'];
+							}
+						?>&nbsp;
+					</td>
 					<td>
 					<?php
 									
@@ -79,24 +117,30 @@
 									</div>
 					
 					</td>
+					<?php if($editar || $excluir){?>
 					<td width="7%" nowrap="nowrap">
 						<center>
 						<?php 
+							if($editar){
 							echo $this->Html->link(
 								__(""),
 								array('action' => 'editar', $acao['Acao']['id']),
 								array('class'=>'icon-edit')
 							);
 							echo "&nbsp;&nbsp;";
+							}
+							if($excluir){
 							echo $this->Form->postLink(
 								__(""), 
 								array('action' => 'excluir', $acao['Acao']['id']), 
 								array('class'=>'icon-trash'),
 								__(Util::MENSAGEM_DELETAR, $acao['Acao']['id'])
 							); 
+							}
 						?>
 						</center>
 					</td>
+					<?php }?>
 				</tr>
 				<?php } ?>
 			</tbody>
@@ -116,18 +160,44 @@
 					<th data-hide="phone,tablet"><?php echo __('responsável'); ?></th>
 					<th data-hide="phone,tablet"><?php echo __('supervisor'); ?></th>
 					<th data-hide="phone,tablet"><?php echo __('andamento'); ?></th>
+					<?php if($editar || $excluir){?>
 					<th><center><?php echo __('Ações'); ?></center></th>
+					<?php }?>
 				</tr>
 			</thead>
 			<tbody>
 			<?php foreach($acoes2 as $acao){?>
 				<tr>
-					<td><?php echo $this->Html->link($acao['Acao']['titulo'], array('action' => 'visualizar', $acao['Acao']['id'])); ?>&nbsp;</td>
+					<td>
+						<?php
+							if($visualizar){
+								echo $this->Html->link($acao['Acao']['titulo'], array('action' => 'visualizar', $acao['Acao']['id']));
+							}else{
+								echo $acao['Acao']['titulo'];
+							}
+						?>&nbsp;
+					</td>
 					<td><?php echo $acao['Acao']['data_inicio_previsto']; ?>&nbsp;</td>
 					<td><?php echo $acao['Acao']['data_fim_previsto']; ?>&nbsp;</td>
-					<td><?php echo $this->Html->link($acao['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $acao['Responsavel']['id'])); ?>&nbsp;</td>
-					<td><?php echo $this->Html->link($acao['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $acao['Supervisor']['id'])); ?>&nbsp;</td>
-					<td><?php echo $acao['Acao']['andamento']; ?>&nbsp;
+					<td>
+						<?php
+							if($visualizarUsuario){
+								echo $this->Html->link($acao['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $acao['Responsavel']['id']));
+							}else{
+								echo $acao['Responsavel']['Pessoa']['titulo'];
+							}
+						?>&nbsp;
+					</td>
+					<td>
+						<?php
+							if($visualizarUsuario){
+								echo $this->Html->link($acao['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $acao['Supervisor']['id']));
+							}else{
+								echo $acao['Supervisor']['Pessoa']['titulo'];
+							}
+						?>&nbsp;
+					</td>
+					<td>
 					<?php
 									
 										
@@ -152,26 +222,31 @@
 									  <div class="bar" style="width: <?php echo $acao['Acao']['andamento'];?>;"><?php echo $acao['Acao']['andamento'];?></div>
 									</div>
 					
-					
 					</td>
+					<?php if($editar || $excluir){?>
 					<td width="7%" nowrap="nowrap">
 						<center>
 						<?php 
+							if($editar){
 							echo $this->Html->link(
 								__(""),
 								array('action' => 'editar', $acao['Acao']['id']),
 								array('class'=>'icon-edit')
 							);
 							echo "&nbsp;&nbsp;";
+							}
+							if($excluir){
 							echo $this->Form->postLink(
 								__(""), 
 								array('action' => 'excluir', $acao['Acao']['id']), 
 								array('class'=>'icon-trash'),
 								__(Util::MENSAGEM_DELETAR, $acao['Acao']['id'])
 							); 
+							}
 						?>
 						</center>
 					</td>
+					<?php }?>
 				</tr>
 				<?php } ?>
 			</tbody>

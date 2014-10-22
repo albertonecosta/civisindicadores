@@ -1,3 +1,10 @@
+<?php
+	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
+	$visualizarDimensao = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Dimensao');
+?>
 <script type="text/javascript">
   $(function() {
     $('.footable').footable();
@@ -39,8 +46,10 @@
 					?>
 				</div>
 			</div><!-- /.list-filters -->
-				<div class="list-actions-buttons pull-right">				
+				<div class="list-actions-buttons pull-right">
+				<?php if($adicionar){?>				
 				<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>Objetivo/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>
+				<?php }?>
 			</div><!-- /.list-actions -->
 			<!-- end Filtros -->
 		</div>
@@ -52,33 +61,57 @@
 				<th data-class="expand"><?php echo $this->Paginator->sort('Objetivo.titulo', 'Título'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Dimensao.titulo', 'Dimensão'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('ano'); ?></th>
+				<?php if($editar || $excluir){?>
 				<th><center><?php echo __('Ações'); ?></center></th>
+				<?php }?>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach($objetivo as $objetivo){?>
 			<tr>
-				<td><?php echo $this->Html->link($objetivo['Objetivo']['titulo'], array('action' => 'visualizar', $objetivo['Objetivo']['id'])); ?>&nbsp;</td>
-				<td><?php echo $this->Html->link($objetivo['Dimensao']['titulo'], array('controller' => 'Dimensao','action' => 'visualizar', $objetivo['Dimensao']['id'])); ?>&nbsp;</td>
+				<td>
+					<?php
+						if($visualizar){
+							echo $this->Html->link($objetivo['Objetivo']['titulo'], array('action' => 'visualizar', $objetivo['Objetivo']['id']));
+						}else{
+							echo $objetivo['Objetivo']['titulo'];
+						}
+					?>&nbsp;
+				</td>
+				<td>
+					<?php
+						if($visualizarDimensao){
+							echo $this->Html->link($objetivo['Dimensao']['titulo'], array('controller' => 'dimensao','action' => 'visualizar', $objetivo['Dimensao']['id']));
+						}else{
+							echo $objetivo['Dimensao']['titulo'];
+						}
+					?>&nbsp;
+				</td>
 				<td><?php echo $objetivo['Objetivo']['ano'];?></td>
+				<?php if($editar || $excluir){?>
 				<td width="7%" nowrap="nowrap">
 					<center>
 					<?php 
+						if($editar){
 						echo $this->Html->link(
 							__(""),
 							array('action' => 'editar', $objetivo['Objetivo']['id']),
 							array('class'=>'icon-edit')
 						);
 						echo "&nbsp;&nbsp;";
+						}
+						if($excluir){
 						echo $this->Form->postLink(
 							__(""), 
 							array('action' => 'excluir', $objetivo['Objetivo']['id']), 
 							array('class'=>'icon-trash'),
 							__(Util::MENSAGEM_DELETAR, $objetivo['Objetivo']['id'])
-						); 
+						);
+						}
 					?>
 					</center>
 				</td>
+				<?php }?>
 			</tr>
 			<?php } ?>
 		</tbody>

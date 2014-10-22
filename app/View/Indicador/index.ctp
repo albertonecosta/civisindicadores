@@ -1,3 +1,10 @@
+<?php
+	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
+	$visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Usuario');
+?>
 <script type="text/javascript">
   $(function() {
     $('.footable').footable();
@@ -8,16 +15,15 @@
 
 	<h4 class="title title-section">Indicador</h4>
 
-	<?php
-		echo $this->FilterForm->create('',array('class' => 'well form-search'));
-	?>
+	<?php echo $this->FilterForm->create('',array('class' => 'well form-search'));?>
 	<div class="list-actions row-fluid">
-		
-		<div class="list-actions-buttons pull-left">				
+		<div class="list-actions-buttons pull-right">
+			<?php if($adicionar){?>			
 			<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->Html->url(array('controller' => 'Indicador', 'action' => 'adicionar'), true);?>' "><i class="fa fa-plus-circle"></i>Adicionar</button>
+			<?php }?>
 		</div><!-- /.list-actions -->
 		<!-- Filtros -->
-		<div class="list-filters pull-right">
+		<div class="list-filters pull-left">
 			
 			<div class="with-select">
 				<?php
@@ -32,45 +38,76 @@
 
 		</div><!-- /.list-filters -->
 		<!-- end Filtros -->	
-
 	</div>
 	</form>
 	
 	<table cellpadding="0" cellspacing="0" class="footable table table-bordered table-hover table-condensed" id="index">
 		<thead>
 			<tr>
-				<th data-class="expand"><?php echo $this->Paginator->sort('titulo'); ?></th>
-				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Responsavel.Pessoa.titulo','responsável'); ?></th>
+				<th data-class="expand"><?php echo $this->Paginator->sort('titulo', 'Título'); ?></th>
+				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Responsavel.Pessoa.titulo','Responsável'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Pai.titulo', 'Pai'); ?></th>
-				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('tipo_calculo'); ?></th>
+				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('tipo_calculo', 'Tipo Cálculo'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('desdobramento'); ?></th>
+				<?php if($editar || $excluir){?>
 				<th class="actions"><center><?php echo __('Ações'); ?></center></th>
+				<?php }?>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach($indicador as $indicador){?>
 			<tr>
-				<td><?php echo $this->Html->link($indicador['Indicador']['titulo'], array('action' => 'visualizar', $indicador['Indicador']['id'])); ?>&nbsp;</td>
-				<td><?php echo $this->Html->link($indicador['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $indicador['Responsavel']['id'])); ?>&nbsp;</td>
-				<td><?php echo $this->Html->link($indicador['Pai']['titulo'], array('action' => 'visualizar', $indicador['Pai']['id'])); ?>&nbsp;</td>
+				<td>
+					<?php
+					if($visualizar){
+						echo $this->Html->link($indicador['Indicador']['titulo'], array('action' => 'visualizar', $indicador['Indicador']['id']));
+					}else{
+						echo $indicador['Indicador']['titulo'];
+					}
+					?>&nbsp;
+				</td>
+				<td>
+					<?php
+					if($visualizarUsuario){
+						echo $this->Html->link($indicador['Responsavel']['Pessoa']['titulo'], array('controller' => 'usuario','action' => 'visualizar', $indicador['Responsavel']['id']));
+					}else{
+						echo $indicador['Responsavel']['Pessoa']['titulo'];
+					}
+					?>&nbsp;
+				</td>
+				<td>
+					<?php
+					if($visualizar){
+						echo $this->Html->link($indicador['Pai']['titulo'], array('action' => 'visualizar', $indicador['Pai']['id']));
+					}else{
+						echo $indicador['Pai']['titulo'];
+					}
+					?>&nbsp;
+				</td>
 				<td><?php echo Util::getTipoCalculo($indicador['Indicador']['tipo_calculo']); ?>&nbsp;</td>
 				<td><?php echo $indicador['Indicador']['desdobramento'] == Util::ATIVO ? 'Mensal' : 'Anual'; ?>&nbsp;</td>
+				<?php if($editar || $excluir){?>
 				<td class="actions" width="7%" nowrap="nowrap">
 					<?php 
+						if($editar){
 						echo $this->Html->link(
 							__(""),
 							array('action' => 'editar', $indicador['Indicador']['id']),
 							array('class'=>'icon-edit fa fa-edit')
 						);
 						echo "&nbsp;&nbsp;";
+						}
+						if($excluir){
 						echo $this->Form->postLink(
 							__(""), 
 							array('action' => 'excluir', $indicador['Indicador']['id']), 
 							array('class'=>'icon-trash fa fa-trash-o'),
 							__(Util::MENSAGEM_DELETAR, $indicador['Indicador']['id'])
 						); 
+						}
 					?>
 				</td>
+				<?php }?>
 			</tr>
 			<?php } ?>
 		</tbody>

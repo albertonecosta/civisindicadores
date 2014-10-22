@@ -1,3 +1,13 @@
+<?php
+	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
+	$painel = $this->ControleDeAcesso->validaAcessoElemento('painel');
+	
+	$visualizarAcao = $this->ControleDeAcesso->validaAcessoElemento('visualiza', 'Acao');
+	$adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Acao');
+?>
 <script type="text/javascript">
   $(function() {
     $('.footable').footable();
@@ -39,8 +49,10 @@
 					?>
 				</div>
 			</div><!-- /.list-filters -->
-				<div class="list-actions-buttons pull-right">				
+				<div class="list-actions-buttons pull-right">
+				<?php if($adicionar){?>				
 				<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>Anomalia/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>
+				<?php }?>
 			</div><!-- /.list-actions -->
 			<!-- end Filtros -->
 		</div>
@@ -54,14 +66,23 @@
 				<th data-class="expand"><?php echo $this->Paginator->sort('identificacao_problema', 'Identificação do problema'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('estratificacao_problema', 'Estratificação do problema'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('data'); ?></th>
-				<th data-hide="phone,tablet"><?php echo __('Ações associadas'); ?></th>
+				<th data-hide="phone,tablet"><?php echo __('Atividades Associadas'); ?></th>
+				<?php if($editar || $excluir || $painel){?>
 				<th><center><?php echo __('Ações'); ?></center></th>
+				<?php }?>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach($anomalia as $anomalia){?>
 			<tr>
-				<td><?php echo $anomalia['Anomalia']['identificacao_problema']; ?>&nbsp;</td>
+				<td>
+					<?php
+						if($visualizar){
+							echo "<a href='".$this->base."/anomalia/visualizar/{$anomalia['Anomalia']['id']}'>{$anomalia['Anomalia']['identificacao_problema']}</a>";
+						}else{
+							echo $anomalia['Anomalia']['identificacao_problema'];	
+						}
+					?>&nbsp;</td>
 				<td><?php echo $anomalia['Anomalia']['estratificacao_problema']; ?>&nbsp;</td>
 				<td><?php echo $anomalia['Anomalia']['data']; ?>&nbsp;</td>
 				<td class="no-padding">
@@ -75,7 +96,13 @@
 							<li>
 								<div class="wrapper">
 								<acronym title='<?php echo @$value["Responsavel"]["login"]." | ".$value["data_inicio_previsto"]." a ".$value["data_fim_previsto"]?>'>
-								<?php echo $this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id'])); ?>
+								<?php 
+									if($visualizarAcao){
+										echo $this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));
+									}else{
+										echo $value['titulo'];
+									}
+								?>
 								
 								<?php
 									if (time()>strtotime(Util::inverteData($value["data_fim_previsto"])))
@@ -85,7 +112,6 @@
 									else
 									$barraProgresso="progress progress-success progress-striped";
 									?>
-									
 									
 									<div class="<?php echo $barraProgresso; ?>">
 									  <div class="bar" style="width: <?php echo $value["andamento"];?>;"></div>
@@ -97,32 +123,42 @@
 					}
 					?>
 					</ul>
+					<?php if($adicionarAcao){?>
 					<div class="button-area row-fluid">
 						<button class="btn btn-mini" type="button" onclick="abrirModal(<?php echo $anomalia['Anomalia']['id']; ?>)">Adicionar</button>
 					</div>
+					<?php }?>
 					
 					
 				</td>
+				<?php if($editar || $excluir || $painel){?>
 				<td width="7%" nowrap="nowrap">
 					<center>
+					<?php if($painel){?>
 					<a href="javascript:abrirPainelAnomalia(<?php echo $anomalia['Anomalia']['id']; ?>)"><i class="icon-fullscreen" title="Painel de Anomalia"></i></a>
+					&nbsp;
+					<?php }?>
 					<?php 
-						echo "&nbsp;";
+						if($editar){
 						echo $this->Html->link(
 							__(""),
 							array('action' => 'editar', $anomalia['Anomalia']['id']),
 							array('class'=>'icon-edit')
 						);
 						echo "&nbsp;";
+						}
+						if($excluir){
 						echo $this->Form->postLink(
 							__(""), 
 							array('action' => 'excluir', $anomalia['Anomalia']['id']), 
 							array('class'=>'icon-trash'),
 							__(Util::MENSAGEM_DELETAR, $anomalia['Anomalia']['id'])
 						); 
+						}
 					?>
 					</center>
 				</td>
+				<?php }?>
 			</tr>
 			<?php } ?>
 		</tbody>

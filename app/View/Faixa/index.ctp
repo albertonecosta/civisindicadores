@@ -1,3 +1,9 @@
+<?php
+	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
+?>
 <script type="text/javascript">
   $(function() {
     $('.footable').footable();
@@ -39,8 +45,10 @@
 					?>
 				</div>
 			</div><!-- /.list-filters -->
-				<div class="list-actions-buttons pull-right">				
+				<div class="list-actions-buttons pull-right">
+				<?php if($adicionar){?>				
 				<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>Faixa/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>
+				<?php }?>
 			</div><!-- /.list-actions -->
 			<!-- end Filtros -->
 		</div>
@@ -52,33 +60,49 @@
 				<th data-class="expand"><?php echo $this->Paginator->sort('titulo'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('limite_vermelho'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('limite_amarelo'); ?></th>
+				<?php if($editar || $excluir){?>
 				<th><center><?php echo __('Ações'); ?></center></th>
+				<?php }?>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach($faixa as $faixa){?>
 			<tr>
-				<td><?php echo $this->Html->link($faixa['Faixa']['titulo'], array('action' => 'visualizar', $faixa['Faixa']['id'])); ?>&nbsp;</td>
+				<td>
+					<?php
+						if($visualizar){
+							echo $this->Html->link($faixa['Faixa']['titulo'], array('action' => 'visualizar', $faixa['Faixa']['id']));
+						}else{
+							echo $faixa['Faixa']['titulo'];
+						}
+					?>&nbsp;
+				</td>
 				<td><?php echo $faixa['Faixa']['limite_vermelho']; ?>&nbsp;</td>
 				<td><?php echo $faixa['Faixa']['limite_amarelo']; ?>&nbsp;</td>
+				<?php if($editar || $excluir){?>
 				<td width="7%" nowrap="nowrap">
 					<center>
 					<?php 
+						if($editar){
 						echo $this->Html->link(
 							__(""),
 							array('action' => 'editar', $faixa['Faixa']['id']),
 							array('class'=>'icon-edit')
 						);
 						echo "&nbsp;&nbsp;";
+						}
+						if($excluir){
 						echo $this->Form->postLink(
 							__(""), 
 							array('action' => 'excluir', $faixa['Faixa']['id']), 
 							array('class'=>'icon-trash'),
 							__(Util::MENSAGEM_DELETAR, $faixa['Faixa']['id'])
-						); 
+						);
+						}
 					?>
 					</center>
 				</td>
+				<?php }?>
 			</tr>
 			<?php } ?>
 		</tbody>

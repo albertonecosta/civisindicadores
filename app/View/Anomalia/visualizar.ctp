@@ -1,3 +1,7 @@
+<?php
+	$visualizarAcao = $this->ControleDeAcesso->validaAcessoElemento('visualiza', 'Acao');
+	$adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Acao');
+?>
 <div class="container">
 	<legend>Visualizar Anomalia</legend>
 	<div class="row">
@@ -46,13 +50,25 @@
 											
 											
 											<abbr style='font-size: 16px;' title='<?php echo $value["data_inicio_previsto"]." a ".$value["data_fim_previsto"]?>'>
-											<?php echo $this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));?>
+											<?php 
+												if($visualizarAcao){
+													echo $this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));
+												}else{
+													echo $value['titulo'];
+												}
+											?>
 											</abbr>
 											 
 										<?php }else{ ?>
 										
 											<abbr style='font-size: 16px;' title='<?php echo $value["data_inicio_previsto"]." a ".$value["data_fim_previsto"]?>'>
-											<?php echo "&nbsp;&nbsp;&nbsp;".$this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));?>
+											<?php 
+											if($visualizarAcao){
+												echo "&nbsp;&nbsp;&nbsp;".$this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));
+											}else{
+												echo "&nbsp;&nbsp;&nbsp;".$value['titulo'];
+											}
+											?>
 											<abbr>
 										 <?php 
 										 }
@@ -85,10 +101,11 @@
 									</div>
 									</div>
 									</li>
-							
+							<?php if($adicionarAcao){?>
 							<div class="row-fluid" style="margin-top: 10px;">
 								<button class="btn btn-mini" type="button" onclick="abrirModal(<?php echo $anomalia['Anomalia']['id']; ?>)">Adicionar</button>
 							</div>
+							<?php }?>
 							</ul>
 						&nbsp;
 						</td>

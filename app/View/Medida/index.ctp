@@ -1,3 +1,11 @@
+<?php
+	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
+	$grafico = $this->ControleDeAcesso->validaAcessoElemento('grafico');
+	$visualizarDimensao = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Dimensao');
+?>
 <script type="text/javascript">
   $(function() {
     $('.footable').footable();
@@ -13,9 +21,9 @@
 			<div class="list-filters pull-left">
 				<div class="with-select">
 					<input name="data[Medida][busca]" placeholder="O que você procura?" type="text" id="MedidaBusca">
-					<?php $options = array('titulo' => 'Título','ano'=>'Ano','situacao'=>'Situação','prioridade'=>'Prioridade', 'Última Atualização'=>'Última Atualização');?>
+					<?php $options = array('Medida.titulo' => 'Título','Medida.ano'=>'Ano','Medida.situacao'=>'Situação','Medida.prioridade'=>'Prioridade', 'Medida.data_ultima_atualizacao'=>'Última Atualização');?>
 					<select name="data[Medida][buscar_em]" id="MedidaBuscarEm">
-						<option value="titulo">Filtrar em:</option>					
+						<option value="Medida.titulo">Filtrar em:</option>					
 						<?php foreach($options as $key => $value){?>
 						<option value="<?php echo $key; ?>"><?php echo $value;?></option>
 						<?php } ?>
@@ -31,7 +39,7 @@
 						<?php
 							foreach($_SESSION['Search']['Medida'] as $key => $temo_busca){
 						?>
-							<span class="type-tag"><?php echo $temo_busca['buscar_em']?>: <?php echo $temo_busca['busca']?><?php echo $this->Html->link("", array("action" => "excluirFiltro", $key), array("class" => "fa fa-times")); ?></span>
+							<span class="type-tag"><?php echo $options[$temo_busca['buscar_em']]?>: <?php echo $temo_busca['busca']?><?php echo $this->Html->link("", array("action" => "excluirFiltro", $key), array("class" => "fa fa-times")); ?></span>
 						<?php	
 							}
 						}
@@ -39,15 +47,18 @@
 					?>
 				</div>
 			</div><!-- /.list-filters -->
-				<div class="list-actions-buttons pull-right">				
-				<!--<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>Medida/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>-->
+				<div class="list-actions-buttons pull-right">
+				<?php if($adicionar){?>			
+				<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>medida/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>
+				<?php }?>
 			</div><!-- /.list-actions -->
 			<!-- end Filtros -->
 		</div>
 	</form>
 	
-	
+	<?php if($grafico){?>
 	<p><a href="javascript: void(0);" onclick="$('#TargetGraphic').slideToggle('slow');">Exibir Gráfico</a></p>
+	
 	<div id="TargetGraphic" style="display: none">
 		<?php 
 		$parametros = array();
@@ -80,7 +91,7 @@
 		
 		<iframe src="http://<?php echo $_SERVER['HTTP_HOST'] . $this->base; ?>/graficos/ver_alvo.php?base=<?php echo $this->base;?>&showscale=1&width=400&height=400&table_data=<?php echo $parametros;?>" width="100%" height="440" style="border: 0px;" scrolling="no"> </iframe>
 	</div>
-	
+	<?php }?>
 	
 	<table cellpadding="0" cellspacing="0" class="footable table table-bordered table-hover table-condensed" id="index">
 		<thead>
@@ -93,8 +104,9 @@
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Medida.data_ultima_atualizacao', 'Atualização'); ?></th>
 				<!--th data-hide="phone,tablet"><?php echo $this->Paginator->sort('ano'); ?></th-->
 				<!--th data-hide="phone,tablet"><?php echo __('Projetos associados'); ?></th-->
-				
+				<?php if($editar || $excluir){?>
 				<th><center><?php echo __('Ações'); ?></center></th>
+				<?php }?>
 			</tr>
 		</thead>
 		<tbody>
@@ -124,8 +136,24 @@
 				echo  $situacaoNome;
 				?>&nbsp;</td>
 				<td><?php echo $medida['Medida']['prioridade'];?></td>
-				<td><?php echo $this->Html->link($medida['Medida']['titulo'], array('action' => 'visualizar', $medida['Medida']['id'])); ?>&nbsp;</td>
-				<td><?php echo $this->Html->link($medida['Dimensao']['titulo'], array('controller' => 'Dimensao','action' => 'visualizar', $medida['Dimensao']['id'])); ?>&nbsp;</td>
+				<td>
+					<?php
+					if($visualizar){
+						echo $this->Html->link($medida['Medida']['titulo'], array('action' => 'visualizar', $medida['Medida']['id']));
+					}else{
+						echo $medida['Medida']['titulo'];
+					}
+					?>&nbsp;
+				</td>
+				<td>
+					<?php
+					if($visualizarDimensao){
+						echo $this->Html->link($medida['Dimensao']['titulo'], array('controller' => 'Dimensao','action' => 'visualizar', $medida['Dimensao']['id']));
+					}else{
+						echo $medida['Dimensao']['titulo'];
+					}
+					?>&nbsp;
+				</td>
 				<td><?php echo $medida['Medida']['data_ultima_atualizacao'];?></td>
 				<!--td><?php echo $medida['Medida']['ano'];?></td-->
 				<!--td class="no-padding">
@@ -162,27 +190,30 @@
 					</ul>
 					
 				</td-->
+				<?php if($editar || $excluir){?>
 				<td width="7%" nowrap="nowrap">
 					<center>
 					<?php 
+						if($editar){
 						echo $this->Html->link(
 							__(""),
 							array('action' => 'editar', $medida['Medida']['id']),
 							array('class'=>'icon-edit')
 						);
 						echo "&nbsp;&nbsp;";
-						
-						/*
+						}
+						if($excluir){
 						echo $this->Form->postLink(
 							__(""), 
 							array('action' => 'excluir', $medida['Medida']['id']), 
 							array('class'=>'icon-trash'),
 							__(Util::MENSAGEM_DELETAR, $medida['Medida']['id'])
-						);
-						*/						
+						);	
+						}			
 					?>
 					</center>
 				</td>
+				<?php }?>
 			</tr>
 			<?php } ?>
 		</tbody>
