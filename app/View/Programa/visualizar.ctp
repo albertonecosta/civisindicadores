@@ -1,9 +1,13 @@
+<?php
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+	$visualizarProjeto = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Projeto');
+?>
 <div class="container">
 	<legend>Visualizar Programa
 			<div class="list-actions-buttons pull-right">				
-			
+			<?php if($editar){?>
 			<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->Html->url(__(""),
-							array('action' => 'editar', $programa['Programa']['id']));?>'"><i class="fa fa-plus-circle"></i>Editar</button>
+							array('action' => 'editar', $programa['Programa']['id']));?>'"><i class="fa fa-plus-circle"></i>Editar</button><?php }?>
 		</div>
 
 
@@ -57,7 +61,13 @@
 									?>
 									
 											<abbr style='font-size: 16px;' title='<?php echo $value["titulo"]." | ".Util::inverteData($value["data_inicio_previsto"])." a ".Util::inverteData($value["data_fim_previsto"])?>'>
-											<?php echo $this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));?>
+												<?php
+													if($visualizarProjeto){
+														echo $this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));
+													}else{
+														echo $value['titulo'];
+													}
+												?>
 											<abbr>
 										
 																			

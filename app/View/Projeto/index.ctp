@@ -1,3 +1,12 @@
+<?php
+	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
+	$imprimir = $this->ControleDeAcesso->validaAcessoElemento('imprimir');
+	$cronograma = $this->ControleDeAcesso->validaAcessoElemento('cronograma');
+	$visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Usuario');
+?>
 <script type="text/javascript">
   $(function() {
     $('.footable').footable();
@@ -40,8 +49,10 @@
 					?>
 				</div>
 			</div><!-- /.list-filters -->
-				<div class="list-actions-buttons pull-right">				
+				<div class="list-actions-buttons pull-right">
+				<?php if($adicionar){?>				
 				<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>Projeto/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>
+				<?php }?>
 			</div><!-- /.list-actions -->
 			<!-- end Filtros -->
 		</div>
@@ -59,20 +70,46 @@
 				<!--th data-hide="phone,tablet">Custo</th-->
 				<th data-hide="phone,tablet">Responsável</th>
 				<!--th data-hide="phone,tablet" width=400><?php echo __('Atividades associadas'); ?></th-->
+				<?php if($editar || $excluir || $cronograma || $imprimir){?>
 				<th class="actions"><?php echo __('Ações'); ?></th>
+				<?php }?>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach($projetos as $projeto){
 		?>
 			<tr>
-				<td nowrap="nowrap"><?php echo $this->Html->link($projeto['processo'], array('action' => 'visualizar', $projeto['id'])); ?>&nbsp;</td>
-				<td><?php echo $this->Html->link($projeto['titulo'], array('action' => 'visualizar', $projeto['id'])); ?>&nbsp;</td>
+				<td nowrap="nowrap">
+					<?php
+						if($visualizar){
+							echo $this->Html->link($projeto['processo'], array('action' => 'visualizar', $projeto['id']));
+						}else{
+							echo $projeto['processo'];
+						}
+					?>&nbsp;
+				</td>
+				<td>
+					<?php
+						if($visualizar){
+							echo $this->Html->link($projeto['titulo'], array('action' => 'visualizar', $projeto['id']));
+						}else{
+							echo $projeto['titulo'];
+						}
+					?>&nbsp;
+				</td>
 				<td><?php echo Util::inverteData($projeto['data_inicio_previsto']); ?>&nbsp;</td>
 				<td <?php if ($projeto['data_fim_previsto'] < Date('Y-m-d') && $projeto['data_conclusao'] == null) echo "style=\"color: red\"";?>><?php echo Util::inverteData($projeto['data_fim_previsto']); ?>&nbsp;</td>
 				<td><?php echo Util::inverteData($projeto['data_conclusao']); ?>&nbsp;</td>
 				<!--td><?php echo $projeto['moeda']; ?>&nbsp;<?php echo $projeto['custo']; ?>&nbsp;</td-->
-				<td><?php echo $this->Html->link($projeto['nome'], array('controller' => 'Usuario','action' => 'visualizar', $projeto['usuario_id'])); ?>&nbsp;</td>
+				<td>
+					<?php
+						if($visualizarUsuario){
+							echo $this->Html->link($projeto['nome'], array('controller' => 'usuario','action' => 'visualizar', $projeto['usuario_id']));
+						}else{
+							echo $projeto['nome'];
+						}
+					?>&nbsp;
+				</td>
 				<!--td class="no-padding">
 					<ul class="list-inner">
 					<?php
@@ -135,24 +172,32 @@
 						<button class="btn btn-mini" type="button" onclick="abrirModal(<?php echo $projeto['id']; ?>)">Adicionar</button>
 					</div>
 				</td-->
+				<?php if($editar || $excluir || $cronograma || $imprimir){?>
 				<td width="7%" nowrap="nowrap" class="actions">
 					<?php 
+						if($editar){
 						echo $this->Html->link(
 							__(""),
 							array('action' => 'editar', $projeto['id']),
 							array('class'=>'icon-edit fa fa-edit')
 						);
+						}
 					?>
+					<?php if($cronograma){?>
 					<a href="javascript:abrirCronograma(<?php echo $projeto['id']; ?>)" title="Cronograma" class="icon-time fa fa-clock-o"></a>
 					<?php
+					}
+					if($excluir){
 						echo $this->Form->postLink(
 							__(""), 
 							array('action' => 'excluir', $projeto['id']), 
 							array('class'=>'icon-trash fa fa-trash-o'),
 							__("Você realmente deseja deletar o registro # {$projeto['id']}? Todas as ações, tarefas e posts relacionados ao projeto também serão deletadas. Deseja continuar?", $projeto['id'])
 						); 
+					}
 					?>
 						<?php
+						if($imprimir){
 						echo "&nbsp;";
 						echo $this->Html->link(
 							__(""),
@@ -160,8 +205,10 @@
 							array('class'=>'icon-print fa fa-print')
 						);
 						echo "&nbsp;";
+						}
 					?>
 				</td>
+				<?php }?>
 			</tr>
 			<?php } ?>
 		</tbody>

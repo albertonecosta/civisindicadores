@@ -145,6 +145,25 @@ class ControleDeAcesso{
 			'Listar'=>array('Anomalia.index.action', 'Anomalia.listar.element'),
 			'Visualizar'=>array('Anomalia.visualizar.action', 'Anomalia.visualizar.element'),
 			'Painel'=>array('Anomalia.painel.element')
+		),'Projetos'=>array(
+			'Adicionar'=>array('Projeto.adicionar.action', 'Projeto.adicionar.element'),
+			'Excluir'=>array('Projeto.excluir.action', 'Projeto.excluir.element'),
+			'Editar'=>array('Projeto.editar.action', 'Projeto.editar.element'),
+			'Listar'=>array('Projeto.index.action', 'Projeto.listar.element'),
+			'Visualizar'=>array('Projeto.visualizar.action', 'Projeto.visualizar.element'),
+			'Imprimir'=>array('Projeto.imprimir.action', 'Projeto.imprimir.element'),
+			'Cronograma'=>array('Projeto.cronograma.element')
+		),'Programas'=>array(
+			'Adicionar'=>array('Programa.adicionar.action', 'Programa.adicionar.element'),
+			'Excluir'=>array('Programa.excluir.action', 'Programa.excluir.element'),
+			'Editar'=>array('Programa.editar.action', 'Programa.editar.element'),
+			'Listar'=>array('Programa.index.action', 'Programa.listar.element'),
+			'Visualizar'=>array('Programa.visualizar.action', 'Programa.visualizar.element'),
+			'Imprimir'=>array('Programa.imprimir.action', 'Programa.imprimir.element')
+		),'Mapa Estratégico'=>array(
+			'Listar'=>array('MapaEstrategico.index.action', 'MapaEstrategico.listar.element')
+		),'Organograma'=>array(
+			'Listar'=>array('Organograma.index.action', 'Organograma.listar.element')
 		)
 	);
 

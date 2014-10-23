@@ -1,8 +1,17 @@
+<?php
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+	$visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Usuario');
+	$visualizarPrograma = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Programa');
+	$visualizarAcao = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Acao');
+	$adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Acao');
+?>
 <div class="container">
 	<legend>Visualizar Projeto
-		<div class="list-actions-buttons pull-right">				
+		<div class="list-actions-buttons pull-right">
+			<?php if($editar){?>				
 			<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->Html->url(
 					array('action' => 'editar', $projeto['Projeto']['id']));?>'"><i class="fa fa-plus-circle"></i>Editar</button>
+			<?php }?>
 		</div>
 
 	</legend>
@@ -54,12 +63,28 @@
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Programa'); ?></strong></td>
-						<td><?php echo $this->Html->link($projeto['Programa']['titulo'], array('controller' => 'Programa','action' => 'visualizar', $projeto['Programa']['titulo'])); ?></td>
+						<td>
+							<?php
+								if($visualizarPrograma){
+									echo $this->Html->link($projeto['Programa']['titulo'], array('controller' => 'Programa','action' => 'visualizar', $projeto['Programa']['titulo']));
+								}else{
+									echo $projeto['Programa']['titulo'];
+								}
+							?>
+						</td>
 					</tr>
 
 					<tr>
 						<td><strong><?php echo __('Responsável'); ?></strong></td>
-						<td><?php echo $this->Html->link($projeto['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $projeto['Responsavel']['id'])); ?></td>
+						<td>
+							<?php
+								if($visualizarUsuario){
+									echo $this->Html->link($projeto['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $projeto['Responsavel']['id']));
+								}else{
+									echo $projeto['Responsavel']['Pessoa']['titulo'];
+								}
+							?>
+						</td>
 					</tr>
 					<tr>
 						<td><strong><?php echo __('Objetivos'); ?></strong></td>
@@ -109,7 +134,13 @@
 									<div class="wrapper">
 									<div class="text">
 									<abbr style='font-size: 14px;' title='<?php echo $value["nome"]." | ".Util::inverteData($value["data_inicio_previsto"])." a ".Util::inverteData($value["data_fim_previsto"])?>'>
-									<?php echo $this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));?>
+										<?php
+											if($visualizarAcao){
+												echo $this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));
+											}else{
+												echo "<a>{$value['titulo']}</a>";
+											}
+										?>
 									</abbr>
 																		
 									<?php 
@@ -179,7 +210,9 @@
 							}
 							?>
 							<div class="button-area row-fluid">
+								<?php if($adicionarAcao){?>
 								<button class="btn btn-mini"  type="button" onclick="abrirModalAcao(<?php echo $projeto['Projeto']['id']; ?>)">Adicionar</button>
+								<?php }?>
 							</div>
 							</ul>
 						&nbsp;

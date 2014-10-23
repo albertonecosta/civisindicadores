@@ -29,6 +29,17 @@
 	$isAnomalia = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Anomalia');
 	$isGESTAOESTRATEGICA = ($isDimensao || $isObjetivo || $isIndicador || $isMedida || $isMedidaRevisao || $isMedidaPainel || $isAcao || $isFaixa || $isAnomalia);
 	
+	// GESTÃO DE PORTIFÓLIO
+	$isProjeto = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Projeto');
+	$isPrograma = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Programa');
+	$isGESTAOPORTIFOLIO = ($isProjeto || $isPrograma);
+	
+	// MAPA ESTRATÉGICO
+	$isMapaEstrategico = $this->ControleDeAcesso->validaAcessoElemento('listar', 'MapaEstrategico');
+	
+	// ORGANOGRAMA
+	$isOrganograma = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Organograma');
+	
 ?>
 <div class="navbar navbar-static-top" style="position:relative; !important;">
   <div class="navbar-inner">
@@ -147,27 +158,29 @@
           </li>
           <?php }?>
 		
+		  <?php if($isGESTAOPORTIFOLIO){?>
 			<li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             	Gestão de Portfólio
 		        <b class="caret"></b>
 		    </a>			
 		    <ul class="dropdown-menu">
-				<li>          
-				<?php 					
-					echo $this->Html->link(__('Projetos'), array('controller' => 'Projeto','action' => 'index'));
-									?>
-				</li>
-				<li>
-				<?php 
-					echo $this->Html->link(__('Programas'), array('controller' => 'Programa','action' => 'index'));
-				?>
-				</li>
+		    	<?php if($isProjeto){?>
+				<li><?php echo $this->Html->link(__('Projetos'), array('controller' => 'Projeto','action' => 'index'));?></li>
+				<?php }?>
+				<?php if($isPrograma){?>
+				<li><?php echo $this->Html->link(__('Programas'), array('controller' => 'Programa','action' => 'index'));?></li>
+				<?php }?>
 			</ul>
 		  </li>
+		  <?php }?>
 		
-          <li class=""><?php echo $this->Html->link(__('Mapa estratégico'), array('controller' => 'MapaEstrategico','action' => 'index'));?></li>
-          <li class=""><?php echo $this->Html->link(__('Organograma'), array('controller' => 'Organograma','action' => 'index'));?></li>
+		  <?php if($isMapaEstrategico){?>
+          	<li><?php echo $this->Html->link(__('Mapa estratégico'), array('controller' => 'MapaEstrategico','action' => 'index'));?></li>
+          <?php }?>
+          <?php if($isOrganograma){?>
+          	<li><?php echo $this->Html->link(__('Organograma'), array('controller' => 'Organograma','action' => 'index'));?></li>
+          <?php }?>
           
         </ul>
       </div>

@@ -1,3 +1,11 @@
+<?php
+	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
+	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
+	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
+	$imprimir = $this->ControleDeAcesso->validaAcessoElemento('imprimir');
+	$visualizarProjeto = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Projeto');
+?>
 <script type="text/javascript">
   $(function() {
     $('.footable').footable();
@@ -40,8 +48,10 @@
 					?>
 				</div>
 			</div><!-- /.list-filters -->
-				<div class="list-actions-buttons pull-right">				
+				<div class="list-actions-buttons pull-right">	
+				<?php if($adicionar){?>			
 				<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>Programa/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>
+				<?php }?>
 			</div><!-- /.list-actions -->
 			<!-- end Filtros -->
 		</div>
@@ -55,14 +65,24 @@
 				<th data-hide="phone,tablet">Início</th>
 				<th data-hide="phone,tablet">Fim</th>
 				<th data-hide="phone,tablet" width=400><?php echo __('Projetos associados'); ?></th>
-				
+				<?php if($editar || $excluir || $imprimir){?>
+				<th><center><?php echo __('Ações'); ?></center></th>
+				<?php }?>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach($programas as $programa){
 		?>
 			<tr>
-				<td><?php echo $this->Html->link($programa['titulo'], array('action' => 'visualizar', $programa['id'])); ?>&nbsp;</td>
+				<td>
+					<?php
+						if($visualizar){
+							echo $this->Html->link($programa['titulo'], array('action' => 'visualizar', $programa['id']));
+						}else{
+							echo $programa['titulo'];
+						}
+					?>&nbsp;
+				</td>
 				<td><?php echo Util::inverteData($programa['data_inicio']); ?>&nbsp;</td>
 				<td><?php echo Util::inverteData($programa['data_fim']); ?>&nbsp;</td>
 				<td class="no-padding">
@@ -87,7 +107,13 @@
 									
 									?>
 										<abbr>
-										<?php echo $this->Html->link($value["Projeto"]['titulo'], array('controller' => 'Projeto', 'action' => 'visualizar', $value["Projeto"]['id'])); ?>	
+										<?php 
+											if($visualizarProjeto){
+											echo $this->Html->link($value["Projeto"]['titulo'], array('controller' => 'Projeto', 'action' => 'visualizar', $value["Projeto"]['id']));
+											}else{
+												echo $value["Projeto"]['titulo'];
+											}
+										?>	
 										</abbr>
 									
 									</div>									
@@ -101,24 +127,30 @@
 					</ul>
 					
 				</td>
+				<?php if($editar || $excluir || $imprimir){?>
 				<td width="7%" nowrap="nowrap" class="actions">
 					<?php 
+						if($editar){
 						echo $this->Html->link(
 							__(""),
 							array('action' => 'editar', $programa['id']),
 							array('class'=>'icon-edit fa fa-edit')
 						);
+						}
 					?>
 					
 					<?php
+						if($excluir){
 						echo $this->Form->postLink(
 							__(""), 
 							array('action' => 'excluir', $programa['id']), 
 							array('class'=>'icon-trash fa fa-trash-o'),
 							__("Você realmente deseja deletar o registro # {$programa['id']}? Todas as ações, tarefas e posts relacionados ao programa também serão deletadas. Deseja continuar?", $programa['id'])
 						); 
+						}
 					?>
 						<?php
+						if($imprimir){
 						echo "&nbsp;";
 						echo $this->Html->link(
 							__(""),
@@ -126,8 +158,10 @@
 							array('class'=>'icon-print fa fa-print')
 						);
 						echo "&nbsp;";
+						}
 					?>
 				</td>
+				<?php }?>
 			</tr>
 			<?php } ?>
 		</tbody>
