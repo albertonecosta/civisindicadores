@@ -1,4 +1,15 @@
-<?php
+<?php 
+/**
+*
+* Copyright [2014] -  Civis Gestão Inteligente
+* Este arquivo é parte do programa Civis Estratégia
+* O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
+* Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+* Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+*
+*/
+
+// Carregamento das variáveis para controle de acesso
 	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
 	$visualizarDimensao = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Dimensao');
 ?>
@@ -53,11 +64,10 @@
 	<table cellpadding="0" cellspacing="0" class="footable table table-bordered table-hover table-condensed" id="index">
 		<thead>
 			<tr>
-				<th data-hide="phone,tablet" width='10'><?php echo $this->Paginator->sort('Medida.situacao', 'Situação'); ?></th>
-				<th data-class="expand"><?php echo $this->Paginator->sort('Medida.prioridade', 'Prioridade'); ?></th>
-				<th data-class="expand"><?php echo $this->Paginator->sort('Medida.andamento', 'Andamento'); ?></th>
-				<th data-class="expand"><?php echo $this->Paginator->sort('Medida.titulo', 'Título'); ?></th>
-				
+				<th data-class="expand" width='10'><?php echo $this->Paginator->sort('Medida.situacao', 'Situação'); ?></th>
+				<th data-class="expand"><?php echo $this->Paginator->sort('Medida.titulo', 'Título'); ?></th>			
+				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Medida.prioridade', 'Prioridade'); ?></th>
+				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Medida.andamento', 'Andamento'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Dimensao.titulo', 'Dimensão'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Medida.data_ultima_atualizacao', 'Atualização'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Medida.data_ultima_revisao', 'Revisão'); ?></th>
@@ -71,6 +81,7 @@
 		<?php 
 		foreach($medida as $medida){?>
 			<tr>
+			
 				<td><?php $situacao = $medida['Medida']['situacao']; 
 				$situacaoNome = "";
 				switch ($situacao) {
@@ -95,6 +106,15 @@
 				echo  $situacaoNome;
 				?>&nbsp;</td>
 				<td>
+					<?php
+					if($visualizarDimensao){
+						echo $this->Html->link($medida['Dimensao']['titulo'], array('controller' => 'Dimensao','action' => 'visualizar', $medida['Dimensao']['id']));
+					}else{
+						echo $medida['Dimensao']['titulo'];
+					}
+					?>&nbsp;
+				</td>
+				<td>
 				<div class="progress progress-success progress-striped">
 						<div class="bar" style="width: <?php echo $medida['Medida']['andamento'];?>"></div>
 				</div>
@@ -108,16 +128,7 @@
 						echo $medida['Medida']['titulo'];
 					}
 					?>&nbsp;
-				</td>
-				<td>
-					<?php
-					if($visualizarDimensao){
-						echo $this->Html->link($medida['Dimensao']['titulo'], array('controller' => 'Dimensao','action' => 'visualizar', $medida['Dimensao']['id']));
-					}else{
-						echo $medida['Dimensao']['titulo'];
-					}
-					?>&nbsp;
-				</td>
+				</td>				
 				<td><?php echo $medida['Medida']['data_ultima_atualizacao'];?></td>
 				<td><?php echo $medida['Medida']['data_ultima_revisao'];?></td>
 				<!--td><?php echo $medida['Medida']['ano'];?></td-->

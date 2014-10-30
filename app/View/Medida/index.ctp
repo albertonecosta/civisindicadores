@@ -1,10 +1,21 @@
-<?php
-	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
-	$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
-	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
-	$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
-	$grafico = $this->ControleDeAcesso->validaAcessoElemento('grafico');
-	$visualizarDimensao = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Dimensao');
+<?php 
+/**
+*
+* Copyright [2014] -  Civis Gestão Inteligente
+* Este arquivo é parte do programa Civis Estratégia
+* O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
+* Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+* Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+*
+*/
+
+// Carregamento das variáveis para controle de acesso
+$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
+$visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar');
+$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
+$grafico = $this->ControleDeAcesso->validaAcessoElemento('grafico');
+$visualizarDimensao = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Dimensao');
 ?>
 <script type="text/javascript">
   $(function() {
@@ -96,13 +107,10 @@
 	<table cellpadding="0" cellspacing="0" class="footable table table-bordered table-hover table-condensed" id="index">
 		<thead>
 			<tr>
-				<th data-hide="phone,tablet" width='10'><?php echo $this->Paginator->sort('Medida.situacao', 'Situação'); ?></th>
-				<th data-class="expand"><?php echo $this->Paginator->sort('Medida.andamento', 'Andamento'); ?></th>
-				
-				<th data-class="expand"><?php echo $this->Paginator->sort('Medida.prioridade', 'Prioridade'); ?></th>
-				
-				<th data-class="expand"><?php echo $this->Paginator->sort('Medida.titulo', 'Título'); ?></th>
-				
+				<th data-class="expand" width='10'><?php echo $this->Paginator->sort('Medida.situacao', 'Situação'); ?></th>
+				<th data-class="expand"><?php echo $this->Paginator->sort('Medida.titulo', 'Título'); ?></th>				
+				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Medida.andamento', 'Andamento'); ?></th>				
+				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Medida.prioridade', 'Prioridade'); ?></th>								
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Dimensao.titulo', 'Dimensão'); ?></th>
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Medida.data_ultima_atualizacao', 'Atualização'); ?></th>
 				<!--th data-hide="phone,tablet"><?php echo $this->Paginator->sort('ano'); ?></th-->
@@ -141,12 +149,6 @@
 				echo  $situacaoNome;
 				?>&nbsp;</td>
 				<td>
-				<div class="progress progress-success progress-striped">
-						<div class="bar" style="width: <?php echo $medida['Medida']['andamento'];?>"></div>
-				</div>
-				</td>
-				<td><?php echo $medida['Medida']['prioridade'];?></td>
-				<td>
 					<?php
 					if($visualizar){
 						echo $this->Html->link($medida['Medida']['titulo'], array('action' => 'visualizar', $medida['Medida']['id']));
@@ -155,6 +157,13 @@
 					}
 					?>&nbsp;
 				</td>
+				<td>
+				<div class="progress progress-success progress-striped">
+						<div class="bar" style="width: <?php echo $medida['Medida']['andamento'];?>"></div>
+				</div>
+				</td>
+				<td><?php echo $medida['Medida']['prioridade'];?></td>
+				
 				<td>
 					<?php
 					if($visualizarDimensao){

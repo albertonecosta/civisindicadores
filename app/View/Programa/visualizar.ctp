@@ -1,18 +1,44 @@
-<?php
-	$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
-	$visualizarProjeto = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Projeto');
+<?php 
+/**
+*
+* Copyright [2014] -  Civis Gestão Inteligente
+* Este arquivo é parte do programa Civis Estratégia
+* O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
+* Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+* Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+*
+*/
+
+// Carregamento das variáveis para controle de acesso
+$editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
+$excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
+$visualizarProjeto = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Projeto');
 ?>
 <div class="container">
 	<legend>Visualizar Programa
-			<div class="list-actions-buttons pull-right">				
-			<?php if($editar){?>
-			<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->Html->url(__(""),
-							array('action' => 'editar', $programa['Programa']['id']));?>'"><i class="fa fa-plus-circle"></i>Editar</button><?php }?>
-		</div>
-
-
-
-	</legend>
+	
+	<div class="list-actions-buttons pull-right">
+		<?php
+		if($editar){
+		echo $this->Html->link(
+					__("<i class='fa fa-edit'></i>Editar"),
+					array('action' => 'editar', $programa['Programa']['id']),
+					array('class'=>'btn btn-small btn-primary pull-right', 'escape' => false)
+				);
+		echo "&nbsp;&nbsp;";
+		}
+		if($excluir){
+		echo $this->Form->postLink(
+					__("<i class='fa fa-trash'></i>Deletar"), 
+					array('action' => 'excluir', $programa['Programa']['id']), 
+					array('class'=>'btn btn-small btn-primary pull-right', 'escape' => false),
+					__(Util::MENSAGEM_DELETAR, $programa['Programa']['id'])
+				);
+		}
+		?>
+	</div>
+	</legend>	
+	
 	<div class="row">
 	
 		
@@ -63,7 +89,7 @@
 											<abbr style='font-size: 16px;' title='<?php echo $value["titulo"]." | ".Util::inverteData($value["data_inicio_previsto"])." a ".Util::inverteData($value["data_fim_previsto"])?>'>
 												<?php
 													if($visualizarProjeto){
-														echo $this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));
+														echo $this->Html->link($value['titulo'], array('controller' => 'Projeto', 'action' => 'visualizar', $value['id']));
 													}else{
 														echo $value['titulo'];
 													}
