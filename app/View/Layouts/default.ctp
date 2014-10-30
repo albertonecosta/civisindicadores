@@ -61,7 +61,7 @@
 
 
 		<footer class="footer">
-			<!-- <?php echo $this->element('footer')?> -->
+			 	<?php echo $this->element('footer')?>
 		</footer><!-- /.footer -->
 		
 

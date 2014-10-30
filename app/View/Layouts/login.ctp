@@ -19,7 +19,7 @@
 			</div>	<!-- /.corpo-conteudo -->
 		</div><!-- /.corpo -->
 		<footer class="footer">
-			<!-- <?php echo $this->element('footer')?> -->
+			 <?php echo $this->element('footer')?>
 		</footer><!-- /.rodape -->
 	</div><!-- #wrapper -->
 	<!-- Scripts -->

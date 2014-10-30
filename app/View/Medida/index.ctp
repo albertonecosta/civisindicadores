@@ -97,7 +97,10 @@
 		<thead>
 			<tr>
 				<th data-hide="phone,tablet" width='10'><?php echo $this->Paginator->sort('Medida.situacao', 'Situação'); ?></th>
+				<th data-class="expand"><?php echo $this->Paginator->sort('Medida.andamento', 'Andamento'); ?></th>
+				
 				<th data-class="expand"><?php echo $this->Paginator->sort('Medida.prioridade', 'Prioridade'); ?></th>
+				
 				<th data-class="expand"><?php echo $this->Paginator->sort('Medida.titulo', 'Título'); ?></th>
 				
 				<th data-hide="phone,tablet"><?php echo $this->Paginator->sort('Dimensao.titulo', 'Dimensão'); ?></th>
@@ -116,25 +119,32 @@
 				<td><?php $situacao = $medida['Medida']['situacao']; 
 				$situacaoNome = "";
 				switch ($situacao) {
-				    case Util::NAO_INFORMADO:
-				        $situacaoNome = "<img src='".$this->base."/img/quadrado_cinza.png' style='margin-left:20px' title='Não Informado'>";
-				        break;
-				    case Util::ADEQUADO:
-				        $situacaoNome = "<img src='".$this->base."/img/quadrado_verde.png' style='margin-left:20px' title='Adequado'>";
-				        break;
-				    case Util::ATENCAO:
-				        $situacaoNome = "<img src='".$this->base."/img/quadrado_amarelo.png' style='margin-left:20px' title='Atenção'>";
-				        break;
-			        case Util::CONCLUIDO:
-			        	$situacaoNome = "<img src='".$this->base."/img/quadrado_azul.png' style='margin-left:20px' title='Concluído'>";
-			        	break;
-		        	case Util::PREOCUPANTE:
-		        		$situacaoNome = "<img src='".$this->base."/img/quadrado_vermelho.png' style='margin-left:20px' title='Preocupante'>";
-		        		break;
+						case Util::NAO_INFORMADO:
+							$situacaoNome = "<acronym title='Não Informado' ><span class='label label-default'>".$medida['Medida']['andamento']."</span></acronym>";
+							break;
+						case Util::ADEQUADO:
+							$situacaoNome = "<acronym title='Adequado' ><span class='label label-success'>".$medida['Medida']['andamento']."</span></acronym>";
+							break;
+						case Util::ATENCAO:
+							$situacaoNome = "<acronym title='Atenção' ><span class='label label-warning'>".$medida['Medida']['andamento']."</span></acronym>";
+							break;
+						case Util::CONCLUIDO:
+							$situacaoNome = "<acronym title='Concluído' ><span class='label label-primary'>".$medida['Medida']['andamento']."</span></acronym>";
+							break;
+						case Util::PREOCUPANTE:
+							$situacaoNome = "<acronym title='Preocopante' ><span class='label label-danger'>".$medida['Medida']['andamento']."</span></acronym>";
+							break;
+						
+
 				}
 				
 				echo  $situacaoNome;
 				?>&nbsp;</td>
+				<td>
+				<div class="progress progress-success progress-striped">
+						<div class="bar" style="width: <?php echo $medida['Medida']['andamento'];?>"></div>
+				</div>
+				</td>
 				<td><?php echo $medida['Medida']['prioridade'];?></td>
 				<td>
 					<?php

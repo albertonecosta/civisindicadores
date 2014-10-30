@@ -521,7 +521,7 @@ $(function () {
 
 	var colors = Highcharts.getOptions().colors,
 			            categories = [ 'Atividades'],
-			            name = 'Browser brands',
+			            name = 'Atividades',
 			            data = [{
 			                    y: 7.15,
 			                    color: colors[3],
@@ -585,7 +585,7 @@ $(function () {
 			              },
 			              series: [{
 			                  type: 'pie',
-			                  name: 'Browser share',
+			                  name: '% de Atividades',
 			                  data: [
 			                      ['Concluídas',  <?php if (isset($indicadores["Status"][5])) echo $indicadores["Status"][5]; else echo "0";?>],
 			                      ['Aguardando outra pessoa',  <?php if (isset($indicadores["Status"][4])) echo $indicadores["Status"][4]; else echo "0";?>],
