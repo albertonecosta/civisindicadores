@@ -1,4 +1,13 @@
 <?php
+/**
+ * 
+ * Copyright [2014] -  Civis Gestão Inteligente
+ * Este arquivo é parte do programa Civis Estratégia
+ * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
+ * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA 
+ *
+ */
 App::uses('AppController', 'Controller');
 /**
  * Aplicacao Controller
@@ -112,11 +121,16 @@ class AplicacaoController extends AppController {
 		 */
 		
 		$acao = $this->Acao->query("Select count(id) as total,extract(month from data_fim_previsto) as mes from acao where acao.status <> ".Util::INATIVO." group by extract(month from data_fim_previsto)");
-			
-		foreach($acao as $vetorAcao){
+	
+		foreach($acao as $vetorAcao){		
 			$indicadores["acoesPrevistas"][$vetorAcao[0]["mes"]] = $vetorAcao[0]["total"];
 		}
-
+	
+		for($meses=1;$meses<13;$meses++){		
+				if(!isset($indicadores["acoesPrevistas"][$meses]))			
+					$indicadores["acoesPrevistas"][$meses]='1';
+		}
+		
 		$this->set('indicadores', $indicadores);
 		$this->set('posts', $posts);
 		$this->set('projetos', $projetos);
