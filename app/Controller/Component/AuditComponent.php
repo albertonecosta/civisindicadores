@@ -107,7 +107,7 @@ class AuditComponent extends Component {
 				}
 			}
 		}else{
-			$auditoria_data = array("Auditoria" => array("alias_controller" => $aliasController, "alias_acao" => $aliasAcao, "usuario_id" => $_SESSION['Auth']['User']['id'], "elemento_id" => $id_elemento));
+			$auditoria_data = array("Auditoria" => array("alias_controller" => $aliasController, "alias_acao" => $aliasAcao, "usuario_id" => $_SESSION["Auth"]["Indicadores"]['id'], "elemento_id" => $id_elemento));
 			$this->Auditoria->save($auditoria_data);
 		}
 	}
