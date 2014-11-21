@@ -4,8 +4,9 @@
  * Copyright [2014] -  Civis Gestão Inteligente
  * Este arquivo é parte do programa Civis Estratégia
  * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
- * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
- * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA 
  *
  */
 App::uses('AppController', 'Controller');
@@ -409,8 +410,8 @@ class TarefaController extends AppController {
 		}
 		
 		//Buscamos pelo metodo find('all') para poder buscar pelos campos dos models da relação
-		$this->loadModel('Acao');
-		$acoes = $this->Acao->find('list', array('conditions' => array('Acao.status !=' =>Util::INATIVO), 'fields' => array('Acao.id', 'Acao.titulo')));
+		$this->loadModel('Atividade');
+		$atividades = $this->Atividade->find('list', array('conditions' => array('Atividade.status !=' =>Util::INATIVO), 'fields' => array('Atividade.id', 'Atividade.titulo')));
 		
 		$status = array(Util::NAO_INICIADO => 'Não Iniciada', Util::EM_ANDAMENTO => 'Em Andamento', Util::AGUARDANDO_OUTRA_PESSOA => 'Aguardando outra pessoa', Util::CONCLUIDO => 'Concluida', Util::CANCELADO => 'Cancelada');
 		$prioridades = array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F');
@@ -418,14 +419,14 @@ class TarefaController extends AppController {
 		$this->set('usuarios', $usuarios);
 		$this->set('status', $status);
 		$this->set('prioridades', $prioridades);
-		$this->set('acoes', $acoes);
+		$this->set('atividades', $atividades);
 	}
 	
 	/**
 	 * Método que adiciona uma tarefa dentro da página de visualização de uma ação.
-	 * @param Integer $acao_id
+	 * @param Integer $atividade_id
 	 */
-	public function adicionarNaAcao($acao_id){
+	public function adicionarNaAtividade($atividade_id){
 		if ($this->request->is('post')) {
 			try{
 				$this->Tarefa->create();
@@ -438,7 +439,7 @@ class TarefaController extends AppController {
 			}catch(Exception $e){
 				$this->Session->setFlash(__($e->getMessage()), 'alert');
 			}
-			$this->redirect(array("controller"=>"acao", "action"=>"visualizar", $acao_id));
+			$this->redirect(array("controller"=>"atividade", "action"=>"visualizar", $atividade_id));
 		}
 		exit;
 	}
@@ -472,9 +473,9 @@ class TarefaController extends AppController {
 		
 		$status = array(Util::NAO_INICIADO => 'Não Iniciada', Util::EM_ANDAMENTO => 'Em Andamento', Util::AGUARDANDO_OUTRA_PESSOA => 'Aguardando outra pessoa', Util::CONCLUIDO => 'Concluida', Util::CANCELADO => 'Cancelada');
 		$prioridades = array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F');
-		$this->loadModel('Acao');
-		$acoes = $this->Acao->find('list', array('conditions' => array('Acao.status !=' =>Util::INATIVO), 'fields' => array('Acao.id', 'Acao.titulo')));
-		$this->set('acoes', $acoes);
+		$this->loadModel('Atividade');
+		$atividades = $this->Atividade->find('list', array('conditions' => array('Atividade.status !=' =>Util::INATIVO), 'fields' => array('Atividade.id', 'Atividade.titulo')));
+		$this->set('atividades', $atividades);
 		
 		$this->set('reuniao', $reuniao_id);
 		$this->set('usuarios', $usuarios);
@@ -518,9 +519,9 @@ class TarefaController extends AppController {
 		$prioridades = array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F');
 		
 		$this->request->data = $this->Tarefa->read(null, $id);
-		$this->loadModel('Acao');
-		$acoes = $this->Acao->find('list', array('conditions' => array('Acao.status !=' =>Util::INATIVO), 'fields' => array('Acao.id', 'Acao.titulo')));
-		$this->set('acoes', $acoes);
+		$this->loadModel('Atividade');
+		$atividades = $this->Atividade->find('list', array('conditions' => array('Atividade.status !=' =>Util::INATIVO), 'fields' => array('Atividade.id', 'Atividade.titulo')));
+		$this->set('atividades', $atividades);
 		
 		$this->loadModel("Reuniao");
 		$reunioes = $this->Reuniao->find('list', array('conditions' => array('Reuniao.status != ' => Util::INATIVO), 'fields' => array('Reuniao.id', 'Reuniao.titulo')));
@@ -590,17 +591,17 @@ class TarefaController extends AppController {
 				pgerente.email as emailg, 
 				projeto.titulo as projeto,
 				projeto.email_tarefa as email_tarefa,
-				acao.titulo as acao
+				atividade.titulo as atividade
 				from tarefa
-				left join acao on acao.id=tarefa.acao_id
-				left join projeto on projeto.id=acao.projeto_id
+				left join atividade on atividade.id=tarefa.atividade_id
+				left join projeto on projeto.id=atividade.projeto_id
 				inner join usuario as responsavelt on responsavelt.id=tarefa.responsavel_id 
 				inner join usuario as supervisort on supervisort.id=tarefa.supervisor_id				
 				inner join pessoa as presponsavelt on responsavelt.pessoa_id=presponsavelt.id
 				inner join pessoa as psupervisort on supervisort.pessoa_id=psupervisort.id
 				left join usuario as gerente on projeto.usuario_id=gerente.id
-				left join usuario as responsavel on responsavel.id=acao.responsavel_id 
-				left join usuario as supervisor on supervisor.id=acao.supervisor_id				
+				left join usuario as responsavel on responsavel.id=atividade.responsavel_id 
+				left join usuario as supervisor on supervisor.id=atividade.supervisor_id				
 				left join pessoa as presponsavel on responsavel.pessoa_id=presponsavel.id
 				left join pessoa as psupervisor on supervisor.pessoa_id=psupervisor.id
 				left join pessoa as pgerente on gerente.pessoa_id=pgerente.id
@@ -694,7 +695,7 @@ class TarefaController extends AppController {
 		$Email->send();
 		
 		
-		if (isset($emails["acao"])){
+		if (isset($emails["atividade"])){
 			// Carregando cabeçalho do email do gerente do projeto
 			$conteudo="";
 			$Email = new CakeEmail('smtp');
@@ -706,11 +707,11 @@ class TarefaController extends AppController {
 			
 			//montando a mensagem para envio ao responsável
 			if ($tipo=="novo"){
-				$conteudo .= "Prezado(a) ".$emails["responsavel"].", você é o responsável da ação <b>".$emails["acao"]."</b>";
+				$conteudo .= "Prezado(a) ".$emails["responsavel"].", você é o responsável da ação <b>".$emails["atividade"]."</b>";
 				$conteudo .= " e uma nova tarefa foi cadastrada a essa ação por $nomeUserLogado. <Br><br><b>Seguem abaixo os dados:</b><Br>";
 
 			}else{
-				$conteudo .= "Prezado ".$emails["responsavel"].", você é o responsável da ação <b>".$emails["acao"]."</b>";
+				$conteudo .= "Prezado ".$emails["responsavel"].", você é o responsável da ação <b>".$emails["atividade"]."</b>";
 				$conteudo .= " e uma tarefa acaba de ser alterada por $nomeUserLogado. <Br><br><b>Seguem abaixo novos dados:</b><Br>";
 			}
 			//montando a mensagem para envio ao gerente
@@ -736,11 +737,11 @@ class TarefaController extends AppController {
 			
 			//montando a mensagem para envio ao responsável
 			if ($tipo=="novo"){
-				$conteudo .= "Prezado ".$emails["supervisor"].", você é o supervidor da ação <b>".$emails["acao"]."</b>";
+				$conteudo .= "Prezado ".$emails["supervisor"].", você é o supervidor da ação <b>".$emails["atividade"]."</b>";
 				$conteudo .= " e uma nova tarefa foi cadastrada a essa ação por $nomeUserLogado. <Br><br><b>Seguem abaixo os dados:</b><Br>";
 
 			}else{
-				$conteudo .= "Prezado ".$emails["supervisor"].", você é o supervisor da ação <b>".$emails["acao"]."</b>";
+				$conteudo .= "Prezado ".$emails["supervisor"].", você é o supervisor da ação <b>".$emails["atividade"]."</b>";
 				$conteudo .= " e uma tarefa acaba de ser alterada por $nomeUserLogado. <Br><br><b>Seguem abaixo novos dados:</b><Br>";
 
 				}
@@ -773,7 +774,7 @@ class TarefaController extends AppController {
 				//montando a mensagem para envio ao responsável
 				if ($tipo=="novo"){
 					$conteudo .= "Prezado ".$emails["gerente"].", você é o gerente do projeto <b>".$emails["projeto"]."</b>";
-					$conteudo .= " e uma nova tarefa foi cadastrada no na ação ".$emails["acao"]." por $nomeUserLogado. <Br><br><b>Seguem abaixo os dados:</b><Br>";
+					$conteudo .= " e uma nova tarefa foi cadastrada no na ação ".$emails["atividade"]." por $nomeUserLogado. <Br><br><b>Seguem abaixo os dados:</b><Br>";
 	
 				}else{
 					$conteudo .= "Prezado ".$emails["gerente"].", você é o gerente do projeto <b>".$emails["projeto"]."</b> que contém a tarefa: '".$mensagem["Tarefa"]["titulo"]."'";

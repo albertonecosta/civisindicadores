@@ -2,13 +2,14 @@
 
 /**
  *
-* Copyright [2014] -  Civis Gestão Inteligente
-* Este arquivo é parte do programa Civis Estratégia
-* O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
-* Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
-* Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
-*
-*/
+ * Copyright [2014] -  Civis Gestão Inteligente
+ * Este arquivo é parte do programa Civis Estratégia
+ * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA 
+ *
+ */
 
 // Carregamento das variáveis para controle de acesso
 $adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
@@ -17,8 +18,8 @@ $editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
 $excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
 $painel = $this->ControleDeAcesso->validaAcessoElemento('painel');
 	
-$visualizarAcao = $this->ControleDeAcesso->validaAcessoElemento('visualiza', 'Acao');
-$adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Acao');
+$visualizarAtividade = $this->ControleDeAcesso->validaAcessoElemento('visualiza', 'Atividade');
+$adicionarAtividade = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Atividade');
 ?>
 <script type="text/javascript">
   $(function() {
@@ -100,17 +101,17 @@ $adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Aca
 				<td class="no-padding">
 					<ul class="list-inner">
 					<?php
-					if(isset($anomalia['Acao'])){
+					if(isset($anomalia['Atividade'])){
 					
-						foreach ($anomalia['Acao'] as $key => $value) {
+						foreach ($anomalia['Atividade'] as $key => $value) {
 						
 						?>
 							<li>
 								<div class="wrapper">
 								<acronym title='<?php echo @$value["Responsavel"]["login"]." | ".$value["data_inicio_previsto"]." a ".$value["data_fim_previsto"]?>'>
 								<?php 
-									if($visualizarAcao){
-										echo $this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));
+									if($visualizarAtividade){
+										echo $this->Html->link($value['titulo'], array('controller' => 'Atividade', 'action' => 'visualizar', $value['id']));
 									}else{
 										echo $value['titulo'];
 									}
@@ -135,7 +136,7 @@ $adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Aca
 					}
 					?>
 					</ul>
-					<?php if($adicionarAcao){?>
+					<?php if($adicionarAtividade){?>
 					<div class="button-area row-fluid">
 						<button class="btn btn-mini" type="button" onclick="abrirModal(<?php echo $anomalia['Anomalia']['id']; ?>)">Adicionar</button>
 					</div>
@@ -223,7 +224,7 @@ $adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Aca
 </div>
 <script>
 function abrirModal(idAnomalia){
-	var action = "<?php echo $this->webroot;?>Acao/ajaxAdicionar/" + idAnomalia;
+	var action = "<?php echo $this->webroot;?>Atividade/ajaxAdicionar/" + idAnomalia;
 	$.get(
 		action,
 		{},
@@ -236,10 +237,10 @@ function abrirModal(idAnomalia){
 		    	modal: true
 		    });
 		    $("#salvar").click(function(){
-				var action = <?php echo $this->webroot; ?> + "Acao/ajaxAdicionar/" + idAnomalia;
+				var action = <?php echo $this->webroot; ?> + "Atividade/ajaxAdicionar/" + idAnomalia;
 				$.post(
 					action,
-					$("#AcaoAjaxAdicionarForm").serialize(),
+					$("#AtividadeAjaxAdicionarForm").serialize(),
 					function(data){
 						alert(data);
 						$(window.document.location).attr('href',"<?php echo $this->webroot; ?>Anomalia");

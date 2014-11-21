@@ -4,7 +4,8 @@
  * Copyright [2014] -  Civis Gestão Inteligente
  * Este arquivo é parte do programa Civis Estratégia
  * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
- * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
  * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA 
  *
  */
@@ -31,16 +32,29 @@ class AplicacaoController extends AppController {
 	 * @return void
 	 */
 	public function index() {
+		
+		/**
+		 *
+		 * Consultando as informaçoes de projetos
+		 *
+		 */
+		
 		$this->loadModel('Projeto');
-		$projeto = $this->Projeto->query("select projeto.id, projeto.titulo, acao.status,count(acao.id) as totalacao from projeto left join acao on acao.projeto_id=projeto.Id where (projeto.status <> ".Util::INATIVO." and acao.status <> ".Util::INATIVO.") group by acao.status,projeto.id,projeto.titulo,projeto.data_inicio_previsto order by projeto.data_inicio_previsto ASC");
+		$projeto = $this->Projeto->query("select projeto.id, projeto.titulo, atividade.status,count(atividade.id) as totalatividade from projeto left join atividade on atividade.projeto_id=projeto.Id where (projeto.status <> ".Util::INATIVO." and atividade.status <> ".Util::INATIVO.") group by atividade.status,projeto.id,projeto.titulo,projeto.data_inicio_previsto order by projeto.data_inicio_previsto ASC");
 		
 		$projetos =  array();
 		foreach($projeto as $vetorProjeto){
 			$projetos[$vetorProjeto[0]["id"]]["titulo"]=$vetorProjeto[0]["titulo"];
-			$projetos[$vetorProjeto[0]["id"]][$vetorProjeto[0]["status"]]=$vetorProjeto[0]["totalacao"];
+			$projetos[$vetorProjeto[0]["id"]][$vetorProjeto[0]["status"]]=$vetorProjeto[0]["totalatividade"];
 			
 			
 		}
+		
+		/**
+		 *
+		 * Consultando as informaçoes de tarefas somente do usuário logado
+		 *
+		 */
 		
 		$this->loadModel("Tarefa");
 		$tarefa = $this->Tarefa->query("select tarefa.id,tarefa.titulo as Tarefa,pessoa.titulo as Pessoa,data_fim_previsto 
@@ -67,50 +81,55 @@ class AplicacaoController extends AppController {
 			$posts[]=$vetorPost[0];
 		}
 		
+		/**
+		 *
+		 * Calculando o andamento das ações estratégicas
+		 *
+		 */
 		
-		$this->loadModel("Medida");
-		$medida = $this->Medida->query("select * from objetivo where tipo = 2 and status <> 0");
+		$this->loadModel("AcaoEstrategica");
+		$acaoEstrategica = $this->AcaoEstrategica->query("select * from acaoestrategica where tipo = 2 and status <> 0");
 		
-		$medidas = array();
-		foreach($medida as $vetorMedida){
-			$medidas[]= $vetorMedida[0];
+		$acoesEstrategicas = array();
+		foreach($acaoEstrategica as $vetorAcaoEstrategica){
+			$acoesEstrategicas[]= $vetorAcaoEstrategica[0];
 		}
 		
-		@$indicadores["QtdeAcoesEstrategicas"] = count($medidas);		
+		@$indicadores["QtdeAcoesEstrategicas"] = count($acoesEstrategicas);		
 		
 		$somaAndamento = 0;
 		$qtdeAcoesInformadas = 0;
 		
-		foreach ($medidas as $medida){			
-			if ($medida['andamento'] <> ""){
+		foreach ($acoesEstrategicas as $acaoEstrategica){			
+			if ($acaoEstrategica['andamento'] <> ""){
 				$qtdeAcoesInformadas++;
-				$somaAndamento += str_replace("%", "", $medida['andamento']);
+				$somaAndamento += str_replace("%", "", $acaoEstrategica['andamento']);
 			}
 		}
 		
 		@$indicadores["ExecucaoPDTI"] = number_format($somaAndamento/$qtdeAcoesInformadas,2,'.',',');
 		
 		@$indicadores["AcoesMonitoradas"] = $qtdeAcoesInformadas;
-		@$indicadores["PercentualAcoesMonitoradas"] = number_format($qtdeAcoesInformadas*100/count($medidas),2,'.',',');
+		@$indicadores["PercentualAcoesMonitoradas"] = number_format($qtdeAcoesInformadas*100/count($acoesEstrategicas),2,'.',',');
 		
 		/**
 		 * 
 		 * Calculando quantos dias em média as ações estão cadastradas 
 		 * 
 		 */
-		$this->loadModel('Acao');
-		$acao = $this->Acao->query("Select status,count(id) as total ,sum(data_fim_previsto-data_inicio_previsto) as calculo from acao where acao.status <> ".Util::INATIVO." group by status");
+		$this->loadModel('Atividade');
+		$atividade = $this->Atividade->query("Select status,count(id) as total ,sum(data_fim_previsto-data_inicio_previsto) as calculo from atividade where atividade.status <> ".Util::INATIVO." group by status");
 		$totalAcoes=0;
 		$totalDatas=0;
-		foreach($acao as $vetorAcao){
+		foreach($atividade as $vetorAtividade){
 			
-			$vetorAcao[0]["calculo"]/$vetorAcao[0]["total"];
-			$totalAcoes+=$vetorAcao[0]["total"];
-			$totalDatas+=$vetorAcao[0]["calculo"];
+			$vetorAtividade[0]["calculo"]/$vetorAtividade[0]["total"];
+			$totalAcoes+=$vetorAtividade[0]["total"];
+			$totalDatas+=$vetorAtividade[0]["calculo"];
 			$indicadores["diasAcoes"]=floor($totalDatas/$totalAcoes);
-			$indicadores["Status"][$vetorAcao[0]["status"]]=$vetorAcao[0]["total"];
-			if ($vetorAcao[0]["status"]==5)
-				$concluidas = $vetorAcao[0]["total"];
+			$indicadores["Status"][$vetorAtividade[0]["status"]]=$vetorAtividade[0]["total"];
+			if ($vetorAtividade[0]["status"]==5)
+				$concluidas = $vetorAtividade[0]["total"];
 		}
 		@$indicadores["acoesConcluidas"]=number_format((($concluidas*100)/$totalAcoes),2,'.',',');
 		
@@ -120,10 +139,10 @@ class AplicacaoController extends AppController {
 		 *
 		 */
 		
-		$acao = $this->Acao->query("Select count(id) as total,extract(month from data_fim_previsto) as mes from acao where acao.status <> ".Util::INATIVO." group by extract(month from data_fim_previsto)");
+		$atividade = $this->Atividade->query("Select count(id) as total,extract(month from data_fim_previsto) as mes from atividade where atividade.status <> ".Util::INATIVO." group by extract(month from data_fim_previsto)");
 	
-		foreach($acao as $vetorAcao){		
-			$indicadores["acoesPrevistas"][$vetorAcao[0]["mes"]] = $vetorAcao[0]["total"];
+		foreach($atividade as $vetorAtividade){		
+			$indicadores["acoesPrevistas"][$vetorAtividade[0]["mes"]] = $vetorAtividade[0]["total"];
 		}
 	
 		for($meses=1;$meses<13;$meses++){		

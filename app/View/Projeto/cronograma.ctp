@@ -1,13 +1,14 @@
 <?php 
 /**
-*
-* Copyright [2014] -  Civis Gestão Inteligente
-* Este arquivo é parte do programa Civis Estratégia
-* O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
-* Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
-* Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
-*
-*/
+ *
+ * Copyright [2014] -  Civis Gestão Inteligente
+ * Este arquivo é parte do programa Civis Estratégia
+ * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+ *
+ */
 ?>
 <!-- Buttons -->
 
@@ -18,27 +19,27 @@
 <!-- end Buttons -->
 
 <div class="list row-fluid">
-	<?php echo $this->Form->create('Acao', array('action' => 'cronograma', 'id'=>'formCronograma')); ?>	
+	<?php echo $this->Form->create('Atividade', array('action' => 'cronograma', 'id'=>'formCronograma')); ?>	
 		<table class="footable table table-hover table-condensed">
 			<thead>
 				<tr>
 					<td>Ação</td>
 					<td>Data Início</td>
-					<td>Data fim</td>
+					<td>Data Fim</td>
 					<td>Responsável</td>
 					<td>Status</td>
 					<td></td>
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach($acoes as $acao){?>
+				<?php foreach($atividades as $atividade){?>
 					<tr>
-						<td><?php echo $acao['Acao']['titulo']; ?></td>
-						<td><?php echo $this->Form->input('data_inicio_previsto.', array('type' => 'text','label' => false,'value'=> $acao['Acao']['data_inicio_previsto'],'class'=>'input-menor date datepicker'));?></td>
-						<td><?php echo $this->Form->input('data_fim_previsto.', array('type' => 'text','label' => false,'value'=> $acao['Acao']['data_fim_previsto'],'class'=>'input-menor date datepicker'));?></td>
-						<td><?php echo $acao['Responsavel']['Pessoa']['titulo']; ?></td>
-						<td><?php echo Util::getStatus($acao['Acao']['status']); ?></td>
-						<td><?php echo $this->Form->input('id.', array('label' => 'id','type' => 'hidden','value'=> $acao['Acao']['id']));?></td>
+						<td><?php echo $atividade['Atividade']['titulo']; ?></td>
+						<td><?php echo $this->Form->input('data_inicio_previsto.', array('type' => 'text','label' => false,'value'=> $atividade['Atividade']['data_inicio_previsto'],'class'=>'input-menor date datepicker'));?></td>
+						<td><?php echo $this->Form->input('data_fim_previsto.', array('type' => 'text','label' => false,'value'=> $atividade['Atividade']['data_fim_previsto'],'class'=>'input-menor date datepicker'));?></td>
+						<td><?php echo $atividade['Responsavel']['Pessoa']['titulo']; ?></td>
+						<td><?php echo Util::getStatus($atividade['Atividade']['status']); ?></td>
+						<td><?php echo $this->Form->input('id.', array('label' => 'id','type' => 'hidden','value'=> $atividade['Atividade']['id']));?></td>
 					</tr>
 				<?php } ?>
 			</tbody>

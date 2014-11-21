@@ -1,8 +1,19 @@
 <?php
+
+/**
+ * 
+ * Copyright [2014] -  Civis Gestão Inteligente
+ * Este arquivo é parte do programa Civis Estratégia
+ * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+ *  
+ */
 header ("Content-type: image/png");
 
 
-//Par�metros
+//Parâmetros
 $parameters = $_GET['table_data'];
 $showLabel = $_GET['showlabel'] == "1";
 $showScale = $_GET['showscale'] == "1";
@@ -27,7 +38,7 @@ imagefill($im, 0, 0, $trans_colour);
 
 //Titulo da Imagem
 $text_color = imagecolorallocate($im, 0, 0, 100);
-imagestring($im, 2, 5, 5,  "Gr�fico de Alcance de Meta", $text_color);
+imagestring($im, 2, 5, 5,  "Gráfico de Alcance de Meta", $text_color);
 
 // inicia cores
 $color_red = imagecolorallocate($im, 230, 230, 230);
@@ -47,7 +58,7 @@ $zones = 10;
 $zonewidth = ($width*0.9)/$zones;
 $zoneheight = ($height*0.9)/$zones;
 
-//$situacao = new Array("N�o Informado" => 0, "Adequado" => 1, "Aten��o" => 2, "Preocupante" => 3, "Conclu�do" => 4);
+//$situacao = new Array("Não Informado" => 0, "Adequado" => 1, "Atenção" => 2, "Preocupante" => 3, "Concluído" => 4);
 
 
 
@@ -116,7 +127,7 @@ if ($showScale) {
 	}
 }
 
-//Inclui Pontos no Gr�fico
+//Inclui Pontos no Gráfico
 
 
 //imagestring($im, 1, 25, 25,  $parameters, $color_black);
@@ -167,7 +178,7 @@ foreach ($points as $point) {
 	
 }
 
-//Teste de circunfer�ncia
+//Teste de circunferência
 
 function DrawCirclePointX($cX, $radius, $angle) {
 	$circlePointX = $cX+$radius*cos(deg2rad($angle));

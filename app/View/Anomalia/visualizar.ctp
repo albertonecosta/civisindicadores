@@ -2,17 +2,18 @@
 
 /**
  *
-* Copyright [2014] -  Civis Gestão Inteligente
-* Este arquivo é parte do programa Civis Estratégia
-* O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
-* Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
-* Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
-*
-*/
+ * Copyright [2014] -  Civis Gestão Inteligente
+ * Este arquivo é parte do programa Civis Estratégia
+ * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA 
+ *
+ */
 
 // Carregamento de variáveis para controle de acesso
-	$visualizarAcao = $this->ControleDeAcesso->validaAcessoElemento('visualiza', 'Acao');
-	$adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Acao');
+	$visualizarAtividade = $this->ControleDeAcesso->validaAcessoElemento('visualiza', 'Atividade');
+	$adicionarAtividade = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Atividade');
 ?>
 <div class="container">
 	<legend>Visualizar Anomalia</legend>
@@ -37,15 +38,15 @@
 						<td><?php echo h($anomalia['Anomalia']['causas_externas']); ?></td>
 					</tr>
 					<tr>
-						<td><strong><?php echo __('Ações Associadas'); ?></strong></td>
+						<td><strong><?php echo __('Atividades Associadas'); ?></strong></td>
 						<td>
 							<ul class="list-inner">
 							
 							<?php
 							//var_dump($acoes[0][0]);
 							//die();
-							if($anomalia['Acao']){
-								foreach ($anomalia['Acao'] as $key => $value) {
+							if($anomalia['Atividade']){
+								foreach ($anomalia['Atividade'] as $key => $value) {
 								?>
 								
 									<li>
@@ -63,8 +64,8 @@
 											
 											<abbr style='font-size: 16px;' title='<?php echo $value["data_inicio_previsto"]." a ".$value["data_fim_previsto"]?>'>
 											<?php 
-												if($visualizarAcao){
-													echo $this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));
+												if($visualizarAtividade){
+													echo $this->Html->link($value['titulo'], array('controller' => 'Atividade', 'action' => 'visualizar', $value['id']));
 												}else{
 													echo $value['titulo'];
 												}
@@ -75,8 +76,8 @@
 										
 											<abbr style='font-size: 16px;' title='<?php echo $value["data_inicio_previsto"]." a ".$value["data_fim_previsto"]?>'>
 											<?php 
-											if($visualizarAcao){
-												echo "&nbsp;&nbsp;&nbsp;".$this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));
+											if($visualizarAtividade){
+												echo "&nbsp;&nbsp;&nbsp;".$this->Html->link($value['titulo'], array('controller' => 'Atividade', 'action' => 'visualizar', $value['id']));
 											}else{
 												echo "&nbsp;&nbsp;&nbsp;".$value['titulo'];
 											}
@@ -87,24 +88,23 @@
 										?>	
 										
 																			
-									<?php if($value["status"]==5){
-											if (strtotime(Util::inverteData($value["data_conclusao"]))-strtotime(Util::inverteData($value["data_fim_previsto"]))>604800)
-											$barraProgresso="progress progress-danger progress-striped";
-											elseif (strtotime(Util::inverteData($value["data_fim_previsto"]))-strtotime(Util::inverteData($value["data_conclusao"]))<604800)
-											$barraProgresso="progress progress-warning progress-striped";
-											else
-											$barraProgresso="progress progress-success progress-striped";
-										}else{
-											if (time()>strtotime(Util::inverteData($value["data_fim_previsto"])))
-											$barraProgresso="progress progress-danger progress-striped";
-											elseif (time()-604800>strtotime(Util::inverteData($value["data_fim_previsto"])))
-											$barraProgresso="progress progress-warning progress-striped";
-											else
-											$barraProgresso="progress progress-success progress-striped";
-										}
+											<?php if($value["status"]==5){
+													if (strtotime(Util::inverteData($value["data_conclusao"]))-strtotime(Util::inverteData($value["data_fim_previsto"]))>604800)
+													$barraProgresso="progress progress-danger progress-striped";
+													elseif (strtotime(Util::inverteData($value["data_fim_previsto"]))-strtotime(Util::inverteData($value["data_conclusao"]))<604800)
+													$barraProgresso="progress progress-warning progress-striped";
+													else
+													$barraProgresso="progress progress-success progress-striped";
+												}else{
+													if (time()>strtotime(Util::inverteData($value["data_fim_previsto"])))
+													$barraProgresso="progress progress-danger progress-striped";
+													elseif (time()-604800>strtotime(Util::inverteData($value["data_fim_previsto"])))
+													$barraProgresso="progress progress-warning progress-striped";
+													else
+													$barraProgresso="progress progress-success progress-striped";
+												}
 										
-											}
-							}
+									
 										
 										?>
 									</div>									
@@ -113,7 +113,12 @@
 									</div>
 									</div>
 									</li>
-							<?php if($adicionarAcao){?>
+									<?php 
+									}
+										}
+								
+							 if($adicionarAtividade){
+							?>
 							<div class="row-fluid" style="margin-top: 10px;">
 								<button class="btn btn-mini" type="button" onclick="abrirModal(<?php echo $anomalia['Anomalia']['id']; ?>)">Adicionar</button>
 							</div>
@@ -133,7 +138,7 @@
 </div>
 <script>
 function abrirModal(idAnomalia){
-	var action = "<?php echo $this->webroot;?>Acao/ajaxAdicionar/" + idAnomalia;
+	var action = "<?php echo $this->webroot;?>Atividade/ajaxAdicionar/" + idAnomalia;
 	$.get(
 		action,
 		{},
@@ -146,10 +151,10 @@ function abrirModal(idAnomalia){
 		    	modal: true
 		    });
 		    $("#salvar").click(function(){
-				var action = <?php echo $this->webroot; ?> + "Acao/ajaxAdicionar/" + idAnomalia;
+				var action = <?php echo $this->webroot; ?> + "Atividade/ajaxAdicionar/" + idAnomalia;
 				$.post(
 					action,
-					$("#AcaoAjaxAdicionarForm").serialize(),
+					$("#AtividadeAjaxAdicionarForm").serialize(),
 					function(data){
 						alert(data);
 						var url = <?php echo $this->webroot; ?> + "Anomalia/" + "visualizar/" + idAnomalia;

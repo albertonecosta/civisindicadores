@@ -4,8 +4,9 @@
  * Copyright [2014] -  Civis Gestão Inteligente
  * Este arquivo é parte do programa Civis Estratégia
  * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
- * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
- * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA 
  *
  */
 App::uses('AppController', 'Controller');
@@ -50,14 +51,14 @@ class PostController extends AppController {
 	 *
 	 * @return void
 	 */
-	public function adicionarNaAcao() {
+	public function adicionarNaAtividade() {
 		if ($this->request->is('post')) {
 			$this->request->data['Post']['usuario_id'] = $this->Auth->user('id');
 			$this->Post->begin();
 			$this->Post->create();
 			if ($this->Post->save($this->request->data)) {
 				// Enviando email para todos os participantes da conversa que pediram para serem avisados sobre novas postagens
-				$this->enviarEmails(@$this->Post->id, $this->request->data['Post']['mensagem'],"acao");
+				$this->enviarEmails(@$this->Post->id, $this->request->data['Post']['mensagem'],"atividade");
 				$this->Audit->salvar($this->request->data, "Post", array(), "adicionar", true, $this->Post->id, $this->Auth->user("id"));
 				$this->Post->commit();
 				$this->Session->setFlash(__(Util::REGISTRO_ADICIONADO_SUCESSO), 'success');
@@ -65,7 +66,7 @@ class PostController extends AppController {
 				$this->Post->rollback();
 				$this->Session->setFlash(__(Util::REGISTRO_ADICIONADO_FALHA), 'alert');
 			}
-			$this->redirect(array('controller' => 'Acao', 'action' => 'visualizar', $this->request->data['Post']['acao_id']));
+			$this->redirect(array('controller' => 'Atividade', 'action' => 'visualizar', $this->request->data['Post']['atividade_id']));
 		}
 		exit;
 	}
@@ -104,9 +105,9 @@ class PostController extends AppController {
 	 * @param String $mensagem
 	 */
 	private function enviarEmails($id, $mensagem,$modulo){
-		
+		/*
 		// Busca pelo tipo de comentário, se foi inserido numa tarefa ou numa ação.
-		if ($modulo=="acao"){
+		if ($modulo=="atividade"){
 		
 				$responsaveis = $this->Post->query("Select 
 				presponsavel.titulo as responsavelt,
@@ -116,13 +117,13 @@ class PostController extends AppController {
 				pgerente.titulo as gerente,
 				pgerente.email as emailg, 
 				projeto.titulo as projeto,
-				acao.titulo as titulo
+				atividade.titulo as titulo
 				from post
-				left join acao on acao.id=post.acao_id
-				left join projeto on projeto.id=acao.projeto_id
+				left join atividade on atividade.id=post.atividade_id
+				left join projeto on projeto.id=atividade.projeto_id
 				left join usuario as gerente on projeto.usuario_id=gerente.id
-				left join usuario as responsavel on responsavel.id=acao.responsavel_id 
-				left join usuario as supervisor on supervisor.id=acao.supervisor_id				
+				left join usuario as responsavel on responsavel.id=atividade.responsavel_id 
+				left join usuario as supervisor on supervisor.id=atividade.supervisor_id				
 				left join pessoa as presponsavel on responsavel.pessoa_id=presponsavel.id
 				left join pessoa as psupervisor on supervisor.pessoa_id=psupervisor.id
 				left join pessoa as pgerente on gerente.pessoa_id=pgerente.id
@@ -143,15 +144,15 @@ class PostController extends AppController {
 				tarefa.titulo as titulo
 				from post
 				left join tarefa on tarefa.id=post.tarefa_id
-				left join acao on acao.id=tarefa.acao_id
-				left join projeto on projeto.id=acao.projeto_id
+				left join atividade on atividade.id=tarefa.atividade_id
+				left join projeto on projeto.id=atividade.projeto_id
 				left join usuario as gerente on projeto.usuario_id=gerente.id
 				left join usuario as responsavelt on responsavelt.id=tarefa.responsavel_id 
 				left join usuario as supervisort on supervisort.id=tarefa.supervisor_id				
 				left join pessoa as presponsavelt on responsavelt.pessoa_id=presponsavelt.id
 				left join pessoa as psupervisort on supervisort.pessoa_id=psupervisort.id
-				left join usuario as responsavel on responsavel.id=acao.responsavel_id 
-				left join usuario as supervisor on supervisor.id=acao.supervisor_id				
+				left join usuario as responsavel on responsavel.id=atividade.responsavel_id 
+				left join usuario as supervisor on supervisor.id=atividade.supervisor_id				
 				left join pessoa as presponsavel on responsavel.pessoa_id=presponsavel.id
 				left join pessoa as psupervisor on supervisor.pessoa_id=psupervisor.id
 				left join pessoa as pgerente on gerente.pessoa_id=pgerente.id
@@ -197,7 +198,7 @@ class PostController extends AppController {
 				'conteudo' => $conteudo));
 		$Email->subject($assunto);
 		$Email->send();
-		
+		*/
 	}
 	
 	/**
@@ -206,7 +207,8 @@ class PostController extends AppController {
 	 * @param String $mensagem
 	 */
 	private function enviarEmailsPost($idPostPai, $mensagem){
-			if(empty($idPostPai)) return;
+		/*
+		if(empty($idPostPai)) return;
 		// Busca pelo tipo de comentário, se foi inserido numa tarefa ou numa ação.
 		
 			$responsaveis = $this->Post->query("Select 
@@ -229,13 +231,13 @@ class PostController extends AppController {
 				from post
 				inner join post as postpai on postpai.id=post.post_id
 				left join tarefa on tarefa.id=postpai.tarefa_id
-				left join acao on acao.id=tarefa.acao_id
-				left join projeto on projeto.id=acao.projeto_id
+				left join atividade on atividade.id=tarefa.atividade_id
+				left join projeto on projeto.id=atividade.projeto_id
 				left join usuario as gerente on projeto.usuario_id=gerente.id
 				left join usuario as responsavelt on responsavelt.id=tarefa.responsavel_id 
 				left join usuario as supervisort on supervisort.id=tarefa.supervisor_id				
-				left join usuario as responsavel on responsavel.id=acao.responsavel_id 
-				left join usuario as supervisor on supervisor.id=acao.supervisor_id				
+				left join usuario as responsavel on responsavel.id=atividade.responsavel_id 
+				left join usuario as supervisor on supervisor.id=atividade.supervisor_id				
 				left join pessoa as presponsavelt on responsavelt.pessoa_id=presponsavelt.id
 				left join pessoa as psupervisort on supervisort.pessoa_id=psupervisort.id
 				left join pessoa as presponsavel on responsavel.pessoa_id=presponsavel.id
@@ -308,7 +310,7 @@ class PostController extends AppController {
 					'conteudo' => $conteudo));
 			$Email->subject($assunto);
 			$Email->send();
-			
+	*/		
 	}
 	
 }

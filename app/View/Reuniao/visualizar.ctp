@@ -1,13 +1,14 @@
 <?php 
 /**
-*
-* Copyright [2014] -  Civis Gestão Inteligente
-* Este arquivo é parte do programa Civis Estratégia
-* O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
-* Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
-* Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
-*
-*/
+ *
+ * Copyright [2014] -  Civis Gestão Inteligente
+ * Este arquivo é parte do programa Civis Estratégia
+ * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+ *
+ */
 
 // Carregamento das variáveis para controle de acesso
 $editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
@@ -84,22 +85,31 @@ $adicionarTarefa = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'T
 					<tr>
 						<td><strong><?php echo __('Tarefas'); ?></strong></td>
 						<td>
-							<ul class="nav nav-tabs nav-stacked">
-							<?php
-							if(isset($reuniao[0]['Tarefa'])){
-								foreach ($reuniao[0]['Tarefa'] as $key => $value) {
-								?>
-									<li><?php 
-									if($visualizarTarefa){
-										echo $this->Html->link($value['titulo'], array('controller' => 'Tarefa', 'action' => 'visualizar', $value['id']));
-										}else{
-											echo "<a>". $value['titulo'] . "</a>";
-										}
-									?></li>
-								<?php
+							<ul class="list-inner">
+							
+				
+					<?php
+					if(isset($reuniao[0]['Tarefa'])){
+						foreach ($reuniao[0]['Tarefa'] as $key => $value) { ?>
+
+							<li>
+								<div class="wrapper">
+								
+							<?php 
+								if($visualizarTarefa){
+									echo $this->Html->link($value['titulo'], array('controller' => 'Tarefa', 'action' => 'visualizar', $value['id']));
+								}else{
+									echo "<a href='javascript:void(0);'>" . $value['titulo'] . "</a>";
 								}
-							}
 							?>
+							
+								</div>
+							</li>
+						<?php
+						}
+					}
+					?>
+					</ul>
 							<div class="row-fluid" style="margin-top: 10px;">
 								<?php if($adicionarTarefa){?>
 								<button class="btn btn-mini" type="button" onclick="abrirModal(<?php echo $reuniao[0]['Reuniao']['id']; ?>)">Adicionar</button>

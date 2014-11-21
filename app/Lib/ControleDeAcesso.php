@@ -4,8 +4,9 @@
  * Copyright [2014] -  Civis Gestão Inteligente
  * Este arquivo é parte do programa Civis Estratégia
  * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
- * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
- * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA 
  *
  */
 App::import("Model", "Usuario");
@@ -100,14 +101,14 @@ class ControleDeAcesso{
 			'Listar'=>array('Departamento.index.action', 'Departamento.listar.element'),
 			'Visualizar'=>array('Departamento.visualizar.action', 'Departamento.visualizar.element')
 		),'Atividades'=>array(
-			'Adicionar'=>array('Acao.adicionar.action', 'Acao.adicionar.element'),
-			'Excluir'=>array('Acao.excluir.action', 'Acao.excluir.element'),
-			'Editar'=>array('Acao.editar.action', 'Acao.editar.element'),
-			'Listar'=>array('Acao.index.action', 'Acao.listar.element'),
-			'Visualizar'=>array('Acao.visualizar.action', 'Acao.visualizar.element'),
-			'Imprimir'=>array('Acao.imprimirIndex.action', 'Acao.imprimirTodosResponsavel.action', 'Acao.imprimirTodosSupervisor.action' ,'Acao.imprimir.element'),
-			'Listar Forum'=>array('Acao.listar_forum.element'),
-			'Adicionar Forum'=>array('Acao.adicionar_forum.element')
+			'Adicionar'=>array('Atividade.adicionar.action', 'Atividade.adicionar.element'),
+			'Excluir'=>array('Atividade.excluir.action', 'Atividade.excluir.element'),
+			'Editar'=>array('Atividade.editar.action', 'Atividade.editar.element'),
+			'Listar'=>array('Atividade.index.action', 'Atividade.listar.element'),
+			'Visualizar'=>array('Atividade.visualizar.action', 'Atividade.visualizar.element'),
+			'Imprimir'=>array('Atividade.imprimirIndex.action', 'Atividade.imprimirTodosResponsavel.action', 'Atividade.imprimirTodosSupervisor.action' ,'Atividade.imprimir.element'),
+			'Listar Forum'=>array('Atividade.listar_forum.element'),
+			'Adicionar Forum'=>array('Atividade.adicionar_forum.element')
 		),'Dimensões'=>array(
 			'Adicionar'=>array('Dimensao.adicionar.action', 'Dimensao.adicionar.element'),
 			'Excluir'=>array('Dimensao.excluir.action', 'Dimensao.excluir.element'),

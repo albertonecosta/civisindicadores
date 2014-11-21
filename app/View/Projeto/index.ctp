@@ -1,13 +1,14 @@
 <?php 
 /**
-*
-* Copyright [2014] -  Civis Gestão Inteligente
-* Este arquivo é parte do programa Civis Estratégia
-* O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
-* Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
-* Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
-*
-*/
+ *
+ * Copyright [2014] -  Civis Gestão Inteligente
+ * Este arquivo é parte do programa Civis Estratégia
+ * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+ *
+ */
 
 // Carregamento das variáveis para controle de acesso
 	$adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar');
@@ -80,7 +81,7 @@
 				<th data-hide="phone,tablet">Conclusão</th>
 				<!--th data-hide="phone,tablet">Custo</th-->
 				<th data-hide="phone,tablet">Responsável</th>
-				<!--th data-hide="phone,tablet" width=400><?php echo __('Atividades associadas'); ?></th-->
+				<th data-hide="phone,tablet" width=300><?php echo __('Atividades associadas'); ?></th>
 				<?php if($editar || $excluir || $cronograma || $imprimir){?>
 				<th class="actions"><?php echo __('Ações'); ?></th>
 				<?php }?>
@@ -121,20 +122,20 @@
 						}
 					?>&nbsp;
 				</td>
-				<!--td class="no-padding">
+				<td class="no-padding">
 					<ul class="list-inner">
 					<?php
-					if(isset($acoes[$projeto['id']])){
-						foreach ($acoes[$projeto['id']] as $key => $value) {
+					if(isset($atividades[$projeto['id']])){
+						foreach ($atividades[$projeto['id']] as $key => $value) {
 
-							if($value["Acao"]['status'] != Util::INATIVO and $value["Acao"]['marco']=='1'){
+							if($value["Atividade"]['status'] != Util::INATIVO and $value["Atividade"]['marco']=='1'){
 							
 						?>
 							<li>
 								<div class="wrapper">
 								<div class="text">
 									<?php
-									if($value["Acao"]["status"]==5){
+									if($value["Atividade"]["status"]==5){
 										echo '<span class="icon-check fa fa-check-square-o"></span>';
 									}
 									
@@ -143,21 +144,21 @@
 									
 									
 									
-										<acronym title='<?php echo $value["Responsavel"]["login"]." | ".$value["Acao"]["data_inicio_previsto"]." a ".$value["Acao"]["data_fim_previsto"]?>'>
-										<?php echo $this->Html->link($value["Acao"]['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value["Acao"]['id'])); ?>	
+										<acronym title='<?php echo $value["Atividade"]["data_inicio_previsto"]." a ".$value["Atividade"]["data_fim_previsto"]?>'>
+										<?php echo $this->Html->link($value["Atividade"]['titulo'], array('controller' => 'Atividade', 'action' => 'visualizar', $value["Atividade"]['id'])); ?>	
 										</acronym>
 										
 										<?php
-										if(($value["Acao"]["status"]==5)){
+										if(($value["Atividade"]["status"]==5)){
 								
-											if (strtotime(Util::inverteData($value["Acao"]["data_conclusao"]))>strtotime(Util::inverteData($value["Acao"]["data_fim_previsto"])))
+											if (strtotime(Util::inverteData($value["Atividade"]["data_conclusao"]))>strtotime(Util::inverteData($value["Atividade"]["data_fim_previsto"])))
 											$barraProgresso="progress progress-danger progress-striped";
 											else
 											$barraProgresso="progress progress-success progress-striped";
 										}else{
-											if (time()>strtotime(Util::inverteData($value["Acao"]["data_fim_previsto"])))
+											if (time()>strtotime(Util::inverteData($value["Atividade"]["data_fim_previsto"])))
 											$barraProgresso="progress progress-danger progress-striped";
-											elseif (time()-604800>strtotime(Util::inverteData($value["Acao"]["data_fim_previsto"])))
+											elseif (time()-604800>strtotime(Util::inverteData($value["Atividade"]["data_fim_previsto"])))
 											$barraProgresso="progress progress-success progress-striped";
 											else
 											$barraProgresso="progress progress-warning progress-striped";
@@ -168,7 +169,7 @@
 										?>
 									</div>									
 									<div class="<?php echo $barraProgresso; ?>">
-									  <div class="bar" style="width: <?php echo $value["Acao"]["andamento"];?>;"></div>
+									  <div class="bar" style="width: <?php echo $value["Atividade"]["andamento"];?>;"></div>
 									</div>
 									
 								</div>
@@ -182,7 +183,7 @@
 					<div class="button-area row-fluid">
 						<button class="btn btn-mini" type="button" onclick="abrirModal(<?php echo $projeto['id']; ?>)">Adicionar</button>
 					</div>
-				</td-->
+				</td>
 				<?php if($editar || $excluir || $cronograma || $imprimir){?>
 				<td width="7%" nowrap="nowrap" class="actions">
 					<?php 
@@ -237,7 +238,7 @@
 <script type="text/javascript" src="<?php echo $this->base?>/js/libs/jquery.fn.gantt.js"></script>
 <script>
 function abrirModal(idProjeto){
-	var action = "<?php echo $this->webroot;?>Acao/ajaxAdicionarComProjeto";
+	var action = "<?php echo $this->webroot;?>Atividade/ajaxAdicionarComProjeto";
 	$.get(
 		action,
 		{id_projeto: idProjeto},
@@ -250,10 +251,10 @@ function abrirModal(idProjeto){
 		    	modal: true
 		    });
 		    $("#salvar").click(function(){
-				var action = "<?php echo $this->webroot; ?>Acao/ajaxAdicionarComProjeto/" + idProjeto;
+				var action = "<?php echo $this->webroot; ?>Atividade/ajaxAdicionarComProjeto/" + idProjeto;
 				$.post(
 					action,
-					$("#AcaoAjaxAdicionarComProjetoForm").serialize(),
+					$("#AtividadeAjaxAdicionarComProjetoForm").serialize(),
 					function(data){
 						alert(data);
 						$(window.document.location).attr('href',"<?php echo $this->webroot; ?>Projeto");

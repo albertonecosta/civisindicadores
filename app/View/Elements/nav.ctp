@@ -1,13 +1,14 @@
 <?php
 /**
- * 
+ *
  * Copyright [2014] -  Civis Gestão Inteligente
  * Este arquivo é parte do programa Civis Estratégia
  * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
- * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
- * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
- * 
- **/
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA 
+ *
+ */
 	// Verificando configuraçoes para liberação do menu
 	
 	// COMUNICAÇÃO
@@ -32,13 +33,13 @@
 	$isDimensao = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Dimensao');
 	$isObjetivo = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Objetivo');
 	$isIndicador = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Indicador');
-	$isMedida = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Medida');
-	$isMedidaRevisao = $this->ControleDeAcesso->validaAcessoElemento('listar_revisao', 'Medida');
-	$isMedidaPainel = $this->ControleDeAcesso->validaAcessoElemento('listar_painel', 'Medida');
-	$isAcao = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Acao');
+	$isAcaoEstrategica = $this->ControleDeAcesso->validaAcessoElemento('listar', 'AcaoEstrategica');
+	$isAcaoEstrategicaRevisao = $this->ControleDeAcesso->validaAcessoElemento('listar_revisao', 'AcaoEstrategica');
+	$isAcaoEstrategicaPainel = $this->ControleDeAcesso->validaAcessoElemento('listar_painel', 'AcaoEstrategica');
+	$isAtividade = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Atividade');
 	$isFaixa = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Faixa');
 	$isAnomalia = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Anomalia');
-	$isGESTAOESTRATEGICA = ($isDimensao || $isObjetivo || $isIndicador || $isMedida || $isMedidaRevisao || $isMedidaPainel || $isAcao || $isFaixa || $isAnomalia);
+	$isGESTAOESTRATEGICA = ($isDimensao || $isObjetivo || $isIndicador || $isAcaoEstrategica || $isAcaoEstrategicaRevisao || $isAcaoEstrategicaPainel || $isAtividade || $isFaixa || $isAnomalia);
 	
 	// GESTÃO DE PORTIFÓLIO
 	$isProjeto = $this->ControleDeAcesso->validaAcessoElemento('listar', 'Projeto');
@@ -141,20 +142,20 @@
 			  	<li><?php echo $this->Html->link(__('Indicadores'), array('controller' => 'indicador','action' => 'index'));?></li>
 			  <?php }?>
 			  
-			  <?php if($isMedida){?>
-			  	<li><?php echo $this->Html->link(__('Ações Estratégicas'), array('controller' => 'medida','action' => 'index'));?></li>
+			  <?php if($isAcaoEstrategica){?>
+			  	<li><?php echo $this->Html->link(__('Ações Estratégicas'), array('controller' => 'AcaoEstrategica','action' => 'index'));?></li>
 			  <?php }?>
 			  
-			  <?php if($isMedidaRevisao){?>
-			  	<li><?php echo $this->Html->link(__('Revisão das Ações'), array('controller' => 'medida','action' => 'indice_revisao'));?></li>
+			  <?php if($isAcaoEstrategicaRevisao){?>
+			  	<li><?php echo $this->Html->link(__('Revisão das Ações'), array('controller' => 'AcaoEstrategica','action' => 'indice_revisao'));?></li>
 			  <?php }?>
 			  
-			  <?php if($isMedidaPainel){?>
-			  	<li><?php echo $this->Html->link(__('Painel Geral de Ações'), array('controller' => 'medida','action' => 'painel_acoes'));?></li>
+			  <?php if($isAcaoEstrategicaPainel){?>
+			  	<li><?php echo $this->Html->link(__('Painel Geral de Ações'), array('controller' => 'AcaoEstrategica','action' => 'painel_acoes'));?></li>
 			  <?php }?>
 			  
-			  <?php if($isAcao){?>
-		      	<li><?php echo $this->Html->link(__('Atividades'), array('controller' => 'acao','action' => 'index'));?></li>
+			  <?php if($isAtividade){?>
+		      	<li><?php echo $this->Html->link(__('Atividades'), array('controller' => 'atividade','action' => 'index'));?></li>
 		      <?php }?>
 		      
 			  <?php if($isFaixa){?>

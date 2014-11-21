@@ -1,21 +1,22 @@
 <?php 
 /**
-*
-* Copyright [2014] -  Civis Gestão Inteligente
-* Este arquivo é parte do programa Civis Estratégia
-* O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
-* Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
-* Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
-*
-*/
+ *
+ * Copyright [2014] -  Civis Gestão Inteligente
+ * Este arquivo é parte do programa Civis Estratégia
+ * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+ *
+ */
 
 // Carregamento das variáveis para controle de acesso
 $editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
 $excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
 $visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Usuario');
 $visualizarPrograma = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Programa');
-$visualizarAcao = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Acao');
-$adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Acao');
+$visualizarAtividade = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Atividade');
+$adicionarAtividade = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Atividade');
 ?>
 <div class="container">
 	<legend>Visualizar Projeto
@@ -151,8 +152,8 @@ $adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Aca
 							 * Exibição das ações do projeto atual
 							 * 							 * 
 							 */
-							if(isset($acoes)){
-								foreach ($acoes as $key => $value) {
+							if(isset($atividades)){
+								foreach ($atividades as $key => $value) {
 								?>
 								
 									<li>
@@ -160,8 +161,8 @@ $adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Aca
 									<div class="text">
 									<abbr style='font-size: 14px;' title='<?php echo $value["nome"]." | ".Util::inverteData($value["data_inicio_previsto"])." a ".Util::inverteData($value["data_fim_previsto"])?>'>
 										<?php
-											if($visualizarAcao){
-												echo $this->Html->link($value['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $value['id']));
+											if($visualizarAtividade){
+												echo $this->Html->link($value['titulo'], array('controller' => 'Atividade', 'action' => 'visualizar', $value['id']));
 											}else{
 												echo "<a>{$value['titulo']}</a>";
 											}
@@ -194,18 +195,18 @@ $adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Aca
 										
 										$ondeEsta=substr($value["andamento"],0,strpos($value["andamento"],"%"));
 										
-										$ondeDeveriaHoje=time()-strtotime($value["data_inicio_previsto"]);
-										if ($ondeDeveriaHoje<0) $ondeDeveriaHoje=1;
-										$diferenca = (strtotime($value["data_fim_previsto"])-strtotime($value["data_inicio_previsto"]));
-										if ($diferenca==0) 
-											$diferenca=1;						
-
-													
-										$ondeDeveria=($ondeDeveriaHoje/$diferenca)*100;
-										if ($ondeDeveria>100)
-											$ondeDeveria=100;
+										if (time()>strtotime($value["data_fim_previsto"])){
+											$ondeDeveriaHoje=100;	
+										}elseif(time()<strtotime($value["data_inicio_previsto"])){
+											$ondeDeveriaHoje=0;
+										}else{
+											$ondeDeveriaHoje=time()-strtotime($value["data_inicio_previsto"]);
+											$diferenca = (strtotime($value["data_fim_previsto"])-strtotime($value["data_inicio_previsto"]));
+											$ondeDeveriaHoje = ($ondeDeveriaHoje/$diferenca)*100;
+										}
+										 $ondeDeveriaHoje;
 										
-										$ondeDeveriaTotal+=$ondeDeveria;
+										$ondeDeveriaTotal+=$ondeDeveriaHoje;
 										$ondeEstaTotal+=$ondeEsta;
 									
 										?>
@@ -219,24 +220,21 @@ $adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Aca
 								
 								
 								}
-								
 								//Calculo para exibição nos indicadores
 								$ondeDeveriaMedia = ($ondeDeveriaTotal/$qtdAcoes);
 								
 								$ondeEstaMedia = ($ondeEstaTotal/$qtdAcoes);
-								
-								
-								
-									$vp = h($projeto['Projeto']['custo'])*($ondeDeveriaMedia/100);
-									$va= h($projeto['Projeto']['custo'])*($ondeEstaMedia/100);
-									$idc= $va/h($projeto['Projeto']['gasto']);
-									$ipd= $va/$vp;
+							
+									$vp = $projeto['Projeto']['custo']*$ondeDeveriaMedia*10;
+									$va = $projeto['Projeto']['custo']*$ondeEstaMedia*10;
+									$idc= $va/$projeto['Projeto']['gasto'];
+									$idp= $va/$vp;
 								
 							}
 							?>
 							<div class="button-area row-fluid">
-								<?php if($adicionarAcao){?>
-								<button class="btn btn-mini"  type="button" onclick="abrirModalAcao(<?php echo $projeto['Projeto']['id']; ?>)">Adicionar</button>
+								<?php if($adicionarAtividade){?>
+								<button class="btn btn-mini"  type="button" onclick="abrirModalAtividade(<?php echo $projeto['Projeto']['id']; ?>)">Adicionar</button>
 								<?php }?>
 							</div>
 							</ul>
@@ -244,23 +242,23 @@ $adicionarAcao = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Aca
 						</td>
 					</tr>
 					<tr>
-						<td><strong><?php echo __('Valor Planejado'); ?></strong></td>
-						<td>$ <?php echo number_format($vp,2,'.',',');?></td>
+						<td><strong><?php echo __('Valor Planejado'); ?></strong><abbr title='Isso mostra a você quanto ($) seu projeto deveria ter utilizado de recurso.'><span class="fa fa-question-circle fa-1g"></span></abbr></td>
+						<td>$ <?php echo number_format($vp,2,',','.');?></td>
 					</tr>
 					<tr>
-						<td><strong><?php echo __('Valor Agregado'); ?></strong><abbr title='Isso mostra a você quanto($) seu projeto realmente agregou.'><span class="fa fa-question-circle fa-1g"></span></abbr></td>
+						<td><strong><?php echo __('Valor Agregado'); ?></strong><abbr title='Isso mostra a você quanto($) seu projeto realmente agregou'><span class="fa fa-question-circle fa-1g"></span></abbr></td>
 						<td>$ <?php echo number_format($va,2,',','.'); ?></td>
 					</tr>
 					<tr>
-						<td><strong><?php echo __('IPD'); ?></strong></td>
-						<td><?php echo number_format($ipd,2,',','.') ?></td>
+						<td><strong><?php echo __('IDP'); ?><abbr title='Se IDP maior que 1 (um) você está adiantado, se menor que 1 você está atrasado.'><span class="fa fa-question-circle fa-1g"></span></abbr></strong></td>
+						<td><?php echo number_format($idp,2,',','.') ?></td>
 					</tr>
 					<tr>
-						<td><strong><?php echo __('IPC'); ?></strong></td>
-						<td><?php echo number_format($ipd,2,',','.') ?></td>
+						<td><strong><?php echo __('IDC'); ?><abbr title='Se IDC maior que 1 (um) você está dentro do orçamento, se menor que 1 você está fora do orçamento'><span class="fa fa-question-circle fa-1g"></span></abbr></strong></td>
+						<td><?php echo number_format($idc,2,',','.') ?></td>
 					</tr>
 					<tr>
-						<td><strong><?php echo __('VPR'); ?><abbr title='Esse indicador mostra em ($) o quanto seu projeto está adiantado ou atrasado.'><span class="fa fa-question-circle fa-1g"></span></abbr></strong></td>
+						<td><strong><?php echo __('VPR'); ?><abbr title='Esse indicador mostra em ($) o quanto seu projeto está adiantado, se estiver positivo, ou atrasado, se esiver negativo.'><span class="fa fa-question-circle fa-1g"></span></abbr></strong></td>
 						<td><?php echo number_format($va-$vp,2,',','.'); ?></td>
 					</tr>
 				</tbody>				
@@ -382,7 +380,7 @@ $(function () {
 		
 	    series: [{
 	        name: 'Percentual',
-	        data: [<?php echo (($ondeEstaMedia/$ondeDeveriaMedia)*100)?>],
+	        data: [<?php echo $ondeEstaMedia?>],
 	        
 	    }], navigation: {
             buttonOptions: {
@@ -540,354 +538,8 @@ $(function () {
 		<div class="tab-pane" id="tab2">
 			<div id='indicadores<?php echo $projeto['Projeto']['id'];?>'><center><img src="<?php echo $this->webroot."img".DS."ajax-loader.gif" ?>" />Carregando indicadores...</center></div>
 		</div>
-		
-<?php /*	
-<div class="tab-pane" id="tab2">
-				<table class="footable table table-hover table-condensed" id="indicadores">
-						<thead>
-						<tr>
-							<th data-class="expand">Metas</th>
-							<th data-hide="phone,tablet">Jan</th>
-							<th data-hide="phone,tablet">Fev</th>
-							<th data-hide="phone,tablet">Mar</th>
-							<th data-hide="phone,tablet">Abri</th>
-							<th data-hide="phone,tablet">Mai</th>
-							<th data-hide="phone,tablet">Jun</th>
-							<th data-hide="phone,tablet">Jul</th>
-							<th data-hide="phone,tablet">Ago</th>
-							<th data-hide="phone,tablet">Set</th>
-							<th data-hide="phone,tablet">Out</th>
-							<th data-hide="phone,tablet">Nov</th>
-							<th data-hide="phone,tablet">Dez</th>
-							<th data-hide="phone,tablet">Meta</th>
-							<th data-hide="phone,tablet">Projeção</th>
-							<th data-hide="phone,tablet"><?php echo $_SESSION['ano_selecionado_indicadores']-1; ?></th>
-							<th data-hide="phone,tablet">Opções</th>
-						</tr>
-						</thead>
-						<tbody>
-					<?php 
-						foreach($indicadoresFiltrados as $indicador){ ?>					
-						<tr style="border-bottom: #bebec5 solid 1px;" data-tt-id="<?php echo $indicador['Indicador']['id']; ?>" <?php if($indicador['Pai']['id'] != null && !in_array($indicador['Pai']['id'])){ ?> data-tt-parent-id="<?php echo $indicador['Pai']['id']; ?>" <?php } ?>>
-							<td onclick="javascript:habilitarForm(<?php echo $indicador['Indicador']['id']; ?>)">
-								<a href="javascript:"><?php echo $indicador['Indicador']['titulo']; ?></a>&nbsp;
-								<?php if($indicador['Pai']['id'] != null){?>
-									<i class="icon-question-sign" title="Sub-indicador de <?php echo $indicador['Pai']['titulo']; ?>"></i>
-								<?php } ?>
-							</td>
-							<?php foreach($indicador['TotalIndicador'] as $totalIndicador){
-									if($totalIndicador['ano'] == $_SESSION['ano_selecionado_indicadores']){?>
-							<td>
-								<?php if(isset($indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['01'])){
-									$anomalias = $indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['01'];
-								}else{
-									$anomalias = 0;
-								}?>
-								<?php if($totalIndicador['janeiro'] == 0){ ?>
-
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 1;?>, true)"><span class='badge-indicador' title="<?php echo $totalIndicador['janeiro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if(($totalIndicador['janeiro'] > 0 && $totalIndicador['janeiro'] <= $indicador['Faixa']['limite_vermelho']) || $totalIndicador['janeiro'] < 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 1;?>, true)"><span class='badge-indicador  important' title="<?php echo $totalIndicador['janeiro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if($totalIndicador['janeiro'] > $indicador['Faixa']['limite_vermelho'] && $totalIndicador['janeiro'] <= $indicador['Faixa']['limite_amarelo']){?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 1;?>, true)"><span class='badge-indicador  warning' title="<?php echo $totalIndicador['janeiro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else{ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 1;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['janeiro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php } ?>							
-							</td>
-							<td>
-								<?php if(isset($indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['02'])){
-									$anomalias = $indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['02'];
-								}else{
-									$anomalias = 0;
-								}?>
-								<?php if($totalIndicador['fevereiro'] == 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 2;?>, true)"><span class='badge-indicador' title="<?php echo $totalIndicador['fevereiro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if(($totalIndicador['fevereiro'] == 0 || $totalIndicador['fevereiro'] <= $indicador['Faixa']['limite_vermelho']) || $totalIndicador['fevereiro'] < 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 2;?>, true)"><span class='badge-indicador  important' title="<?php echo $totalIndicador['fevereiro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if($totalIndicador['fevereiro'] > $indicador['Faixa']['limite_vermelho'] && $totalIndicador['fevereiro'] <= $indicador['Faixa']['limite_amarelo']){?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 2;?>, true)"><span class='badge-indicador  warning' title="<?php echo $totalIndicador['fevereiro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else{ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 2;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['fevereiro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php } ?>							
-							</td>
-							<td>
-								<?php if(isset($indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['03'])){
-									$anomalias = $indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['03'];
-								}else{
-									$anomalias = 0;
-								}?>
-								<?php if($totalIndicador['marco'] == 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 3;?>, true)"><span class='badge-indicador' title="<?php echo $totalIndicador['marco']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if(($totalIndicador['marco'] == 0 || $totalIndicador['marco'] <= $indicador['Faixa']['limite_vermelho']) || $totalIndicador['marco'] < 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 3;?>, true)"><span class='badge-indicador  important' title="<?php echo $totalIndicador['marco']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if($totalIndicador['marco'] > $indicador['Faixa']['limite_vermelho'] && $totalIndicador['marco'] <= $indicador['Faixa']['limite_amarelo']){?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 3;?>, true)"><span class='badge-indicador  warning' title="<?php echo $totalIndicador['marco']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else{ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 3;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['marco']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php } ?>							
-							</td>
-							<td>
-								<?php if(isset($indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['04'])){
-									$anomalias = $indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['04'];
-								}else{
-									$anomalias = 0;
-								}?>
-								<?php if($totalIndicador['abril'] == 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 4;?>, true)"><span class='badge-indicador' title="<?php echo $totalIndicador['abril']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if(($totalIndicador['abril'] == 0 || $totalIndicador['abril'] <= $indicador['Faixa']['limite_vermelho']) || $totalIndicador['abril'] < 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 4;?>, true)"><span class='badge-indicador  important' title="<?php echo $totalIndicador['abril']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if($totalIndicador['abril'] > $indicador['Faixa']['limite_vermelho'] && $totalIndicador['abril'] <= $indicador['Faixa']['limite_amarelo']){?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 4;?>, true)"><span class='badge-indicador  warning' title="<?php echo $totalIndicador['abril']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else{ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 4;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['abril']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php } ?>							
-							</td>
-							<td>
-								<?php if(isset($indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['05'])){
-									$anomalias = $indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['05'];
-								}else{
-									$anomalias = 0;
-								}?>
-								<?php if($totalIndicador['maio'] == 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 5;?>, true)"><span class='badge-indicador' title="<?php echo $totalIndicador['maio']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if(($totalIndicador['maio'] == 0 || $totalIndicador['maio'] <= $indicador['Faixa']['limite_vermelho']) || $totalIndicador['maio'] < 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 5;?>, true)"><span class='badge-indicador  important' title="<?php echo $totalIndicador['maio']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if($totalIndicador['maio'] > $indicador['Faixa']['limite_vermelho'] && $totalIndicador['maio'] <= $indicador['Faixa']['limite_amarelo']){?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 5;?>, true)"><span class='badge-indicador  warning' title="<?php echo $totalIndicador['maio']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else{ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 5;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['maio']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php } ?>							
-							</td>
-							<td>
-								<?php if(isset($indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['06'])){
-									$anomalias = $indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['06'];
-								}else{
-									$anomalias = 0;
-								}?>
-								<?php if($totalIndicador['junho'] == 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 6;?>, true)"><span class='badge-indicador' title="<?php echo $totalIndicador['junho']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if(($totalIndicador['junho'] == 0 || $totalIndicador['junho'] <= $indicador['Faixa']['limite_vermelho']) || $totalIndicador['junho'] < 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 6;?>, true)"><span class='badge-indicador  important' title="<?php echo $totalIndicador['junho']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if($totalIndicador['junho'] > $indicador['Faixa']['limite_vermelho'] && $totalIndicador['junho'] <= $indicador['Faixa']['limite_amarelo']){?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 6;?>, true)"><span class='badge-indicador  warning' title="<?php echo $totalIndicador['junho']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else{ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 6;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['junho']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php } ?>							
-							</td>
-							<td>
-								<?php if(isset($indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['07'])){
-									$anomalias = $indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['07'];
-								}else{
-									$anomalias = 0;
-								}?>
-								<?php if($totalIndicador['julho'] == 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 7;?>, true)"><span class='badge-indicador' title="<?php echo $totalIndicador['julho']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if(($totalIndicador['julho'] == 0 || $totalIndicador['julho'] <= $indicador['Faixa']['limite_vermelho']) || $totalIndicador['julho'] < 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 7;?>, true)"><span class='badge-indicador  important' title="<?php echo $totalIndicador['julho']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if($totalIndicador['julho'] > $indicador['Faixa']['limite_vermelho'] && $totalIndicador['julho'] <= $indicador['Faixa']['limite_amarelo']){?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 7;?>, true)"><span class='badge-indicador  warning' title="<?php echo $totalIndicador['julho']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else{ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 7;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['julho']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php } ?>							
-							</td>
-							<td>
-								<?php if(isset($indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['08'])){
-									$anomalias = $indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['08'];
-								}else{
-									$anomalias = 0;
-								}?>
-								<?php if($totalIndicador['agosto'] == 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 8;?>, true)"><span class='badge-indicador' title="<?php echo $totalIndicador['agosto']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if(($totalIndicador['agosto'] == 0 || $totalIndicador['agosto'] <= $indicador['Faixa']['limite_vermelho']) || $totalIndicador['agosto'] < 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 8;?>, true)"><span class='badge-indicador  important' title="<?php echo $totalIndicador['agosto']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if($totalIndicador['agosto'] > $indicador['Faixa']['limite_vermelho'] && $totalIndicador['agosto'] <= $indicador['Faixa']['limite_amarelo']){?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 8;?>, true)"><span class='badge-indicador  warning' title="<?php echo $totalIndicador['agosto']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else{ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 8;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['agosto']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php } ?>							
-							</td>
-							<td>
-								<?php if(isset($indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['09'])){
-									$anomalias = $indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['09'];
-								}else{
-									$anomalias = 0;
-								}?>
-								<?php if($totalIndicador['setembro'] == 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 9;?>, true)"><span class='badge-indicador' title="<?php echo $totalIndicador['setembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if(($totalIndicador['setembro'] == 0 || $totalIndicador['setembro'] <= $indicador['Faixa']['limite_vermelho']) || $totalIndicador['setembro'] < 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 9;?>, true)"><span class='badge-indicador  important' title="<?php echo $totalIndicador['setembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if($totalIndicador['setembro'] > $indicador['Faixa']['limite_vermelho'] && $totalIndicador['setembro'] <= $indicador['Faixa']['limite_amarelo']){?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 9;?>, true)"><span class='badge-indicador  warning' title="<?php echo $totalIndicador['setembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else{ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 9;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['setembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php } ?>							
-							</td>
-							<td>
-								<?php if(isset($indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['10'])){
-									$anomalias = $indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['10'];
-								}else{
-									$anomalias = 0;
-								}?>
-								<?php if($totalIndicador['outubro'] == 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 10;?>, true)"><span class='badge-indicador' title="<?php echo $totalIndicador['outubro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if(($totalIndicador['outubro'] == 0 || $totalIndicador['outubro'] <= $indicador['Faixa']['limite_vermelho']) || $totalIndicador['outubro'] < 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 10;?>, true)"><span class='badge-indicador  important' title="<?php echo $totalIndicador['outubro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if($totalIndicador['outubro'] > $indicador['Faixa']['limite_vermelho'] && $totalIndicador['outubro'] <= $indicador['Faixa']['limite_amarelo']){?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 10;?>, true)"><span class='badge-indicador  warning' title="<?php echo $totalIndicador['outubro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else{ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 10;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['outubro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php } ?>							
-							</td>
-							<td>
-								<?php if(isset($indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['11'])){
-									$anomalias = $indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['11'];
-								}else{
-									$anomalias = 0;
-								}?>
-								<?php if($totalIndicador['novembro'] == 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 11;?>, true)"><span class='badge-indicador' title="<?php echo $totalIndicador['novembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if(($totalIndicador['novembro'] == 0 || $totalIndicador['novembro'] <= $indicador['Faixa']['limite_vermelho']) || $totalIndicador['novembro'] < 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 11;?>, true)"><span class='badge-indicador  important' title="<?php echo $totalIndicador['novembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if($totalIndicador['novembro'] > $indicador['Faixa']['limite_vermelho'] && $totalIndicador['novembro'] <= $indicador['Faixa']['limite_amarelo']){?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 11;?>, true)"><span class='badge-indicador  warning' title="<?php echo $totalIndicador['novembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else{ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 11;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['novembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php } ?>							
-							</td>
-							<td>
-								<?php if(isset($indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['12'])){
-									$anomalias = $indicador['TotalAnomalias'][$_SESSION['ano_selecionado_indicadores']]['12'];
-								}else{
-									$anomalias = 0;
-								}?>
-								<?php if($totalIndicador['dezembro'] == 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 12;?>, true)"><span class='badge-indicador' title="<?php echo $totalIndicador['dezembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if(($totalIndicador['dezembro'] == 0 || $totalIndicador['dezembro'] <= $indicador['Faixa']['limite_vermelho']) || $totalIndicador['dezembro'] < 0){ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 12;?>, true)"><span class='badge-indicador  important' title="<?php echo $totalIndicador['dezembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else if($totalIndicador['dezembro'] > $indicador['Faixa']['limite_vermelho'] && $totalIndicador['dezembro'] <= $indicador['Faixa']['limite_amarelo']){?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 12;?>, true)"><span class='badge-indicador  warning' title="<?php echo $totalIndicador['dezembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php }else{ ?>
-									
-									<a href="javascript:abrirModal(1,<?php echo $indicador['Indicador']['id']; ?>, <?php echo 12;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['dezembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
-									
-								<?php } ?>							
-							</td>
-							<td><?php echo Util::getMetaTotal($indicador); ?></td>
-							<td><?php echo Util::getProjecao($indicador); ?></td>
-							<td><?php echo Util::getMetaTotal($indicador, true); ?></td>
-							<td><a href="javascript:exibirGrafico(<?php echo $indicador['Indicador']['id']; ?>)" id="exibir_grafico"><i class="icon-picture" title="Gráficos"></i></a></td>
-							<form action="#" id="form_grafico_<?php echo $indicador['Indicador']['id']; ?>">
-								<input type="hidden" name="data[Indicador][id]" value="<?php echo $indicador['Indicador']['id']; ?>" />
-								<input type="hidden" name="data[Objetivo][id]" value="<?php echo $indicador['Indicador']['objetivo_id']; ?>" />
-							</form>
-							<?php } 
-								} ?>
-						</tr>
-					<?php } ?>
-					</tbody>
-				</table>
-				<?php foreach($indicadores as $indicador){ ?>
-				<div class="row-fluid" style="display: none" id="grafico_<?php echo $indicador['Indicador']['id']; ?>">
-					<div class="span8" id="exibir_grafico_<?php echo $indicador['Indicador']['id']; ?>" style="height:400px;">
-					</div>					
-				</div>
-				<?php } ?>
-			</div>
-			*/ ?>
-			<div id="dialog" title="Painel de Resumo" style="display: none">
+	
+			<div id="dialog" title="Cadastro de Atividades" style="display: none">
 </div>
 <div id="dialog1" title="Painel de Resumo" style="display: none">
 </div>
@@ -941,8 +593,8 @@ exibirIndicadores(<?php echo $projeto['Projeto']['id'];?>);
 
 								
 								
-function abrirModalAcao(idProjeto){
-	var action = "<?php echo $this->webroot;?>Acao/ajaxAdicionarComProjeto";
+function abrirModalAtividade(idProjeto){
+	var action = "<?php echo $this->webroot;?>Atividade/ajaxAdicionarComProjeto";
 	$.get(
 		action,
 		{id_projeto: idProjeto},
@@ -955,10 +607,10 @@ function abrirModalAcao(idProjeto){
 		    	modal: true
 		    });
 		    $("#salvar").click(function(){
-				var action = <?php echo $this->webroot; ?> + "Acao/ajaxAdicionarComProjeto/" + idProjeto;
+				var action = <?php echo $this->webroot; ?> + "Atividade/ajaxAdicionarComProjeto/" + idProjeto;
 				$.post(
 					action,
-					$("#AcaoAjaxAdicionarComProjetoForm").serialize(),
+					$("#AtividadeAjaxAdicionarComProjetoForm").serialize(),
 					function(data){
 						alert(data);
 						var url = <?php echo $this->webroot; ?> + "Projeto/" + "visualizar/" + idProjeto;

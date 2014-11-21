@@ -1,19 +1,20 @@
 <?php 
 /**
-*
-* Copyright [2014] -  Civis Gestão Inteligente
-* Este arquivo é parte do programa Civis Estratégia
-* O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
-* Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
-* Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
-*
-*/
+ *
+ * Copyright [2014] -  Civis Gestão Inteligente
+ * Este arquivo é parte do programa Civis Estratégia
+ * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+ *
+ */
 
 // Carregamento das variáveis para controle de acesso
 $editar = $this->ControleDeAcesso->validaAcessoElemento('editar', 'Tarefa');
 $excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir', 'Tarefa');
 $visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Usuario');
-$visualizarAcao = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Acao');
+$visualizarAtividade = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Atividade');
 	
 $listarForum = $this->ControleDeAcesso->validaAcessoElemento('listar_forum', 'Tarefa');
 $adicionarForum = $this->ControleDeAcesso->validaAcessoElemento('adicionar_forum', 'Tarefa');
@@ -114,10 +115,10 @@ $adicionarForum = $this->ControleDeAcesso->validaAcessoElemento('adicionar_forum
 					<tr>
 						<td><strong><?php echo __('Atividade'); ?></strong></td>
 						<td><?php 
-						if($visualizarAcao){
-							echo $this->Html->link($tarefa['Acao']['titulo'], array('controller' => 'Acao','action' => 'visualizar', $tarefa['Acao']['id']));
+						if($visualizarAtividade){
+							echo $this->Html->link($tarefa['Atividade']['titulo'], array('controller' => 'Atividade','action' => 'visualizar', $tarefa['Atividade']['id']));
 						}else{
-							echo $tarefa['Acao']['titulo'];
+							echo $tarefa['Atividade']['titulo'];
 						}
 						?></td>
 					</tr>

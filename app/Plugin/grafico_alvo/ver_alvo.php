@@ -1,6 +1,6 @@
 <?php
 
-//Parêmetros
+//ParÃ¢metros
 $parameters = $_GET['table_data'];
 $showLabel = $_GET['showlabel'] == "1";
 $showScale = $_GET['showscale'] == "1";
@@ -23,7 +23,7 @@ $zoneheight = ($height*0.9)/$zones;
 
 
 
-//Inclui Pontos no Gráfico
+//Inclui Pontos no GrÃ¡fico
 
 $parameters = explode(';', $parameters);
 $angle = 360/count($parameters);
@@ -59,7 +59,7 @@ foreach ($parameters as $parameter) {
 
 
 
-//Pontos na circunferência
+//Pontos na circunferÃªncia
 
 function DrawCirclePointX($cX, $radius, $angle) {
 	$circlePointX = $cX+$radius*cos(deg2rad($angle));

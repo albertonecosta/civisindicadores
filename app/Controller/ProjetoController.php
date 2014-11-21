@@ -4,8 +4,9 @@
  * Copyright [2014] -  Civis Gestão Inteligente
  * Este arquivo é parte do programa Civis Estratégia
  * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
- * Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
- * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA 
  *
  */
 App::uses('AppController', 'Controller');
@@ -81,18 +82,18 @@ class ProjetoController extends AppController {
 				WHERE Projeto.status = ".Util::ATIVO." {$busca}");
 		$total = $total[0][0]["total"];
 		
-		$this->loadModel('Acao');
-		$this->Acao->recursive = 0;
+		$this->loadModel('Atividade');
+		$this->Atividade->recursive = 0;
 		$projetos = array();
-		$acoes = array();
+		$atividades = array();
 		foreach($projeto as $p){
 			$projetos[] = $p[0];
-			$acoes[$p[0]['id']] = $this->Acao->find('all', array('conditions'=>array('Acao.projeto_id'=>$p[0]['id']),'order' => array('Acao.data_inicio_previsto','Acao.marco','Acao.titulo')));
+			$atividades[$p[0]['id']] = $this->Atividade->find('all', array('conditions'=>array('Atividade.projeto_id'=>$p[0]['id']),'order' => array('Atividade.data_inicio_previsto','Atividade.marco','Atividade.titulo')));
 		}
 		
 		$this->paginacao($projetos, $total, $pagina);
 		$this->set('projetos', $projetos);
-		$this->set('acoes', $acoes);
+		$this->set('atividades', $atividades);
 		$this->set('total', $total);
 		
 	}
@@ -138,12 +139,12 @@ class ProjetoController extends AppController {
 		foreach ($projeto as $key => $value) {
 		
 			$pessoas = array();
-			foreach ($value['Acao'] as $key2 => $value2) {
+			foreach ($value['Atividade'] as $key2 => $value2) {
 				$usuario = $this->Usuario->find('first', array('conditions' => array('Usuario.id' => $value2['responsavel_id'])));
 				$pessoas[$key2]['id'] = $usuario['Usuario']['id'];
 				$pessoas[$key2]['titulo'] = $usuario['Pessoa']['titulo'];
 				$pessoas[$key2]['email'] = $usuario['Pessoa']['email'];
-				$projeto[$key]['Acao'][$key2]['Responsavel'] = $pessoas;
+				$projeto[$key]['Atividade'][$key2]['Responsavel'] = $pessoas;
 			}
 			
 		}
@@ -159,8 +160,7 @@ class ProjetoController extends AppController {
 	 * @return void
 	 */
 	public function visualizar($id = null) {
-		
-		$this->Projeto->id = $id;
+			$this->Projeto->id = $id;
 		if (!$this->Projeto->exists()) {
 			throw new NotFoundException(__(Util::REGISTRO_NAO_ENCONTRADO));
 		}
@@ -170,7 +170,7 @@ class ProjetoController extends AppController {
 		$array = $this->Projeto->data["ObjetivoProjeto"];
 		$objetivos= array();
 		foreach($array as $campos){
-			$objetivos[$campos['Objetivo']['id']] = $campos['Objetivo']['titulo'];
+			@$objetivos[$campos['Objetivo']['id']] = $campos['Objetivo']['titulo'];
 		}
 		
 		$this->set('objetivos',$objetivos);
@@ -183,40 +183,43 @@ class ProjetoController extends AppController {
 		
 		$this->set('patrocinadores',$patrocinadores);
 		
-		$this->loadModel('Acao');
-		$acoes = $this->Acao->query("SELECT Acao.*, Pessoa.titulo as nome
-			FROM acao Acao 
-			INNER JOIN usuario Usuario ON Usuario.id = Acao.responsavel_id 
+		$this->loadModel('Atividade');
+		$atividades = $this->Atividade->query("SELECT Atividade.*, Pessoa.titulo as nome
+			FROM atividade Atividade 
+			INNER JOIN usuario Usuario ON Usuario.id = Atividade.responsavel_id 
 			INNER JOIN pessoa Pessoa ON Pessoa.id = Usuario.pessoa_id 
-			WHERE Acao.status<>0 and Acao.projeto_id = {$id} and Acao.acao_id is NULL
-			ORDER BY Acao.data_inicio_previsto asc, Acao.marco,Acao.titulo");
+			WHERE Atividade.status<>0 and Atividade.projeto_id = {$id} and Atividade.atividade_id is NULL
+			ORDER BY Atividade.data_inicio_previsto asc, Atividade.marco,Atividade.titulo");
 		$x=0;
-		foreach($acoes as $novas){
+		foreach($atividades as $novas){
 			$x++;
-			$acoes1[$x] = $novas[0];
-			$filhos = $this->Acao->query("SELECT Acao.*, Pessoa.titulo as nome
-			FROM acao Acao 
-			INNER JOIN usuario Usuario ON Usuario.id = Acao.responsavel_id 
+			$atividades1[$x] = $novas[0];
+			$filhos = $this->Atividade->query("SELECT Atividade.*, Pessoa.titulo as nome
+			FROM atividade Atividade 
+			INNER JOIN usuario Usuario ON Usuario.id = Atividade.responsavel_id 
 			INNER JOIN pessoa Pessoa ON Pessoa.id = Usuario.pessoa_id 
-			WHERE Acao.status<>0 and Acao.acao_id = ".$novas[0]["id"]."
-			ORDER BY Acao.data_inicio_previsto asc, Acao.marco,Acao.titulo");
+			WHERE Atividade.status<>0 and Atividade.atividade_id = ".$novas[0]["id"]."
+			ORDER BY Atividade.data_inicio_previsto asc, Atividade.marco,Atividade.titulo");
 			
 			foreach($filhos as $novosFilhos){
-				$acoes1[$x]["Filhos"][]=$novosFilhos[0];
+				$atividades1[$x]["Filhos"][]=$novosFilhos[0];
 			}
 		}
+		
 		Configure::write('debug', 0);
 		
-			$this->loadModel("Usuario");
+//			$this->loadModel("Usuario");
 
-			$this->Usuario->recursive = 2;
-			$usuario = $this->Usuario->find("first", array("conditions" => array('Usuario.id' => 25)));
+	//		$this->Usuario->recursive = 2;
 
-			if(isset($this->request->data['data_atual']) && $this->request->data['data_atual'] == "atual"){
-				$data = date("Y");
-			}else{
-				$data = $this->request->data['data_selecionada'];
-			}			
+//			$usuario = $this->Usuario->find("first", array("conditions" => array('Usuario.id' => 25)));
+
+	//		if(isset($this->request->data['data_atual']) && $this->request->data['data_atual'] == "atual"){
+	//			$data = date("Y");
+	//		}else{
+	//			$data = $this->request->data['data_selecionada'];
+	//		}
+						
 			$this->loadModel("Indicador");
 			$this->Indicador->recursive = 1;
 			$indicadores = $this->Indicador->find("all", array('conditions' => array('Indicador.status' => Util::ATIVO,'Indicador.projeto_id'=>$id), 'order' => array('Indicador.ordem ASC')));
@@ -262,7 +265,7 @@ class ProjetoController extends AppController {
 			
 			
 		$this->set("indicadores", $indicadoresFiltrados);
-		$this->set('acoes', $acoes1);
+		$this->set('atividades', $atividades1);
 			
 	}
 
@@ -501,13 +504,13 @@ class ProjetoController extends AppController {
 			if ($this->Projeto->saveField('status', Util::INATIVO)) {
 				
 				// Deletando, logicamente, os posts
-				$this->Projeto->query("UPDATE post SET status = ".Util::INATIVO." where acao_id in (select id from acao where projeto_id = $id)");
+				$this->Projeto->query("UPDATE post SET status = ".Util::INATIVO." where atividade_id in (select id from atividade where projeto_id = $id)");
 				
 				// Deletando, logicamente, as tarefas
-				$this->Projeto->query("UPDATE tarefa SET status = ".Util::INATIVO." where acao_id in (select id from acao where projeto_id = $id)");
+				$this->Projeto->query("UPDATE tarefa SET status = ".Util::INATIVO." where atividade_id in (select id from atividade where projeto_id = $id)");
 				
 				// Deletando, logicamente, as ações
-				$this->Projeto->query("UPDATE acao SET status = ".Util::INATIVO." where projeto_id = $id");
+				$this->Projeto->query("UPDATE atividade SET status = ".Util::INATIVO." where projeto_id = $id");
 				
 				// Salvando na tabela de auditoria (log)
 				$this->Audit->salvar("", "Projeto", array(), "excluir", false, $id, $this->Auth->user("id"));
@@ -538,12 +541,12 @@ class ProjetoController extends AppController {
 	 */	
 	public function cronograma(){
 		$this->layout = "ajax";
-		$this->loadModel("Acao");
+		$this->loadModel("Atividade");
 		
-		$this->Acao->recursive = 2;
-		$acoes = $this->Acao->find('all', array('conditions' => array('Acao.status != ' => Util::INATIVO, 'Acao.projeto_id' => $_GET['projeto_id']), 'order' => array('Acao.data_inicio_previsto ASC')));
+		$this->Atividade->recursive = 2;
+		$atividades = $this->Atividade->find('all', array('conditions' => array('Atividade.status != ' => Util::INATIVO, 'Atividade.projeto_id' => $_GET['projeto_id']), 'order' => array('Atividade.data_inicio_previsto ASC')));
 
-		$this->set('acoes', $acoes);
+		$this->set('atividades', $atividades);
 		$this->set('projeto_id', $_GET['projeto_id']);
 	}
 	
@@ -553,45 +556,45 @@ class ProjetoController extends AppController {
 	public function salvar_datas_cronograma(){
 		$this->autoRender = false;
 		$this->layout = "ajax";
-		$this->loadModel("Acao");
+		$this->loadModel("Atividade");
 		
 		if ($this->request->is('post') || $this->request->is('put')) {
 			
-			$quantidadeRegistros = count($this->request->data['Acao']['id']);
+			$quantidadeRegistros = count($this->request->data['Atividade']['id']);
 			$arrayRegistrosOrganizados = array();
 			$count = 0;
 			
-			if($this->request->data['Acao']['dias_a_mais'][0] == ""){	
+			if($this->request->data['Atividade']['dias_a_mais'][0] == ""){	
 					
 				for($i=0;$i<$quantidadeRegistros;$i++){
-					$arrayRegistrosOrganizados[$i]['id'] = $this->request->data['Acao']['id'][$count];
-					$arrayRegistrosOrganizados[$i]['data_inicio_previsto'] = $this->request->data['Acao']['data_inicio_previsto'][$count];
-					$arrayRegistrosOrganizados[$i]['data_fim_previsto'] = $this->request->data['Acao']['data_fim_previsto'][$count];
+					$arrayRegistrosOrganizados[$i]['id'] = $this->request->data['Atividade']['id'][$count];
+					$arrayRegistrosOrganizados[$i]['data_inicio_previsto'] = $this->request->data['Atividade']['data_inicio_previsto'][$count];
+					$arrayRegistrosOrganizados[$i]['data_fim_previsto'] = $this->request->data['Atividade']['data_fim_previsto'][$count];
 					$count++;
 				}
 					
 				foreach($arrayRegistrosOrganizados as $arrayRegistro){
-					$sqlAtualizaDatas = $this->Acao->query("UPDATE acao SET data_inicio_previsto = '".$arrayRegistro['data_inicio_previsto']."',
+					$sqlAtualizaDatas = $this->Atividade->query("UPDATE atividade SET data_inicio_previsto = '".$arrayRegistro['data_inicio_previsto']."',
 																	data_fim_previsto = '".$arrayRegistro['data_fim_previsto']."'
-													WHERE acao.id='".$arrayRegistro['id']."'");
+													WHERE atividade.id='".$arrayRegistro['id']."'");
 				}
 				
 			}else{
 				
 				for($i=0;$i<$quantidadeRegistros;$i++){
-					$arrayRegistrosOrganizados[$i]['id'] = $this->request->data['Acao']['id'][$count];
-					$arrayRegistrosOrganizados[$i]['data_inicio_previsto'] = $this->request->data['Acao']['data_inicio_previsto'][$count];
-					$arrayRegistrosOrganizados[$i]['data_fim_previsto'] = $this->request->data['Acao']['data_fim_previsto'][$count];
+					$arrayRegistrosOrganizados[$i]['id'] = $this->request->data['Atividade']['id'][$count];
+					$arrayRegistrosOrganizados[$i]['data_inicio_previsto'] = $this->request->data['Atividade']['data_inicio_previsto'][$count];
+					$arrayRegistrosOrganizados[$i]['data_fim_previsto'] = $this->request->data['Atividade']['data_fim_previsto'][$count];
 					$count++;
 				}
 					
 				foreach($arrayRegistrosOrganizados as $arrayRegistro){
 					$dataParaBanco = Util::inverteData($arrayRegistro['data_inicio_previsto']);
-					$nova_data_fim_previsto = date('Y-m-d', strtotime("+".$this->request->data['Acao']['dias_a_mais'][0]." days",strtotime($dataParaBanco)));
+					$nova_data_fim_previsto = date('Y-m-d', strtotime("+".$this->request->data['Atividade']['dias_a_mais'][0]." days",strtotime($dataParaBanco)));
 					
-					$sqlAtualizaDatas = $this->Acao->query("UPDATE acao SET data_inicio_previsto = '".$arrayRegistro['data_inicio_previsto']."',
+					$sqlAtualizaDatas = $this->Atividade->query("UPDATE atividade SET data_inicio_previsto = '".$arrayRegistro['data_inicio_previsto']."',
 																	data_fim_previsto = '".$nova_data_fim_previsto."'
-													WHERE acao.id='".$arrayRegistro['id']."'");
+													WHERE atividade.id='".$arrayRegistro['id']."'");
 					
 				}
 				
@@ -613,14 +616,14 @@ class ProjetoController extends AppController {
 		$this->autoRender = false;
 		$this->layout = "ajax";
 		
-		$this->loadModel("Acao");
-		$this->Acao->recursive = -1;
-		$acoes = $this->Acao->find('all', array('conditions' => array('Acao.status != ' => Util::INATIVO, 'Acao.projeto_id' => $_GET['projeto_id'])));
+		$this->loadModel("Atividade");
+		$this->Atividade->recursive = -1;
+		$atividades = $this->Atividade->find('all', array('conditions' => array('Atividade.status != ' => Util::INATIVO, 'Atividade.projeto_id' => $_GET['projeto_id'])));
 		
-		$total = count($acoes);
+		$total = count($atividades);
 		$participacao = array('Em andamento' => 0, 'Não Iniciada' => 0, 'Aguardando outra pessoa' => 0, 'Concluida' => 0, 'Cancelada' => 0);
-		foreach ($acoes as $key => $value) {
-			switch ($value['Acao']['status']) {
+		foreach ($atividades as $key => $value) {
+			switch ($value['Atividade']['status']) {
 				case Util::EM_ANDAMENTO:
 					$participacao['Em andamento']++;
 					break;
@@ -665,29 +668,29 @@ class ProjetoController extends AppController {
 		$this->layout = "ajax";
 		$_GET['projeto_id'] = $id;
 		
-		$this->loadModel("Acao");
-		$this->Acao->recursive = -1;
-		$acoes = $this->Acao->find('all', array('conditions' => array('Acao.status != ' => Util::INATIVO, 'Acao.projeto_id' => $_GET['projeto_id'])));
+		$this->loadModel("Atividade");
+		$this->Atividade->recursive = -1;
+		$atividades = $this->Atividade->find('all', array('conditions' => array('Atividade.status != ' => Util::INATIVO, 'Atividade.projeto_id' => $_GET['projeto_id'])));
 		
 		//$retorno = array('data' => array(), 'links' => array());
 		//$data = array();
 		//$link = array();
 		$dados = array();
 		$count = 0;
-		foreach ($acoes as $key => $value) {
+		foreach ($atividades as $key => $value) {
 			$count++;
-			$diferenca = Util::difData($value['Acao']['data_inicio_previsto'], $value['Acao']['data_fim_previsto'], 'D');
-			if($value['Acao']['acao_id'] != null){
-				//$link[] = array('id' => $count, 'source' => $value['Acao']['acao_id'], 'target' => $value['Acao']['id'], 'type' => "0");
-				//$data[] = array('id' => $value['Acao']['id'], 'text' => $value['Acao']['titulo'], 'start_date' => str_replace("/", "-", $value['Acao']['data_inicio_previsto']), 'duration' => $diferenca, 'progress' => 0, 'open' => true, 'parent' => $value['Acao']['acao_id']);
-				$inicio = explode("/", $value['Acao']['data_inicio_previsto']);
-				$fim = explode("/", $value['Acao']['data_fim_previsto']);
-				$dados[] = array('name' => $value['Acao']['titulo'], "desc" => "", "values" => array(array('id' => $value['Acao']['id'], "from" => "/Date(".mktime(0,0,0, $inicio[1], $inicio[0], $inicio[2])."000)/", "to" => "/Date(".mktime(0,0,0, $fim[1], $fim[0], $fim[2])."000)/", "desc" => $value['Acao']['titulo'], "dep" => $value['Acao']['acao_id'])));
+			$diferenca = Util::difData($value['Atividade']['data_inicio_previsto'], $value['Atividade']['data_fim_previsto'], 'D');
+			if($value['Atividade']['atividade_id'] != null){
+				//$link[] = array('id' => $count, 'source' => $value['Atividade']['atividade_id'], 'target' => $value['Atividade']['id'], 'type' => "0");
+				//$data[] = array('id' => $value['Atividade']['id'], 'text' => $value['Atividade']['titulo'], 'start_date' => str_replace("/", "-", $value['Atividade']['data_inicio_previsto']), 'duration' => $diferenca, 'progress' => 0, 'open' => true, 'parent' => $value['Atividade']['atividade_id']);
+				$inicio = explode("/", $value['Atividade']['data_inicio_previsto']);
+				$fim = explode("/", $value['Atividade']['data_fim_previsto']);
+				$dados[] = array('name' => $value['Atividade']['titulo'], "desc" => "", "values" => array(array('id' => $value['Atividade']['id'], "from" => "/Date(".mktime(0,0,0, $inicio[1], $inicio[0], $inicio[2])."000)/", "to" => "/Date(".mktime(0,0,0, $fim[1], $fim[0], $fim[2])."000)/", "desc" => $value['Atividade']['titulo'], "dep" => $value['Atividade']['atividade_id'])));
 			}else{
-				//$data[] = array('id' => $value['Acao']['id'], 'text' => $value['Acao']['titulo'], 'start_date' => str_replace("/", "-", $value['Acao']['data_inicio_previsto']), 'duration' => $diferenca, 'progress' => 0, 'open' => true);
-				$inicio = explode("/", $value['Acao']['data_inicio_previsto']);
-				$fim = explode("/", $value['Acao']['data_fim_previsto']);
-				$dados[] = array('name' => $value['Acao']['titulo'], "desc" => "", "values" => array(array('id' => $value['Acao']['id'], "from" => "/Date(".mktime(0,0,0, $inicio[1], $inicio[0], $inicio[2])."000)/", "to" => "/Date(".mktime(0,0,0, $fim[1], $fim[0], $fim[2])."000)/", "desc" => $value['Acao']['titulo'])));
+				//$data[] = array('id' => $value['Atividade']['id'], 'text' => $value['Atividade']['titulo'], 'start_date' => str_replace("/", "-", $value['Atividade']['data_inicio_previsto']), 'duration' => $diferenca, 'progress' => 0, 'open' => true);
+				$inicio = explode("/", $value['Atividade']['data_inicio_previsto']);
+				$fim = explode("/", $value['Atividade']['data_fim_previsto']);
+				$dados[] = array('name' => $value['Atividade']['titulo'], "desc" => "", "values" => array(array('id' => $value['Atividade']['id'], "from" => "/Date(".mktime(0,0,0, $inicio[1], $inicio[0], $inicio[2])."000)/", "to" => "/Date(".mktime(0,0,0, $fim[1], $fim[0], $fim[2])."000)/", "desc" => $value['Atividade']['titulo'])));
 			}		
 		}
 		//$retorno['data'] = $data;

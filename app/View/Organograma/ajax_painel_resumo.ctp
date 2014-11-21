@@ -1,13 +1,14 @@
 <?php 
 /**
-*
-* Copyright [2014] -  Civis Gestão Inteligente
-* Este arquivo é parte do programa Civis Estratégia
-* O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
-* Este programa é distribuído na esperança que possa ser útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
-* Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
-*
-*/
+ *
+ * Copyright [2014] -  Civis Gestão Inteligente
+ * Este arquivo é parte do programa Civis Estratégia
+ * O civis estratégia é um software livre, você pode redistribuí-lo e/ou modificá-lo dentro dos termos da Licença Pública Geral GNU como publicada pela Fundação do Software Livre (FSF) na versão 2 da Licença.
+ * Este programa é distribuído na esperança que possa ser  útil, mas SEM NENHUMA GARANTIA, sem uma garantia implícita de ADEQUAÇÃO a qualquer  MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral GNU/GPL em português para maiores detalhes.
+ * Você deve ter recebido uma cópia da Licença Pública Geral GNU, sob o título "licença GPL.odt", junto com este programa. Se não encontrar,
+ * Acesse o Portal do Software Público Brasileiro no endereço www.softwarepublico.gov.br ou escreva para a Fundação do Software Livre(FSF) Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301, USA
+ *
+ */
 ?>
 <div class="row-fluid" style="margin-bottom: 20px;">
 	<div class="span4">
@@ -32,7 +33,7 @@
 			<li class="active"><a href="#tab1" data-toggle="tab">Projetos</a></li>				
 			<li><a href="#tab2" data-toggle="tab">Indicadores</a></li>
 			<li><a href="#tab3" data-toggle="tab">Tarefas</a></li>
-			<li><a href="#tab4" data-toggle="tab">Ações</a></li>
+			<li><a href="#tab4" data-toggle="tab">Atividades</a></li>
 			<li><a href="#tab5" data-toggle="tab">Anomalias</a></li>
 			<li><a href="#tab6" data-toggle="tab">Descrição</a></li>
 			<li><a href="#tab7" data-toggle="tab">Procedimentos</a></li>
@@ -113,7 +114,7 @@
 									
 								<?php }else{ ?>
 									
-									<a href="javascript:resumoIndicador(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 1;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['janeiro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
+									<a href="javascript:resumoIndicador(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 1;?>, true)"><span class='badge-indicador  success' title="<?php echo $totalIndicador['janeiro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
 									
 								<?php } ?>							
 							</td>
@@ -137,7 +138,7 @@
 									
 								<?php }else{ ?>
 									
-									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 2;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['fevereiro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
+									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 2;?>, true)"><span class='badge-indicador  success' title="<?php echo $totalIndicador['fevereiro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
 									
 								<?php } ?>							
 							</td>
@@ -161,7 +162,7 @@
 									
 								<?php }else{ ?>
 									
-									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 3;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['marco']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
+									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 3;?>, true)"><span class='badge-indicador  success' title="<?php echo $totalIndicador['marco']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
 									
 								<?php } ?>							
 							</td>
@@ -185,7 +186,7 @@
 									
 								<?php }else{ ?>
 									
-									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 4;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['abril']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
+									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 4;?>, true)"><span class='badge-indicador  success' title="<?php echo $totalIndicador['abril']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
 									
 								<?php } ?>							
 							</td>
@@ -209,7 +210,7 @@
 									
 								<?php }else{ ?>
 									
-									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 5;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['maio']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
+									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 5;?>, true)"><span class='badge-indicador  success' title="<?php echo $totalIndicador['maio']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
 									
 								<?php } ?>							
 							</td>
@@ -233,7 +234,7 @@
 									
 								<?php }else{ ?>
 									
-									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 6;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['junho']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
+									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 6;?>, true)"><span class='badge-indicador  success' title="<?php echo $totalIndicador['junho']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
 									
 								<?php } ?>							
 							</td>
@@ -257,7 +258,7 @@
 									
 								<?php }else{ ?>
 									
-									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 7;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['julho']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
+									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 7;?>, true)"><span class='badge-indicador  success' title="<?php echo $totalIndicador['julho']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
 									
 								<?php } ?>							
 							</td>
@@ -281,7 +282,7 @@
 									
 								<?php }else{ ?>
 									
-									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 8;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['agosto']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
+									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 8;?>, true)"><span class='badge-indicador  success' title="<?php echo $totalIndicador['agosto']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
 									
 								<?php } ?>							
 							</td>
@@ -305,7 +306,7 @@
 									
 								<?php }else{ ?>
 									
-									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 9;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['setembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
+									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 9;?>, true)"><span class='badge-indicador  success' title="<?php echo $totalIndicador['setembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
 									
 								<?php } ?>							
 							</td>
@@ -329,7 +330,7 @@
 									
 								<?php }else{ ?>
 									
-									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 10;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['outubro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
+									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 10;?>, true)"><span class='badge-indicador  success' title="<?php echo $totalIndicador['outubro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
 									
 								<?php } ?>							
 							</td>
@@ -353,7 +354,7 @@
 									
 								<?php }else{ ?>
 									
-									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 11;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['novembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
+									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 11;?>, true)"><span class='badge-indicador  success' title="<?php echo $totalIndicador['novembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
 									
 								<?php } ?>							
 							</td>
@@ -377,7 +378,7 @@
 									
 								<?php }else{ ?>
 									
-									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 12;?>, true)"><span class='badge-indicador  succes' title="<?php echo $totalIndicador['dezembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
+									<a href="javascript:abrirModal(<?php echo $indicador['Indicador']['id']; ?>, <?php echo 12;?>, true)"><span class='badge-indicador  success' title="<?php echo $totalIndicador['dezembro']; ?>%"><?php if ($anomalias>0) 	echo "<span class='sup'>$anomalias</span>";	?></span></a>
 									
 								<?php } ?>							
 							</td>
@@ -434,13 +435,13 @@
 						<th>Concluído</th>
 					</thead>
 					<tbody>
-						<?php foreach($usuario['AcaoResponsavel'] as $acao){ ?>
+						<?php foreach($usuario['AtividadeResponsavel'] as $atividade){ ?>
 							<tr>
-								<td><?php echo $this->Html->link($acao['titulo'], array('controller' => 'Acao', 'action' => 'visualizar', $acao['id']), array('target' => '_blank')); ?></td>
+								<td><?php echo $this->Html->link($atividade['titulo'], array('controller' => 'Atividade', 'action' => 'visualizar', $atividade['id']), array('target' => '_blank')); ?></td>
 								<td><?php echo $this->Html->link($usuario['Pessoa']['titulo'], array('controller' => 'Usuario', 'action' => 'visualizar', $usuario['Usuario']['id']), array('target' => '_blank')); ?></td>
-								<td><?php echo Util::inverteData($acao['data_inicio_previsto']); ?></td>
-								<td><?php echo Util::inverteData($acao['data_fim_previsto']); ?></td>
-								<td><?php echo $acao['concluido'] == Util::COMPLETO ? "Sim" : "Não"; ?></td>
+								<td><?php echo Util::inverteData($atividade['data_inicio_previsto']); ?></td>
+								<td><?php echo Util::inverteData($atividade['data_fim_previsto']); ?></td>
+								<td><?php echo $atividade['concluido'] == Util::COMPLETO ? "Sim" : "Não"; ?></td>
 							</tr>
 						<?php } ?>
 					</tbody>					
@@ -452,7 +453,7 @@
 						<th>Justificativa</th>
 						<th>Data</th>
 						<th>Causas internas</th>
-						<th>Ações</th>
+						<th>Atividades</th>
 					</thead>
 					<tbody>
 						<?php foreach($anomaliasAssociadas as $anomalia){
@@ -461,10 +462,10 @@
 							<td><?php echo $value['identificacao_problema']; ?></td>
 							<td><?php echo $value['data']; ?></td>
 							<td><?php echo $value['causas_internas']; ?></td>
-							<td width="7%" nowrap="nowrap">
-								<center>
+							<td width="7%" nowrap="nowrap" align="center">
+								
 								<a href="javascript:abrirPainelAnomalia(<?php echo $value['id']; ?>)"><i class="icon-fullscreen" title="Painel de Anomalia"></i></a>
-								</center>
+								
 							</td>
 						</tr>
 						<?php }

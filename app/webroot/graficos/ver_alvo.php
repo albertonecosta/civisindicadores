@@ -44,7 +44,7 @@ foreach ($parameters as $parameter) {
 	$prioridade = $atributos[1];
 	$andamento = $atributos[2];
 	$cor = (isset($colorStatus[$atributos[3]])) ? $colorStatus[$atributos[3]] : "#FFF";
-	$link = $_GET["base"] . '/Medida/visualizar/'.$atributos[4];
+	$link = $_GET["base"] . '/AcaoEstratetica/visualizar/'.$atributos[4];
 	
 	$radius = (100 - str_replace('%', '', $andamento))*($zonewidth*10)/100/2;
 	$tamanho = 10;
@@ -85,22 +85,25 @@ function DrawCirclePointY($cY, $radius, $angle) {
 
 <div style="text-align: center">
 <img id="alvo" src="http://<?php echo $_SERVER['HTTP_HOST'] . $_GET["base"]; ?>/graficos/alvo.php?width=<?php echo $_GET['width']; ?>&height=<?php echo $_GET['height']; ?>&showscale=<?php echo $_GET['showscale']; ?>&showlabel=<?php echo $_GET['showlabel']; ?>&table_data=<?php echo $_GET['table_data']; ?>" usemap="#targetmap" />
-<map id="targetmap" name="targetmap">
+
+<map name="targetmap">
+
 <?php
 foreach ($points as $point) {
 	$plot = $point;
 	$plotX = $plot[0] + ($width/2);
 	$plotY = $plot[1] + ($height/2);
 	$plotZ = $plot[2];
+	
 	$plotLabel = $plot[3];
 	?>
-	<area shape="circle" coords="<?php echo $plotX.','.$plotY.','.$plotZ; ?>" onmouseout="$('<?php echo $plotLabel; ?>').style.display = 'none';" onmouseover="$('<?php echo $plotLabel; ?>').style.left = event.x;$('<?php echo $plotLabel; ?>').style.top = (event.y+25);$('<?php echo $plotLabel; ?>').style.display = 'inline';" href="<?php echo $plot[5]; ?>" target="_parent" alt="<?php echo $plotLabel; ?>" caption="<?php echo $plotLabel; ?>" />
+	<area shape="circle"  coords="<?php echo $plotX.','.$plotY.','.$plotZ; ?>" onmouseout="$('<?php echo $plotLabel; ?>').style.display = 'none';" onmouseover="$('<?php echo $plotLabel; ?>').style.left = event.x;$('<?php echo $plotLabel; ?>').style.top = (event.y+25);$('<?php echo $plotLabel; ?>').style.display = 'inline';" href="<?php echo $plot[5]; ?>" target="_parent" alt="<?php echo $plotLabel; ?>" caption="<?php echo $plotLabel; ?>" />
 	<?php
 	
 }
 ?>
-
 </map>
+
 </div>
 <?php
 foreach ($points as $point) {
@@ -110,7 +113,7 @@ foreach ($points as $point) {
 	$plotZ = $plot[2];
 	$plotLabel = $plot[3];
 	?>
-	<div id="<?php echo $plotLabel; ?>" style="left:<?php echo ($plotX+25) ?>;top:<?php echo ($plotY+25) ?>;position:absolute;display: none; background-color:lightyellow;border: 1px solid #AAA;"><?php echo $plotLabel; ?></div>
+	<div id="<?php echo $plotLabel; ?>" style="left:<?php echo ($plotX+25) ?>;top:<?php echo ($plotY+25) ?>;position:absolute;display: none; background-color:lightyellow;border: 1px solid #AAA;"><?php echo $plotLabel; ?>222</div>
 	<?php
 	
 }
