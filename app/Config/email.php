@@ -64,7 +64,7 @@ class EmailConfig {
 		'port' => 110,
 		'timeout' => 300,
 		'username' => 'oto@civis.com.br',
-		'password' => 'ot11aspp11#@#@',
+		'password' => '',
 		'client' => null,
 		'log' => false,
 		//'charset' => 'utf-8',

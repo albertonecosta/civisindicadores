@@ -32,6 +32,7 @@ class IndicadorController extends AppController {
 	 * @return void
 	 */
 	public function index() {
+
 		$this->FilterResults->addFilters(
 	        array(
 	            'filter1' => array(

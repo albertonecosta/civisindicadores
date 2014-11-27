@@ -13,6 +13,8 @@ class Util{
 	
 	const ATIVO 	= 1;
 	const INATIVO 	= 0;
+	const INTEIRO 	= 1;
+	const DECIMAL 	= 0;
 	
 	const NAO_INICIADO	= 2;
 	const EM_ANDAMENTO	= 3;
@@ -81,10 +83,7 @@ class Util{
 	
 	const AVISO_ENVIADO_SUCESSO = 'Aviso enviado com sucesso.';
 	const AVISO_ENVIADO_FALHA = 'Não foi possível enviar o aviso por email.';
-	
-	const PERFIL_SINDICO = 1;
-	const PERFIL_SUBSINDICO = 2;
-	
+
 	const MENSAGEM_LIDA = 1;
 	const MENSAGEM_NAO_LIDA = 0;
 	
@@ -191,7 +190,7 @@ class Util{
 	}
 	
 	/**
-	 * Mëtodo que tem a função de inverter o formato de data original
+	 * Método que tem a função de inverter o formato de data original
 	 * Caso a data venha no formato ptbr, é invertido para o fotmato usa
 	 * Caso venha no USA, inverte para o ptbr
 	 * Caso venha hora, retorna com hora, sem os segundos
@@ -381,6 +380,10 @@ class Util{
 		return $index ? $meses[$index]: $meses;
 	}
 	
+	/**
+	 * Método que retorna os meses do ano por nome
+	 * @static
+	 */
 	public static function getMes($mes, $invertido = false) {
 		$retorno = "";
 		if(!$invertido){
@@ -470,6 +473,10 @@ class Util{
 		return $retorno;
 	}
 	
+	/**
+	 * Método que retorna as ações ligadas a outras ações
+	 * @static
+	 */
 	public static function procurarFilhos($paiId, $acos){
 		$filhos = array();
 		$count = 0;
@@ -482,6 +489,10 @@ class Util{
 		return $filhos;		
 	}
 	
+	/**
+	 * Método que os anos para cara carregar nos combos
+	 * @static
+	 */
 	public static function anos(){
 		$anos = array();
 		for ($x=(date("Y")+10);$x>1940;$x--){
@@ -490,6 +501,10 @@ class Util{
 		return $anos;
 	}
 	
+	/**
+	 * Método que retorna a quantidade de anomalias por indicador
+	 * @static
+	 */
 	public static function getTotalAnomalias($indicador){
 		$totalAnomalia = array();
 		$ano = $_SESSION['ano_selecionado_indicadores'];
@@ -520,12 +535,16 @@ class Util{
 		return $totalAnomalia;
 	}
 	
+	/**
+	 * Método que carrega e modifica o array dos indicadores
+	 * @static
+	 */
 	public static function getTotalIndicador($indicador, $filhos = null){		
 		
 		/**
 		 * Regra pra o tipo do indicador ser inteiro ou decimal
 		 */
-		 if($indicador['Indicador']['tipo'] == Util::INATIVO){
+		 if($indicador['Indicador']['tipo'] == Util::DECIMAL){
 		 	foreach ($indicador['IndicadorMeta'] as $key => $value) {
 				 $resultado = str_replace(".", "", $value);
 				 $resultado = str_replace(",", ".", $resultado);
@@ -536,6 +555,7 @@ class Util{
 				 $resultado = str_replace(",", ".", $resultado);
 				 $indicador['IndicadorRealizado'][$key] = $resultado;
 			 }
+		 
 		 }
 			
 		$totalIndicador = array();		
@@ -555,6 +575,7 @@ class Util{
 					$totalIndicador[$count]['outubro'] = 0;
 					$totalIndicador[$count]['novembro'] = 0;
 					$totalIndicador[$count]['dezembro'] = 0;
+					
 					if($indicador['Indicador']['tipo_calculo'] == Util::TIPO_CALCULO_POSITIVO || $indicador['Indicador']['tipo_calculo'] == Util::TIPO_CALCULO_POSITIVO_NAO_CUMULATIVO){
 						if($meta['janeiro'] != 0){
 							$totalJaneiro = ($realizado['janeiro']/$meta['janeiro'])*100;
@@ -688,14 +709,15 @@ class Util{
 	}
 	
 	/**
-	 * Terminar esta função
+	 * Método que calcula a meta por indicador
+	 * @static
 	 */
 	public static function getMetaTotal($indicador, $ano = null){
 		$total = 0;
 		/**
 		 * Regra pra o tipo do indicador ser inteiro ou decimal
 		 */
-		 if($indicador['Indicador']['tipo'] == Util::INATIVO){		 	
+		 if($indicador['Indicador']['tipo'] == Util::DECIMAL){		 	
 		 		if($ano == null){
 		 			foreach ($indicador['IndicadorMeta'] as $chaveMeta => $meta) {
 				 		if($meta['ano'] == $_SESSION['ano_selecionado_indicadores']){
@@ -749,6 +771,11 @@ class Util{
 		 
 	}
 	
+	
+	/**
+	 * Método para cálculo da projeção
+	 * @static
+	 */
 	public static function getProjecao($indicador){
 		$totalMeta = 0;
 		$totalRealizado = 0;
@@ -766,6 +793,7 @@ class Util{
 			 			if($key != 'id' && $key != 'indicador_id' && $key != 'ano' && $achouMes == 1){
 			 				$resultado = str_replace(".", "", $value);
 					 		$resultado = str_replace(",", ".", $resultado);
+					 	
 							$totalMeta += $resultado;
 			 			}
 								  
@@ -779,6 +807,7 @@ class Util{
 			 				$resultado = str_replace(".", "", $value);
 					 		$resultado = str_replace(",", ".", $resultado);
 							$totalRealizado += $resultado;
+						
 			 			}
 						if($key == strtolower(Util::getMes(date("m")))){
 							break;
@@ -814,13 +843,19 @@ class Util{
 				}			
 			 }
 		 }
-		 
-		 $retorno = number_format(($totalMeta+$totalRealizado)/12, 2);
+	
+		 $retorno = ($totalMeta+$totalRealizado);
 		 
 		 return $retorno;
 	}
+	
+	/**
+	 * Método que retorna a diferença
+	 * @static
+	 * 
+	 */
 
-	public static function getDesvio($meta, $realizado){
+	public static function getDesvio($meta, $realizado, $tipo){
 		$meta = str_replace(".", "", $meta);
 		$meta = str_replace(",", ".", $meta);
 		
@@ -828,11 +863,18 @@ class Util{
 		$realizado = str_replace(",", ".", $realizado);
 		
 		$resultado = $meta - $realizado;
-		
-		$resultado = number_format($resultado, 2, ",", ".");
-		
+		if ($tipo==Util::DECIMAL)
+			$resultado = number_format($resultado, 2, ",", ".");
+		else
+			$resultado = number_format($resultado, 0, ",", ".");
+			
 		return $resultado;
 	}
+	
+	/**
+	 * Método que faz tratamento dos numero para formato de banco ou de tela
+	 * @static
+	 */
 	
 	public static function trataNumero($numero, $inverso = true){
 		$retorno = false;
@@ -846,6 +888,12 @@ class Util{
 		}
 		return $retorno;
 	}
+	
+	/**
+	 * Método que retorna os meses do ano
+	 * @static
+	 * @return int 
+	 */
 	
 	public static function difData($d1, $d2, $type='', $sep='/'){
 		$d1 = explode($sep, $d1);

@@ -73,29 +73,6 @@ class MapaEstrategicoController extends AppController {
 				}
 			}			
 		}
-//var_dump($indicadoresFiltrados);
-//die;
-		//Fim de algoritimo para pegar indicadores pelo ano
-		
-		//Ver melhor forma de fazer esse algoritito com Túlio
-		//Algoritimo de ordenação para criar arvore de Pais e filhos correta
-		/*$arrayOrdenado = array();
-		foreach($indicadoresFiltrados as $key1 => $value){
-			if($value['Pai']['id'] != null){
-				foreach ($arrayOrdenado as $key2 => $value2) {
-					if($value2['Indicador']['id'] == $value['Pai']['id']){
-						$arrayOrdenado[] = $arrayOrdenado[$key2 + 1];						
-						$arrayOrdenado[$key2 + 1] = $value;
-					}
-				}
-			}else{
-				$arrayOrdenado[] = $value;
-			}
-		}*/
-		//Fim de algoritimo de ordenação
-		
-		//var_dump($arrayOrdenado);
-		
 		$this->loadModel("Objetivo");
 		$objetivos = $this->Objetivo->find("all", array('conditions' => array('Objetivo.objetivo_id' => $id)));
 		

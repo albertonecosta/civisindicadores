@@ -496,9 +496,31 @@
 									
 								<?php } ?>							
 							</td>
-							<td><?php echo Util::getMetaTotal($indicador); ?></td>
-							<td><?php echo Util::getProjecao($indicador); ?></td>
-							<td><?php echo Util::getMetaTotal($indicador, true); ?></td>
+							<td style="text-align:right">
+							<?php 
+								if($indicador["Indicador"]["tipo"]==Util::INTEIRO)	$casaDecimal=0;	else $casaDecimal=2;
+								echo number_format(Util::getMetaTotal($indicador),$casaDecimal,',','.'); 
+							?>
+							</td>
+							<td style="text-align:right">
+							<?php 							
+							// Verifica o tipo para exibir a qtd de casa decimal
+							
+							
+							// Cálculo da diferença entre a meta e o realizado
+							$desvio = Util::getMetaTotal($indicador)-Util::getProjecao($indicador);
+							$resultadoDesvio = 100-($desvio*100/Util::getMetaTotal($indicador));
+							
+							// Exibição das projeções dentros das cores
+							if($resultadoDesvio <= $indicador['Faixa']['limite_vermelho'])
+								echo "<span class=\"label label-important\">".number_format(Util::getProjecao($indicador),$casaDecimal,',','.')."</span>";
+							elseif($resultadoDesvio > $indicador['Faixa']['limite_vermelho'] && $resultadoDesvio <= $indicador['Faixa']['limite_amarelo'])
+								echo "<span class=\"label label-warning\">".number_format(Util::getProjecao($indicador),$casaDecimal,',','.')."</span>";
+							else 
+								echo "<span class=\"label label-success\">".number_format(Util::getProjecao($indicador),$casaDecimal,',','.')."</span>";
+							?>
+							</td>
+							<td style="text-align:right"><?php echo Util::getMetaTotal($indicador, true); ?></td>
 							<td class="actions"><a href="javascript:exibirGrafico(<?php echo $objetivoPaiId; ?>, <?php echo $indicador['Indicador']['id']; ?>)" id="exibir_grafico"><i class="fa fa-bar-chart-o" title="Gráficos"></i></a></td>
 							<form action="#" id="form_grafico_<?php echo $indicador['Indicador']['id']; ?>">
 								<input type="hidden" name="data[Indicador][id]" value="<?php echo $indicador['Indicador']['id']; ?>" />
@@ -585,7 +607,7 @@
 													<?php } ?>
 												</td>
 												<?php 
-												if($indicador['Indicador']['tipo'] == Util::ATIVO){
+												if($indicador['Indicador']['tipo'] == Util::INTEIRO){
 													$indicadorMeta["janeiro"] = (int)$indicadorMeta["janeiro"];
 													$indicadorMeta["fevereiro"] = (int)$indicadorMeta["fevereiro"];
 													$indicadorMeta["marco"] = (int)$indicadorMeta["marco"];
@@ -600,18 +622,18 @@
 													$indicadorMeta["dezembro"] = (int)$indicadorMeta["dezembro"];
 												}
 												?>
-												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][janeiro]" value="<?php echo $indicadorMeta['janeiro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
-												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][fevereiro]" value="<?php echo $indicadorMeta['fevereiro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
-												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][marco]" value="<?php echo $indicadorMeta['marco']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
-												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][abril]" value="<?php echo $indicadorMeta['abril']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
-												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][maio]" value="<?php echo $indicadorMeta['maio']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
-												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][junho]" value="<?php echo $indicadorMeta['junho']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
-												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][julho]" value="<?php echo $indicadorMeta['julho']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
-												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][agosto]" value="<?php echo $indicadorMeta['agosto']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
-												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][setembro]" value="<?php echo $indicadorMeta['setembro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
-												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][outubro]" value="<?php echo $indicadorMeta['outubro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
-												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][novembro]" value="<?php echo $indicadorMeta['novembro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
-												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][dezembro]" value="<?php echo $indicadorMeta['dezembro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
+												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][janeiro]" value="<?php echo $indicadorMeta['janeiro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
+												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][fevereiro]" value="<?php echo $indicadorMeta['fevereiro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
+												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][marco]" value="<?php echo $indicadorMeta['marco']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
+												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][abril]" value="<?php echo $indicadorMeta['abril']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
+												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][maio]" value="<?php echo $indicadorMeta['maio']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
+												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][junho]" value="<?php echo $indicadorMeta['junho']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
+												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][julho]" value="<?php echo $indicadorMeta['julho']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
+												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][agosto]" value="<?php echo $indicadorMeta['agosto']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
+												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][setembro]" value="<?php echo $indicadorMeta['setembro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
+												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][outubro]" value="<?php echo $indicadorMeta['outubro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
+												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][novembro]" value="<?php echo $indicadorMeta['novembro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
+												<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorMeta][dezembro]" value="<?php echo $indicadorMeta['dezembro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoMeta; ?>/></td>
 											<?php
 													}
 												}
@@ -683,7 +705,7 @@
 														<?php } ?>
 													</td>
 													<?php 
-													if($indicador['Indicador']['tipo'] == Util::ATIVO){
+													if($indicador['Indicador']['tipo'] == Util::INTEIRO){
 														$indicadorRealizado["janeiro"] = (int)$indicadorRealizado["janeiro"];
 														$indicadorRealizado["fevereiro"] = (int)$indicadorRealizado["fevereiro"];
 														$indicadorRealizado["marco"] = (int)$indicadorRealizado["marco"];
@@ -698,18 +720,18 @@
 														$indicadorRealizado["dezembro"] = (int)$indicadorRealizado["dezembro"];
 													}
 													?>
-													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][janeiro]" value="<?php echo $indicadorRealizado['janeiro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
-													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][fevereiro]" value="<?php echo $indicadorRealizado['fevereiro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
-													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][marco]" value="<?php echo $indicadorRealizado['marco']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
-													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][abril]" value="<?php echo $indicadorRealizado['abril']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
-													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][maio]" value="<?php echo $indicadorRealizado['maio']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
-													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][junho]" value="<?php echo $indicadorRealizado['junho']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
-													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][julho]" value="<?php echo $indicadorRealizado['julho']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
-													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][agosto]" value="<?php echo $indicadorRealizado['agosto']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
-													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][setembro]" value="<?php echo $indicadorRealizado['setembro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
-													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][outubro]" value="<?php echo $indicadorRealizado['outubro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
-													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][novembro]" value="<?php echo $indicadorRealizado['novembro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
-													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::ATIVO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][dezembro]" value="<?php echo $indicadorRealizado['dezembro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
+													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][janeiro]" value="<?php echo $indicadorRealizado['janeiro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
+													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][fevereiro]" value="<?php echo $indicadorRealizado['fevereiro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
+													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][marco]" value="<?php echo $indicadorRealizado['marco']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
+													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][abril]" value="<?php echo $indicadorRealizado['abril']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
+													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][maio]" value="<?php echo $indicadorRealizado['maio']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
+													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][junho]" value="<?php echo $indicadorRealizado['junho']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
+													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][julho]" value="<?php echo $indicadorRealizado['julho']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
+													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][agosto]" value="<?php echo $indicadorRealizado['agosto']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
+													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][setembro]" value="<?php echo $indicadorRealizado['setembro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
+													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][outubro]" value="<?php echo $indicadorRealizado['outubro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
+													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][novembro]" value="<?php echo $indicadorRealizado['novembro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
+													<td><input type="text" class="input-mini <?php echo $indicador['Indicador']['tipo'] == Util::INTEIRO ? '' : 'float'; ?>" name="data[<?php echo $indicador['Indicador']['id']; ?>][IndicadorRealizado][dezembro]" value="<?php echo $indicadorRealizado['dezembro']; ?>" <?php echo $apenasLeitura; ?> <?php echo $autorizadoRealizado; ?>/></td>
 												<?php
 														}
 													}

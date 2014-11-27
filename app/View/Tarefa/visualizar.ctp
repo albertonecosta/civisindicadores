@@ -43,6 +43,7 @@ $adicionarForum = $this->ControleDeAcesso->validaAcessoElemento('adicionar_forum
 		}
 		?>
 	</div>
+	<br />
 	<div class="row">
 		<div class="span12">
 			<table cellpadding="0" cellspacing="0" class="table table-bordered table-hover table-condensed">

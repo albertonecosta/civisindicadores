@@ -15,7 +15,7 @@ $adicionar = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Marcado
 $visualizar = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Marcador');
 $editar = $this->ControleDeAcesso->validaAcessoElemento('editar', 'Marcador');
 $excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir', 'Marcador');
-$visualizarMedida = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Medida');
+$visualizarAcaoEstrategica = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'AcaoEstrategica');
 ?>
 <script type="text/javascript">
   $(function() {
@@ -72,7 +72,7 @@ $visualizarMedida = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 
 			<tr>
 				<th data-class="phone,tablet"><?php echo $this->Paginator->sort('Marcador.titulo', 'Título'); ?></th>
 				<?php if($editar || $excluir){?>
-				<th data-hide="phone,tablet"><?php echo __('Ações Associadas'); ?></th>
+				<th data-hide="phone,tablet"><?php echo __('Ações Estratégicas Associadas'); ?></th>
 				<?php }?>
 			</tr>
 		</thead>
@@ -91,11 +91,8 @@ $visualizarMedida = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 
 				<td class="no-padding">
 					<ul class="list-inner">
 					<?php
-					
 					if(isset($marcador["MarcadorObjetivo"])){
-						
-
-							foreach($marcador["MarcadorObjetivo"] as $objetivo){
+						foreach($marcador["MarcadorObjetivo"] as $objetivo){
 							
 						?>
 							<li>
@@ -103,8 +100,8 @@ $visualizarMedida = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 
 								<div class="text">
 										<abbr>
 											<?php 
-											if($visualizarMedida){
-												echo $this->Html->link($objetivo["Objetivo"]['titulo'], array('controller' => 'Medida', 'action' => 'visualizar', $objetivo["Objetivo"]['id']));
+											if($visualizarAcaoEstrategica){
+												echo $this->Html->link($objetivo["Objetivo"]['titulo'], array('controller' => 'AcaoEstrategica', 'action' => 'visualizar', $objetivo["Objetivo"]['id']));
 											}else{
 												echo $objetivo["Objetivo"]['titulo'];
 											}

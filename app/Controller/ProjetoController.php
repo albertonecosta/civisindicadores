@@ -46,7 +46,7 @@ class ProjetoController extends AppController {
 			}
         }
 		
-		//Lemos a sessão se não estiver vázia para aplicar os filtros
+		//Lemos a sessão se não estiver vazia para aplicar os filtros
         $busca = array();
 		if(isset($_SESSION['Search']['Projeto'])){
 			foreach($_SESSION['Search']['Projeto'] as $termo_busca){

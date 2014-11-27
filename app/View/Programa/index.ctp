@@ -157,7 +157,7 @@ $visualizarProjeto = $this->ControleDeAcesso->validaAcessoElemento('visualizar',
 							__(""), 
 							array('action' => 'excluir', $programa['id']), 
 							array('class'=>'icon-trash fa fa-trash-o'),
-							__("Você realmente deseja deletar o registro # {$programa['id']}? Todas as ações, tarefas e posts relacionados ao programa também serão deletadas. Deseja continuar?", $programa['id'])
+							__(Util::MENSAGEM_DELETAR, $programa['id'])
 						); 
 						}
 					?>

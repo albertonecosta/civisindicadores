@@ -24,7 +24,7 @@
 					echo $this->Form->input('responsavel_id', array('label' => 'Responsável','class'=>'input-xlarge', 'empty' => 'Selecione o Responsável','type' => 'select','options' => $usuarios));
 					echo $this->Form->input('supervisor_id', array('label' => 'Supervisor','class'=>'input-xlarge', 'empty' => 'Selecione o Supervisor','type' => 'select','options' => $usuarios));
 					echo $this->Form->input('status', array('label' => 'Status','class'=>'input-xlarge', 'empty' => 'Selecione o Status','type' => 'select','options' => $status));
-					echo $this->Form->input('acao_id', array('label' => 'Ação','class'=>'input-xlarge', 'empty' => 'Selecione o Ação','type' => 'select','options' => $acoes));										
+					echo $this->Form->input('atividade_id', array('label' => 'Atividade','class'=>'input-xlarge', 'empty' => 'Selecione a Atividade','type' => 'select','options' => $atividades));										
 					echo $this->Form->input('data_conclusao', array('label' => 'Data de Conclusão','type' => 'text','class'=>'input-xlarge data datepicker'));
 					echo $this->Form->input('comentario', array('label' => 'Comentário', 'class'=>'input-xlarge'));
 					echo $this->Form->input('arquivo', array('class'=>'input-xlarge', 'type' => 'file'));

@@ -33,14 +33,6 @@ echo $this->Html->css('bootstrap-responsive.min');
 						<?php echo $projeto[0]['Responsavel']["login"]; ?>
 					</td>
 				</tr>
-				<!--tr>
-					<td>
-						<b>Processo:</b>
-					</td>
-					<td>
-						
-					</td>
-				</tr-->				
 				<tr>
 					<td>
 						<b>Custo:</b>
@@ -113,7 +105,7 @@ echo $this->Html->css('bootstrap-responsive.min');
 		<table class="table table-bordered">
 		<thead>
 				<tr style="background-color: #f5f5f5">
-					<th>Ações</th>
+					<th>Atividades</th>
 					<th>Início</th>
 					<th>Fim</th>
 					<th>Status</th>
@@ -123,20 +115,22 @@ echo $this->Html->css('bootstrap-responsive.min');
 			</thead>
 			<tbody>
 				
-				<?php foreach($projeto[0]['Acao'] as $acao){ 
-						if($acao['status'] != Util::INATIVO){
+				<?php 
+				if (count($projeto[0]['Atividade'])){
+				foreach($projeto[0]['Atividade'] as $atividade){ 
+						if($atividade['status'] != Util::INATIVO){
 				
-							if($acao["status"]==5){
-								if (strtotime(Util::inverteData($acao["data_conclusao"]))-strtotime(Util::inverteData($acao["data_fim_previsto"]))>604800)
+							if($atividade["status"]==5){
+								if (strtotime(Util::inverteData($atividade["data_conclusao"]))-strtotime(Util::inverteData($atividade["data_fim_previsto"]))>604800)
 								$barraProgresso="progress progress-danger progress-striped";
-								elseif (strtotime(Util::inverteData($acao["data_fim_previsto"]))-strtotime(Util::inverteData($acao["data_conclusao"]))<604800)
+								elseif (strtotime(Util::inverteData($atividade["data_fim_previsto"]))-strtotime(Util::inverteData($atividade["data_conclusao"]))<604800)
 								$barraProgresso="progress progress-warning progress-striped";
 								else
 								$barraProgresso="progress progress-success progress-striped";
 							}else{
-								if (time()>strtotime(Util::inverteData($acao["data_fim_previsto"])))
+								if (time()>strtotime(Util::inverteData($atividade["data_fim_previsto"])))
 								$barraProgresso="progress progress-danger progress-striped";
-								elseif (time()-604800>strtotime(Util::inverteData($acao["data_fim_previsto"])))
+								elseif (time()-604800>strtotime(Util::inverteData($atividade["data_fim_previsto"])))
 								$barraProgresso="progress progress-warning progress-striped";
 								else
 								$barraProgresso="progress progress-success progress-striped";
@@ -145,24 +139,24 @@ echo $this->Html->css('bootstrap-responsive.min');
 					<tr>
 						<td><?php
 							$titulo='';
-							if($acao["status"]==5){
-								$titulo.= $acao['titulo'];
+							if($atividade["status"]==5){
+								$titulo.= $atividade['titulo'];
 								$titulo.= "<span class='icon-check fa fa-check-o'></span>";
 							}else{
-								$titulo=$acao['titulo'];
+								$titulo=$atividade['titulo'];
 							}
-							if($acao['marco']==1){
+							if($atividade['marco']==1){
 								echo "<strong>$titulo</strong>";						
 							}else{
 								echo "&nbsp;&nbsp;&nbsp;$titulo";
 							}
 						?>
 						</td>
-						<td><?php echo $acao['data_inicio_previsto']; ?></td>
-						<td><?php echo $acao['data_fim_previsto']; ?></td>
+						<td><?php echo $atividade['data_inicio_previsto']; ?></td>
+						<td><?php echo $atividade['data_fim_previsto']; ?></td>
 						<td>
 						<?php 
-							switch ($acao['status']){
+							switch ($atividade['status']){
 								case (Util::ATIVO):
 									echo "Ativo";
 									break;
@@ -189,28 +183,31 @@ echo $this->Html->css('bootstrap-responsive.min');
 							} ?>
 						</td>
 						<td><?php
-							if($acao["status"]==5){
-								if (strtotime(Util::inverteData($acao["data_conclusao"]))-strtotime(Util::inverteData($acao["data_fim_previsto"]))>604800)
+							if($atividade["status"]==5){
+								if (strtotime(Util::inverteData($atividade["data_conclusao"]))-strtotime(Util::inverteData($atividade["data_fim_previsto"]))>604800)
 								$barraProgresso="progress progress-danger progress-striped";
-								elseif (strtotime(Util::inverteData($acao["data_fim_previsto"]))-strtotime(Util::inverteData($acao["data_conclusao"]))<604800)
+								elseif (strtotime(Util::inverteData($atividade["data_fim_previsto"]))-strtotime(Util::inverteData($atividade["data_conclusao"]))<604800)
 								$barraProgresso="progress progress-warning progress-striped";
 								else
 								$barraProgresso="progress progress-success progress-striped";
 							}else{
-								if (time()>strtotime(Util::inverteData($acao["data_fim_previsto"])))
+								if (time()>strtotime(Util::inverteData($atividade["data_fim_previsto"])))
 								$barraProgresso="progress progress-danger progress-striped";
-								elseif (time()-604800>strtotime(Util::inverteData($acao["data_fim_previsto"])))
+								elseif (time()-604800>strtotime(Util::inverteData($atividade["data_fim_previsto"])))
 								$barraProgresso="progress progress-warning progress-striped";
 								else
 								$barraProgresso="progress progress-success progress-striped";
 							}
 							?><div class="<?php echo $barraProgresso; ?>">
-							  <div class="bar" style="width: <?php echo $acao["andamento"];?>;"></div>
+							  <div class="bar" style="width: <?php echo $atividade["andamento"];?>;"></div>
 							</div>						
 						</td>
-						<td><?php echo $acao['Responsavel'][0]['titulo']; ?></td>
+						<td><?php echo $atividade['Responsavel'][0]['titulo']; ?></td>
 					</tr>	
-				<?php }} ?>
+				<?php }
+					}
+				}	 
+				?>
 			</tbody>
 		</table>
 	</div>

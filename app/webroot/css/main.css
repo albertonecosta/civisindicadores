@@ -899,7 +899,7 @@ h4 {
   line-height: 1.1em;
 }
 /*
- * Mapa Estrat√©gico
+ * Mapa EstratÈgico
  */
 #mapa-estrategico .input-mini {
   width: 40px;
@@ -963,20 +963,20 @@ h4 {
   z-index: 2;
 }
 .badge-indicador.success {
-  background-image: linear-gradient(#00EE00, #00EE00);
-  border: 1px solid #00CD00;
+  background-image: linear-gradient(#66CD00, #66CD00);
+  border: 1px solid #458B00;
 }
 .badge-indicador.warning {
-  background-image: linear-gradient(#FFFF00, #FFFF00);
-  border-color: #EEEE00;
-  border: 1px solid #EEEE00;
+  background-image: linear-gradient(#FFD700, #FFD700);
+  border-color: #EEC900;
+  border: 1px solid #EEC900;
 }
 .badge-indicador.important {
   background-image: linear-gradient(#ff0000, #ff0000);
-  border-color: #EE0000;
+  border-color: #EEB422;
   border: 1px solid #EE0000;
 }
-/* end Mapa Estrat√©gico */
+/* end Mapa Estratégico */
 .box .box-title {
   padding: 10px 20px;
   background: #eee;

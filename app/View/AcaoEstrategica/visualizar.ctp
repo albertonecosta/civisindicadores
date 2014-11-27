@@ -15,7 +15,7 @@ $editar = $this->ControleDeAcesso->validaAcessoElemento('editar');
 $excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
 ?>
 <div class="container">
-	<legend>Visualizar Ações</legend>
+	<legend>Visualizar Ações Estratégicas</legend>
 	<div class="buttons">
 		<?php
 		if($editar){
@@ -114,35 +114,28 @@ $excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir');
 					<tr>
 						<td><strong><?php echo __('Situação'); ?></strong></td>
 						<td><?php 
-
 						$situacao = $acaoEstrategica['AcaoEstrategica']['situacao'];
 						$situacaoNome = "";
-						$situacaoNomeLabel = "";
-						
 						switch ($situacao) {
-						    case Util::NAO_INFORMADO:
-						        $situacaoNome = "<img src='".$this->base."/img/quadrado_cinza.png' title='Não Informado'>";
-								$situacaoNomeLabel = "Não Informado";
-						        break;
-						    case Util::ADEQUADO:
-						        $situacaoNome = "<img src='".$this->base."/img/quadrado_verde.png' title='Adequado'>";
-								$situacaoNomeLabel = "Adequado";
-						        break;
-						    case Util::ATENCAO:
-						        $situacaoNome = "<img src='".$this->base."/img/quadrado_amarelo.png' title='Atenção'>";
-								$situacaoNomeLabel = "Atenção";
-						        break;
-					        case Util::CONCLUIDO:
-					        	$situacaoNome = "<img src='".$this->base."/img/quadrado_azul.png' title='Concluído'>";
-								$situacaoNomeLabel = "Concluído";
-					        	break;
-				        	case Util::PREOCUPANTE:
-				        		$situacaoNome = "<img src='".$this->base."/img/quadrado_vermelho.png' title='Preocupante'>";
-								$situacaoNomeLabel = "Preocupante";
-				        		break;
-						}
-				
-						echo $situacaoNome; ?> <?php echo $situacaoNomeLabel; ?></td>
+							case Util::NAO_INFORMADO:
+								$situacaoNome = "<acronym title='Não Informado' ><span class='label label-default'>Não Informado</span></acronym>";
+								break;
+							case Util::ADEQUADO:
+								$situacaoNome = "<acronym title='Adequado' ><span class='label label-success'>Adequado</span></acronym>";
+								break;
+							case Util::ATENCAO:
+								$situacaoNome = "<acronym title='Atenção' ><span class='label label-warning'>Atenção</span></acronym>";
+								break;
+							case Util::CONCLUIDO:
+								$situacaoNome = "<acronym title='Concluído' ><span class='label label-primary'>Concluído</span></acronym>";
+								break;
+							case Util::PREOCUPANTE:
+								$situacaoNome = "<acronym title='Preocopante' ><span class='label label-danger'>Preocupante</span></acronym>";
+								break;
+						}						
+						echo  $situacaoNome;
+						?>&nbsp;
+						</td>
 					</tr>
 					<?php
 							

@@ -22,15 +22,30 @@
 		<tbody>
 			<tr>
 				<td>Meta:</td>
-				<td><?php echo $indicador['IndicadorMeta'][strtolower($mes)]; ?></td>
+				<td><?php 
+				$indicador['IndicadorMeta'][strtolower($mes)] = (float) $indicador['IndicadorMeta'][strtolower($mes)];
+				if ($indicador['Indicador']['tipo']==Util::DECIMAL)
+					echo number_format($indicador['IndicadorMeta'][strtolower($mes)], 2, ",", ".");
+				else
+					echo number_format($indicador['IndicadorMeta'][strtolower($mes)], 0, ",", ".");
+				?></td>
 			</tr>
 			<tr>
 				<td>Realizado:</td>
-				<td><?php echo $indicador['IndicadorRealizado'][strtolower($mes)]; ?></td>
+				<td>
+				<?php 
+				$indicador['IndicadorRealizado'][strtolower($mes)] = (float) $indicador['IndicadorRealizado'][strtolower($mes)];
+				
+				if ($indicador['Indicador']['tipo']==Util::DECIMAL)
+					echo number_format($indicador['IndicadorRealizado'][strtolower($mes)], 2, ",", ".");
+				else
+					echo number_format($indicador['IndicadorRealizado'][strtolower($mes)], 0, ",", ".");
+				?>
+				</td>
 			</tr>
 			<tr>
 				<td>Desvio:</td>
-				<td><?php echo Util::getDesvio($indicador['IndicadorMeta'][strtolower($mes)], $indicador['IndicadorRealizado'][strtolower($mes)]); ?></td>
+				<td><?php echo Util::getDesvio($indicador['IndicadorMeta'][strtolower($mes)], $indicador['IndicadorRealizado'][strtolower($mes)],$indicador['Indicador']['tipo']); ?></td>
 			</tr>
 		</tbody>	
 	</table>

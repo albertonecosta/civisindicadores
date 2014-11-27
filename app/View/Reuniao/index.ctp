@@ -125,12 +125,10 @@
 				</td>
 				<td>				
 					<ul class="list-inner">
-							
-				
 					<?php
 					if(isset($reuniao['Tarefa'])){
 						foreach ($reuniao['Tarefa'] as $key => $value) {					
-?>
+					?>
 							<li>
 								<div class="wrapper">
 								
@@ -140,8 +138,6 @@
 								}else{
 									echo "<a href='javascript:void(0);'>" . $value['titulo'] . "</a>";
 								}
-								
-								
 							?>
 							
 								</div>
@@ -156,8 +152,6 @@
 						<button class="btn btn-mini" type="button" onclick="abrirModal(<?php echo $reuniao['Reuniao']['id']; ?>)">Adicionar</button>
 					</div>
 					<?php }?>
-					</ul>
-					&nbsp;
 				</td>
 				<?php if($editarReuniao || $excluirReuniao || $imprimirReuniao || $emailReuniao){?>
 				<td width="7%" nowrap="nowrap">

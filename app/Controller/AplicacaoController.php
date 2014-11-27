@@ -88,7 +88,7 @@ class AplicacaoController extends AppController {
 		 */
 		
 		$this->loadModel("AcaoEstrategica");
-		$acaoEstrategica = $this->AcaoEstrategica->query("select * from acaoestrategica where tipo = 2 and status <> 0");
+		$acaoEstrategica = $this->AcaoEstrategica->query("select * from objetivo where tipo = 2 and status <> 0");
 		
 		$acoesEstrategicas = array();
 		foreach($acaoEstrategica as $vetorAcaoEstrategica){

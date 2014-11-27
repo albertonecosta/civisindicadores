@@ -13,7 +13,7 @@
 // Carregamento das variáveis de controle de acesso
 $editar = $this->ControleDeAcesso->validaAcessoElemento('editar', 'Marcador');
 $excluir = $this->ControleDeAcesso->validaAcessoElemento('excluir', 'Marcador');
-$visualizarMedida = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Medida');
+$visualizarAcaoEstrategica = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'AcaoEstrategica');
 ?>
 <div class="container">
 	<legend>Visualizar Marcador</legend>
@@ -37,6 +37,7 @@ $visualizarMedida = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 
 		}
 		?>
 	</div>
+	<br/>
 	<div class="row">
 		<div class="span12">
 			<table cellpadding="0" cellspacing="0" class="table table-bordered table-hover table-condensed">
@@ -50,7 +51,7 @@ $visualizarMedida = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 
 						<td><?php echo h($marcador['Marcador']['descricao']); ?></td>
 					</tr>
 					<tr>
-						<td><strong><?php echo __('Ações'); ?></strong></td>
+						<td><strong><?php echo __('Ações Estratégicas Associadas'); ?></strong></td>
 						<td>
 							<ul class="list-inner">
 							<?php
@@ -66,8 +67,8 @@ $visualizarMedida = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 
 										<div class="text">
 												<abbr>
 												<?php 
-												if($visualizarMedida){
-													echo $this->Html->link($objetivo["Objetivo"]['titulo'], array('controller' => 'Medida', 'action' => 'visualizar', $objetivo["Objetivo"]['id']));
+												if($visualizarAcaoEstrategica){
+													echo $this->Html->link($objetivo["Objetivo"]['titulo'], array('controller' => 'AcaoEstrategica', 'action' => 'visualizar', $objetivo["Objetivo"]['id']));
 												}else{
 													echo $objetivo["Objetivo"]['titulo'];
 												}?>	

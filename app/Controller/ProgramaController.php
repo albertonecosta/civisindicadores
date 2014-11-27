@@ -113,7 +113,7 @@ public function imprimir($id = null) {
 		
 		$this->layout = 'ajax';
 		$this->Programa->id = $id;
-		
+		$projetos1=array();
 		
 		if (!$this->Programa->exists()) {
 			throw new NotFoundException(__(Util::REGISTRO_NAO_ENCONTRADO));
@@ -133,15 +133,16 @@ public function imprimir($id = null) {
 			ORDER BY Projeto.data_inicio_previsto asc,Projeto.titulo
 		");
 		
-		foreach($projetos as $novas){
-			$projetos1[] = $novas[0];
+		if (count($projetos)){
+			foreach($projetos as $novas){
+				$projetos1[] = $novas[0];
+			}
 		}
-		
 		$this->set('projetos', $projetos1);	
 		$this->set('programa', $programa);
 	}
 /**
- * visulizar method
+ * visuliazar method
  *
  * @throws NotFoundException
  * @param int $id
@@ -151,6 +152,8 @@ public function imprimir($id = null) {
 		
 		
 		$this->Programa->id = $id;
+		$projetos1=array();
+		
 		if (!$this->Programa->exists()) {
 			throw new NotFoundException(__(Util::REGISTRO_NAO_ENCONTRADO));
 		}
@@ -165,8 +168,10 @@ public function imprimir($id = null) {
 			ORDER BY Projeto.data_inicio_previsto asc,Projeto.titulo
 		");
 		
-		foreach($projetos as $novas){
-			$projetos1[] = $novas[0];
+		if (count($projetos)){
+			foreach($projetos as $novas){
+				$projetos1[] = $novas[0];
+			}
 		}
 		
 		$this->set('projetos', $projetos1);
