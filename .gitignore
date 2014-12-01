@@ -5,3 +5,4 @@
 .settings/org.eclipse.php.core.prefs
 
 app/tmp/*
+app/Config/database.php

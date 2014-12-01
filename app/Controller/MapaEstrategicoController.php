@@ -29,8 +29,13 @@ class MapaEstrategicoController extends AppController {
 			$this->Session->write('ano_selecionado_indicadores',  $this->request->data['Indicador']['anos'][0]);
 			$anoSelecionado = $this->request->data['Indicador']['anos'][0];
 		}else{
-			$this->Session->write('ano_selecionado_indicadores', date("Y"));
-			$anoSelecionado = date("Y");
+			$ano = $this->Session->read('ano_selecionado_indicadores');
+			if(!$ano){
+				$this->Session->write('ano_selecionado_indicadores', date("Y"));
+				$anoSelecionado = date("Y");
+			}else{
+				$anoSelecionado = $ano;
+			}
 		}
 		
 		$this->loadModel("Dimensao");
