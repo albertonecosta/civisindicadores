@@ -102,7 +102,7 @@ $visualizarDimensao = $this->ControleDeAcesso->validaAcessoElemento('visualizar'
 		$parametros = implode(';', $parametros);
 		?>
 		
-		<iframe src="http://<?php echo $_SERVER['HTTP_HOST'] . $this->base; ?>/graficos/ver_alvo.php?base=<?php echo $this->base;?>&showscale=1&width=400&height=400&table_data=<?php echo $parametros;?>" width="100%" height="440" style="border: 0px;" scrolling="no"> </iframe>
+		<iframe src="http://<?php echo $_SERVER['HTTP_HOST'] . $this->base; ?>/graficos/ver_alvo.php?base=<?php echo $this->base;?>&showscale=1&width=400&height=440&table_data=<?php echo $parametros;?>" width="100%" height="440" style="border: 0px;" scrolling="no"> </iframe>
 	</div>
 	<?php }?>
 	

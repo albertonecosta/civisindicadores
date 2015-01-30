@@ -26,11 +26,7 @@
 					echo $this->Form->input('data', array('label' =>'Data','class'=>'input-xlarge data', 'type' => 'text',));
 					echo $this->Form->input('indicador_id', array('label' =>'Indicador','class'=>'input-xlarge data', 'options' => $indicadores));
 					?>
-					<label>Ação concluida?</label>
-					<?php 
-					echo $this->Form->input('concluido', array('legend' => false,'type' => 'radio', 'options' => array(Util::CONCLUIDO => 'sim', Util::NAO_CONCLUIDO => 'não')));
-					echo $this->Form->input('data_conclusao', array('label' =>'Data de conclusão','class'=>'input-xlarge data', 'type' => 'text'));
-				?>
+
   			</div>
  			</div>
  			<div class="row">

@@ -62,16 +62,6 @@ class Anomalia extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
-		'status' => array(
-			'Obrigatório' => array(
-				'rule' => array('notempty'),
-				'message' => 'Campo Concluído é obrigatório',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
 		)
 	);
 
@@ -118,9 +108,7 @@ class Anomalia extends AppModel {
 		if(!empty($this->data['Anomalia']['data'])){
 			$this->data['Anomalia']['data'] = Util::inverteData($this->data['Anomalia']['data']);
 		}
-		if(!empty($this->data['Anomalia']['data_conclusao'])){
-			$this->data['Anomalia']['data_conclusao'] = Util::inverteData($this->data['Anomalia']['data_conclusao']);
-		}
+		
 	}
 	
 	public function afterFind($results){
@@ -129,9 +117,7 @@ class Anomalia extends AppModel {
 				if(isset($model['Anomalia']['data'])){
 					$results[$key]['Anomalia']['data'] = Util::inverteData($model['Anomalia']['data']);
 				}
-				if(isset($model['Anomalia']['data_conclusao'])){
-					$results[$key]['Anomalia']['data_conclusao'] = Util::inverteData($model['Anomalia']['data_conclusao']);
-				}
+				
 			}
 			
 		}

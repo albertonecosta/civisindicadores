@@ -14,7 +14,7 @@
 	<?php 
 	error_reporting(E_ALL ^ E_NOTICE);
 	
-	echo $this->Form->create('Medida'); 
+	echo $this->Form->create('AcaoEstrategica'); 
 	?>	
  		<fieldset>
  			<legend>Edição de Ações</legend>
@@ -32,7 +32,7 @@
 						$box = "";
 						
 						
-						$box .= "<p style=\"margin-left:170px\"><a href=\"javascipt: void(0);\" onclick=\"$('#vpf_".$name."').slideToggle('fast', 'swing');\"><sup>Versão do Ponto Focal (clique para ocultar/exibir)</sup></a></p>";
+						$box .= "<p style=\"margin-left:170px\"><a href=\"javascript: void(0);\" onclick=\"$('#vpf_".$name."').slideToggle('fast', 'swing');\"><sup>Versão do Ponto Focal (clique para ocultar/exibir)</sup></a></p>";
 						$box .= "<div id=\"vpf_".$name."\" style=\"display: none; border: 1px solid #CCC;background-color: lightyellow;width: 520px;margin-left:170px;padding: 15px 10px 10px 10px;\">";
 						$box .= "".cleanUpTags($str)."";
 						$box .= "</div><br />";
@@ -61,10 +61,10 @@
 						echo buildBox("andamento" ,"Andamento", $versao_ponto_focal['andamento']);
 					}
 					
-					echo $this->Form->input('status_medida', array('label' => 'Status','class'=>'input-xlarge', 'empty' => 'Selecione o Status','type' => 'select','options' => $status_medida));
+					echo $this->Form->input('status_acaoestrategica', array('label' => 'Status','class'=>'input-xlarge', 'empty' => 'Selecione o Status','type' => 'select','options' => $status_acaoestrategica));
 					
-					if (isset($versao_ponto_focal['status_medida']) && isset($status_medida[$versao_ponto_focal['status_medida']])){
-						echo buildBox("status_medida", "Status", $status_medida[$versao_ponto_focal['status_medida']]);
+					if (isset($versao_ponto_focal['status_acaoestrategica']) && isset($status_acaoestrategica[$versao_ponto_focal['status_acaoestrategica']])){
+						echo buildBox("status_acaoestrategica", "Status", $status_acaoestrategica[$versao_ponto_focal['status_acaoestrategica']]);
 					}
 					
 					

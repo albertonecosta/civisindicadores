@@ -77,8 +77,7 @@ function DrawCirclePointY($cY, $radius, $angle) {
 	}
 </script>
 
-
-<img id="alvo" src="http://189.9.150.83/graficos/alvo.php?width=<?php echo $_GET['width']; ?>&height=<?php echo $_GET['height']; ?>&showscale=<?php echo $_GET['showscale']; ?>&showlabel=<?php echo $_GET['showlabel']; ?>&table_data=<?php echo $_GET['table_data']; ?>" usemap="#targetmap" />
+<img id="alvo" src="http://<?php echo $_SERVER['HTTP_HOST'] . $this->base; ?>/alvo.php?width=<?php echo $_GET['width']; ?>&height=<?php echo $_GET['height']; ?>&showscale=<?php echo $_GET['showscale']; ?>&showlabel=<?php echo $_GET['showlabel']; ?>&table_data=<?php echo $_GET['table_data']; ?>" usemap="#targetmap" />
 <map id="targetmap" name="targetmap">
 <?php
 foreach ($points as $point) {

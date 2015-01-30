@@ -31,15 +31,15 @@
 				?>
 				<label>Tipo</label>
 				<?php
-					echo $this->Form->input('tipo', array('value' => '0','legend' => false,'type' => 'radio', 'options' => array(Util::ATIVO => 'Inteiro', Util::INATIVO => 'Decimal')));
+					echo $this->Form->input('tipo', array('legend' => false,'type' => 'radio', 'options' => array(Util::ATIVO => 'Inteiro', Util::INATIVO => 'Decimal')));
 				?>
 				<label>Projeção</label>
 				<?php
-					echo $this->Form->input('projecao', array('value' => '0','legend' => false,'type' => 'radio', 'options' => array(Util::ATIVO => 'Sim', Util::INATIVO => 'Não')));
+					echo $this->Form->input('projecao', array('legend' => false,'type' => 'radio', 'options' => array(Util::ATIVO => 'Sim', Util::INATIVO => 'Não')));
 				?>
 				<label>Cálculo</label>
 				<?php
-					echo $this->Form->input('calculo', array('value' => '0','legend' => false,'type' => 'radio', 'options' => array(Util::CALCULO_MEDIA => 'Média', Util::CALCULO_SOMA => 'Soma')));
+					echo $this->Form->input('calculo', array('legend' => false,'type' => 'radio', 'options' => array(Util::CALCULO_MEDIA => 'Média', Util::CALCULO_SOMA => 'Soma')));
 				?>
 				<?php 
 					echo $this->Form->input('ordem', array('class'=>'input-xlarge','type' => 'select','options' => $ordem));

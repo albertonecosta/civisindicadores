@@ -112,11 +112,17 @@ class IndicadorController extends AppController {
 			//Algoritimo para montar a string de anos
 			$anos = '';
 			$anosAntes = $this->request->data['Indicador']['anos'];
-			foreach($this->request->data['Indicador']['anos'] as $ano){
-				$anos .= $ano.',';
+			
+			if ($this->request->data['Indicador']['anos']!=""){
+				foreach($this->request->data['Indicador']['anos'] as $ano){
+					$anos .= $ano.',';
+				}
+				$anos = rtrim($anos, ",");
+				$this->request->data['Indicador']['anos'] = $anos;
+			}else{
+				$this->request->data['Indicador']['anos'] = "";
 			}
-			$anos = rtrim($anos, ",");
-			$this->request->data['Indicador']['anos'] = $anos;
+			
 			//Fim do algoritimo para montar string do ano
 			
 			if ($this->Indicador->save($this->request->data)) {

@@ -49,10 +49,10 @@
   			<div class="span6"> 
   				<legend>Atribuições</legend>
   				<?php
-					echo $this->Form->input('anos', array('class'=>'input-xlarge', 'multiple' => 'multiple','type' => 'select','options' => Util::anos(), 'label' => 'Anos', 'value' => $anos));
-					echo $this->Form->input('autorizado_visualizar', array('class'=>'input-xlarge', 'multiple' => 'multiple','type' => 'select','options' => $usuarios, 'label' => 'Quem irá visualizar?', 'value' => $indicadorAutorizadoVisualizar));
-					echo $this->Form->input('responsavel_meta', array('class'=>'input-xlarge', 'multiple' => 'multiple','type' => 'select','options' => $usuarios, 'label' => 'Quem irá colocar a meta?', 'value' => $indicadorResponsavelMeta));
-					echo $this->Form->input('responsavel_realizado', array('class'=>'input-xlarge', 'multiple' => 'multiple','type' => 'select','options' => $usuarios, 'label' => 'Quem irá colocar o realizado?', 'value' => $indicadorResponsavelrealizado));
+					echo $this->Form->input('anos', array('class'=>'input-xlarge', 'multiple' => 'multiple','type' => 'select','options' => Util::anos(), 'label' => 'Anos', 'value' => $anos,'div' => array('class' => 'input label-block')));
+					echo $this->Form->input('autorizado_visualizar', array('class'=>'input-xlarge', 'multiple' => 'multiple','type' => 'select','options' => $usuarios, 'label' => 'Quem irá visualizar?', 'value' => $indicadorAutorizadoVisualizar,'div' => array('class' => 'input label-block')));
+					echo $this->Form->input('responsavel_meta', array('class'=>'input-xlarge', 'multiple' => 'multiple','type' => 'select','options' => $usuarios, 'label' => 'Quem irá colocar a meta?', 'value' => $indicadorResponsavelMeta,'div' => array('class' => 'input label-block')));
+					echo $this->Form->input('responsavel_realizado', array('class'=>'input-xlarge', 'multiple' => 'multiple','type' => 'select','options' => $usuarios, 'label' => 'Quem irá colocar o realizado?', 'value' => $indicadorResponsavelrealizado,'div' => array('class' => 'input label-block')));
 				?>
   			</div>
  			</div>
@@ -65,10 +65,11 @@
  			</div>
  		</fieldset>
 </div>
+<script type="text/javascript" src="<?php echo $this->base?>/js/libs/jquery.lwMultiSelect.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
     //initialize the element
-    $('#IndicadorAnos').lwMultiSelect();
+      $('#IndicadorAnos').lwMultiSelect();
     $('#IndicadorAutorizadoVisualizar').lwMultiSelect();
     $('#IndicadorResponsavelMeta').lwMultiSelect();
     $('#IndicadorResponsavelRealizado').lwMultiSelect();

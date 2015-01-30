@@ -53,7 +53,7 @@ class Indicador extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'calculo' => array(
+		'tipo' => array(
 			'Obrigatório' => array(
 				'rule' => array('notempty'),
 				'message' => 'Campo cálculo é obrigatório',
@@ -62,6 +62,86 @@ class Indicador extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+		),
+		'desdobramento' => array(
+				'Obrigatório' => array(
+						'rule' => array('notempty'),
+						'message' => 'Campo cálculo é obrigatório',
+						//'allowEmpty' => false,
+						//'required' => false,
+						//'last' => false, // Stop validation after this rule
+						//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+		),
+		'tipo_calculo' => array(
+				'Obrigatório' => array(
+						'rule' => array('notempty'),
+						'message' => 'Campo cálculo é obrigatório',
+						//'allowEmpty' => false,
+						//'required' => false,
+						//'last' => false, // Stop validation after this rule
+						//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+		),
+		'projecao' => array(
+				'Obrigatório' => array(
+						'rule' => array('notempty'),
+						'message' => 'Campo cálculo é obrigatório',
+						//'allowEmpty' => false,
+						//'required' => false,
+						//'last' => false, // Stop validation after this rule
+						//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+		),
+		'calculo' => array(
+				'Obrigatório' => array(
+						'rule' => array('notempty'),
+						'message' => 'Campo cálculo é obrigatório',
+						//'allowEmpty' => false,
+						//'required' => false,
+						//'last' => false, // Stop validation after this rule
+						//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+		),
+		'autorizado_visualizar' => array(
+				'Obrigatório' => array(
+						//'rule' => array('notempty'),
+						'message' => 'Campo anos é obrigatório',
+						'allowEmpty' => false,
+						//'required' => true,
+						//'last' => false, // Stop validation after this rule
+						//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+		),
+		'anos' => array(
+				'Obrigatório' => array(
+						'rule' => array('notempty'),
+						'message' => 'Campo anos é obrigatório',
+						//'allowEmpty' => false,
+						//'required' => false,
+						//'last' => false, // Stop validation after this rule
+						//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+		),
+		'responsavel_meta' => array(
+				'Obrigatório' => array(
+						//'rule' => array('notempty'),
+						'message' => 'Campo anos é obrigatório',
+						'allowEmpty' => false,
+						//'required' => true,
+						//'last' => false, // Stop validation after this rule
+						//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
+		),
+		'responsavel_realizado' => array(
+				'Obrigatório' => array(
+						//'rule' => array('notempty'),
+						'message' => 'Campo anos é obrigatório',
+						'allowEmpty' => false,
+						//'required' => true,
+						//'last' => false, // Stop validation after this rule
+						//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				),
 		),
 		'ordem' => array(
 			'Obrigatório' => array(

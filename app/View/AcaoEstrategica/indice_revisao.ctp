@@ -108,7 +108,7 @@
 				<td>
 					<?php
 					if($visualizar){
-						echo $this->Html->link($acaoEstrategica['AcaoEstrategica']['titulo'], array('action' => 'visualizar', $acaoEstrategica['AcaoEstrategica']['id']));
+						echo $this->Html->link($acaoEstrategica['AcaoEstrategica']['titulo'], array('action' => 'revisar', $acaoEstrategica['AcaoEstrategica']['id']));
 					}else{
 						echo $acaoEstrategica['AcaoEstrategica']['titulo'];
 					}

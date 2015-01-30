@@ -32,12 +32,6 @@
 						<?php }?>
 						<input type="hidden" name="data[Anomalia][indicador_id]" value="<?php echo $idIndicador;?>" />
 					</div>
-					
-					<label>Ação concluida?</label>
-					<?php 
-					echo $this->Form->input('concluido', array('legend' => false,'type' => 'radio', 'options' => array(Util::CONCLUIDO => 'sim', Util::NAO_CONCLUIDO => 'não')));
-					echo $this->Form->input('data_conclusao', array('label' =>'Data de conclusão','class'=>'input-xlarge data datepicker', 'type' => 'text'));
-				?>
  			<div class="row">
  				<div class="span12">
  					<div class="form-actions">
