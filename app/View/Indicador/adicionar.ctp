@@ -27,11 +27,11 @@
 					echo $this->Form->input('usuario_id', array('class'=>'input-xlarge', 'empty' => 'Selecione o responsável','type' => 'select','options' => $usuarios, 'label' => 'Responsável'));
 					echo $this->Form->input('projeto_id', array('class'=>'input-xlarge', 'empty' => 'Selecione o projeto','type' => 'select','options' => $projetos, 'label' => 'Projetos'));
 					echo $this->Form->input('tipo_calculo', array('class'=>'input-xlarge', 'empty' => 'Selecione o tipo de cálculo','type' => 'select','options' => $tiposCalculo, 'label' => 'Tipo do cálculo'));
-					echo $this->Form->input('desdobramento', array('class'=>'input-xlarge', 'empty' => 'Selecione o desdobramento','type' => 'select','options' => array('1' => 'Mensal', '0' => 'Anual')));
+					echo $this->Form->input('desdobramento', array('class'=>'input-xlarge', 'empty' => 'Selecione o desdobramento','type' => 'select','options' => array('1' => 'Mensal')));
 				?>
 				<label>Tipo</label>
 				<?php
-					echo $this->Form->input('tipo', array('legend' => false,'type' => 'radio', 'options' => array(Util::ATIVO => 'Inteiro', Util::INATIVO => 'Decimal')));
+					echo $this->Form->input('tipo', array('legend' => false,'type' => 'radio', 'options' => array(Util::INATIVO => 'Decimal')));
 				?>
 				<label>Projeção</label>
 				<?php

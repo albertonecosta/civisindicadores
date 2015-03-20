@@ -45,7 +45,7 @@
 			</tbody>
 		</table>
 		<?php echo $this->Form->input('dias_a_mais.', array('label' => 'Dias a acrescentar','type' => 'text', 'class'=>'input-menor'));?>
-		<span class="label label-warning" style="margin-bottom: 5px">Obs: A quantidade inserida irá afetar todas as datas, de todas as ações listadas.<br>(O cálculo será data início + quantidade de dias inserido)</span>	
+		 <span class="label label-warning" style="margin-bottom: 5px">Obs: A quantidade inserida irá afetar todas as datas, de todas as ações listadas.<br>(O cálculo será data início + quantidade de dias inserido)</span> 	
 		<div class="row">
 	 		<div class="span12">
 	 			<div class="form-actions">

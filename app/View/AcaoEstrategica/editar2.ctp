@@ -25,7 +25,7 @@
 					//echo $this->Form->input('dimensao_id', array('class'=>'input-xlarge', 'empty' => 'Selecione a Dimensão','type' => 'select','options' => $dimensoes));
 					//echo $this->Form->input('ano', array('class'=>'input-xlarge', 'empty' => 'Selecione o ano','type' => 'select','options' => Util::anos()));
 					echo $this->Form->input('andamento', array('label' => 'Andamento','class'=>'input-xlarge','type' => 'select','options' => $andamento));
-					echo $this->Form->input('status_medida', array('label' => 'Status','class'=>'input-xlarge', 'empty' => 'Selecione o Status','type' => 'select','options' => $status_medida));
+					echo $this->Form->input('status_acaestrategica', array('label' => 'Status','class'=>'input-xlarge', 'empty' => 'Selecione o Status','type' => 'select','options' => $status_medida));
 					echo $this->Form->input('situacao', array('label' => 'Situação','class'=>'input-xlarge', 'empty' => 'Selecione a Situação','type' => 'select','options' => $situacao));
 					echo $this->Form->input('situacao_desc', array('label' => 'Descrição da Situação','class'=>'input-xxlarge textarea'));
 					echo $this->Form->input('resultado', array('label' => 'Resultados','class'=>'input-xxlarge textarea'));

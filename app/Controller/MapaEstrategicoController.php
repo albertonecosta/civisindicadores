@@ -133,10 +133,18 @@ class MapaEstrategicoController extends AppController {
 			$anoSelecionado = $this->Session->read("ano_selecionado_indicadores");
 			$indicadorId = $this->request->query['IdIndicador'];//$this->request->data['Indicador']['id'];
 			$this->IndicadorMeta->recursive = -1;
+			if ($indicadorId)
 			$metas = $this->IndicadorMeta->find('all', array('conditions' => array('IndicadorMeta.indicador_id = ' => $indicadorId, 'IndicadorMeta.ano = ' => $anoSelecionado)));
+			else 
+			$metas = $this->IndicadorMeta->find('all', array('conditions' => array('IndicadorMeta.ano = ' => $anoSelecionado)));
+				
 			$this->IndicadorRealizado->recursive = -1;
+			
+			if ($indicadorId)
 			$realizados = $this->IndicadorRealizado->find('all', array('conditions' => array('IndicadorRealizado.indicador_id' => $indicadorId, 'IndicadorRealizado.ano' => $anoSelecionado)));
-		
+			else
+			$realizados = $this->IndicadorRealizado->find('all', array('conditions' => array('IndicadorRealizado.ano' => $anoSelecionado)));
+				
 			$arrayJson = array(0 => array('name' => 'Realizado', 'data' => array()), 1 => array('name' => 'Meta', 'data' => array()));
 			foreach($metas[0]['IndicadorMeta'] as $chave => $meta){
 				if($chave != 'indicador_id' && $chave != 'ano' && $chave != 'id'){

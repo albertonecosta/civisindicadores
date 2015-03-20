@@ -583,10 +583,11 @@ class AcaoEstrategicaController extends AppController {
 			limit 1;		
 		");
 		
-		$editado = array();
+		
 		foreach($editado_em as $vetorEditado){
 			$editado[]= $vetorEditado[0];
 		}
+		
 		$this->set('editado_em', $editado);
 		
 		
@@ -695,7 +696,7 @@ class AcaoEstrategicaController extends AppController {
 			inner join auditoria_campos on auditoria.id = auditoria_id
 			where alias_controller = 'AcaoEstrategica' and (alias_acao = 'editar' or alias_acao = 'adicionar' ) and elemento_id = '".$this->AcaoEstrategica->id."' 
 			order by auditoria.created desc 
-			limit 1;		
+			;		
 		");
 		
 		$editado = array();
@@ -712,7 +713,7 @@ class AcaoEstrategicaController extends AppController {
 			inner join auditoria_campos on auditoria.id = auditoria_id
 			where alias_controller = 'AcaoEstrategica' and alias_acao = 'revisar' and elemento_id = '".$this->AcaoEstrategica->id."' 
 			order by auditoria.created desc 
-			limit 1;		
+			;		
 		");
 		
 		$revisado = array();

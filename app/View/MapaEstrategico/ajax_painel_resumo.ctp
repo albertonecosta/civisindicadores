@@ -23,23 +23,15 @@
 			<tr>
 				<td>Meta:</td>
 				<td><?php 
-				$indicador['IndicadorMeta'][strtolower($mes)] = (float) $indicador['IndicadorMeta'][strtolower($mes)];
-				if ($indicador['Indicador']['tipo']==Util::DECIMAL)
-					echo number_format($indicador['IndicadorMeta'][strtolower($mes)], 2, ",", ".");
-				else
-					echo number_format($indicador['IndicadorMeta'][strtolower($mes)], 0, ",", ".");
+					echo $indicador['IndicadorMeta'][strtolower($mes)];
 				?></td>
 			</tr>
 			<tr>
 				<td>Realizado:</td>
 				<td>
 				<?php 
-				$indicador['IndicadorRealizado'][strtolower($mes)] = (float) $indicador['IndicadorRealizado'][strtolower($mes)];
-				
-				if ($indicador['Indicador']['tipo']==Util::DECIMAL)
-					echo number_format($indicador['IndicadorRealizado'][strtolower($mes)], 2, ",", ".");
-				else
-					echo number_format($indicador['IndicadorRealizado'][strtolower($mes)], 0, ",", ".");
+			
+					echo $indicador['IndicadorRealizado'][strtolower($mes)];
 				?>
 				</td>
 			</tr>

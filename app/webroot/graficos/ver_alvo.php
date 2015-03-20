@@ -83,7 +83,7 @@ function DrawCirclePointY($cY, $radius, $angle) {
 	}
 </script>
 
-<div style="text-align: center">
+<div style="text-align: center" >
 <img id="alvo" src="http://<?php echo $_SERVER['HTTP_HOST'] . $_GET["base"]; ?>/graficos/alvo.php?width=<?php echo $_GET['width']; ?>&height=<?php echo $_GET['height']; ?>&showscale=<?php echo $_GET['showscale']; ?>&showlabel=<?php echo $_GET['showlabel']; ?>&table_data=<?php echo $_GET['table_data']; ?>" usemap="#targetmap" />
 <map name="targetmap">
 <?php
@@ -112,7 +112,7 @@ foreach ($points as $point) {
 	$plotZ = $plot[2];
 	$plotLabel = $plot[3];
 	?>
-	<div id="<?php echo $plotLabel; ?>" style="left:<?php echo ($plotX+25) ?>;top:<?php echo ($plotY+25) ?>;position:absolute;display: none; background-color:lightyellow;border: 1px solid #AAA;"><?php echo $plotLabel; ?>222</div>
+	<div  id="<?php echo $plotLabel; ?>" style="left:<?php echo ($plotX+25) ?>;top:<?php echo ($plotY+25) ?>;position:absolute;display: none;border-radius: 5px 5px; padding: 4px 4px 4px 4px; background-color:lightgray;border: 1px solid #BBB;font-family: verdana; font-size:12px;"><?php echo $plotLabel; ?></div>
 	<?php
 	
 }

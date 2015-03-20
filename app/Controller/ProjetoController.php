@@ -574,8 +574,9 @@ class ProjetoController extends AppController {
 				}
 					
 				foreach($arrayRegistrosOrganizados as $arrayRegistro){
-					$sqlAtualizaDatas = $this->Atividade->query("UPDATE atividade SET data_inicio_previsto = '".$arrayRegistro['data_inicio_previsto']."',
-																	data_fim_previsto = '".$arrayRegistro['data_fim_previsto']."'
+				
+					$sqlAtualizaDatas = $this->Atividade->query("UPDATE atividade SET data_inicio_previsto = '".Util::inverteData($arrayRegistro['data_inicio_previsto'])."',
+																	data_fim_previsto = '".Util::inverteData($arrayRegistro['data_fim_previsto'])."'
 													WHERE atividade.id='".$arrayRegistro['id']."'");
 				}
 				
@@ -589,10 +590,13 @@ class ProjetoController extends AppController {
 				}
 					
 				foreach($arrayRegistrosOrganizados as $arrayRegistro){
-					$dataParaBanco = Util::inverteData($arrayRegistro['data_inicio_previsto']);
-					$nova_data_fim_previsto = date('Y-m-d', strtotime("+".$this->request->data['Atividade']['dias_a_mais'][0]." days",strtotime($dataParaBanco)));
+					$dataParaBancoInicio = Util::inverteData($arrayRegistro['data_inicio_previsto']);
+					$dataParaBancoFim = Util::inverteData($arrayRegistro['data_fim_previsto']);
 					
-					$sqlAtualizaDatas = $this->Atividade->query("UPDATE atividade SET data_inicio_previsto = '".$arrayRegistro['data_inicio_previsto']."',
+					$nova_data_inicio_previsto = date('Y-m-d', strtotime("+".$this->request->data['Atividade']['dias_a_mais'][0]." days",strtotime($dataParaBancoInicio)));
+					$nova_data_fim_previsto = date('Y-m-d', strtotime("+".$this->request->data['Atividade']['dias_a_mais'][0]." days",strtotime($dataParaBancoFim)));
+					
+					$sqlAtualizaDatas = $this->Atividade->query("UPDATE atividade SET data_inicio_previsto = '".$nova_data_inicio_previsto."',
 																	data_fim_previsto = '".$nova_data_fim_previsto."'
 													WHERE atividade.id='".$arrayRegistro['id']."'");
 					

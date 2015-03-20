@@ -32,7 +32,6 @@ imagefill($im, 0, 0, $trans_colour);
 
 //Titulo da Imagem
 $text_color = imagecolorallocate($im, 0, 0, 100);
-imagestring($im, 2, 5, 5,  "Gráfico de Alcance de Meta", $text_color);
 
 // inicia cores
 $color_red = imagecolorallocate($im, 230, 230, 230);

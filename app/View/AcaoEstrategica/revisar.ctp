@@ -105,7 +105,6 @@
 					if (isset($versao_ponto_focal['riscos'])){
 						echo buildBox("riscos", "Riscos",$versao_ponto_focal['riscos']);
 					}
-
 					echo $this->Form->input('observacoes', array('label' => 'Observações','class'=>'input-xxlarge textarea'));
 					
 					if (isset($versao_ponto_focal['observacoes'])){
@@ -182,4 +181,3 @@
 		$('.jqte-test').jqte({"status" : jqteStatus})
 	});
 </script>
-
