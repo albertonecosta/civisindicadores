@@ -176,17 +176,18 @@ $adicionarAtividade = $this->ControleDeAcesso->validaAcessoElemento('adicionar',
 										echo '<span class="icon-check fa fa-check-square-o"></span>';
 									}
 									$qtdAcoes++;
-
+									
 										if(($value["status"]==5)){
-											if (strtotime(Util::inverteData($value["data_conclusao"]))>strtotime(Util::inverteData($value["data_fim_previsto"])))
+
+											if (strtotime(($value["data_conclusao"]))>strtotime(($value["data_fim_previsto"])))
 											$barraProgresso="progress progress-danger progress-striped";
 											else
 											$barraProgresso="progress progress-success progress-striped";
 											$qtdAcoesConcluidas++;
 										}else{
-											if (time()>strtotime(Util::inverteData($value["data_fim_previsto"])))
+											if (time()>strtotime(($value["data_fim_previsto"])))
 											$barraProgresso="progress progress-danger progress-striped";
-											elseif (time()-604800>strtotime(Util::inverteData($value["data_fim_previsto"])))
+											elseif (time()-604800>strtotime(($value["data_fim_previsto"])))
 											$barraProgresso="progress progress-success progress-striped";
 											else
 											$barraProgresso="progress progress-warning progress-striped";
@@ -516,9 +517,10 @@ $(function () {
 						<!-- <span class="desc-arrow negative">-5% <span class="fa fa-caret-down"></span></span>-->
 					</div>
 					<div id="container3" class="graph" ></div>
-					<div class="graph-number-desc">Indicador da performance do projeto
+					<!-- <div class="graph-number-desc">Indicador da performance do projeto
 						<span class="desc-arrow positive">+25% <span class="fa fa-caret-up"></span></span>
-					</div>	
+					</div>
+					 -->	
 				</div><!-- /.box-graph-w-numbers -->
 			</div><!-- /.span6 -->
 			<div class="span6">
@@ -528,9 +530,11 @@ $(function () {
 						<!--  <span class="desc-arrow negative">-8% <span class="fa fa-caret-down"></span></span>-->
 					</div>
 					<div id="container4" class="graph"></div>
+					 <!--
 					<div class="graph-number-desc">Andamento médio de suas ações
 						<span class="desc-arrow positive">+50% <span class="fa fa-caret-up"></span></span>
 					</div>
+					 -->
 				</div><!-- /.box-graph-w-numbers -->
 			</div><!-- /.span6 -->
 		</div><!-- /.row-fluid -->

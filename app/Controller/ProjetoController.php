@@ -280,21 +280,25 @@ class ProjetoController extends AppController {
 			$this->Projeto->create();
 			if ($this->Projeto->save($this->request->data)) {
 				$this->loadModel("ObjetivoProjeto");
+				
+				if ($this->request->data['Projeto']['objetivos']){
 				foreach($this->request->data['Projeto']['objetivos'] as $objetivos){					
 					$this->request->data['ObjetivoProjeto']['projeto_id'] = $this->Projeto->id;
 					$this->request->data['ObjetivoProjeto']['objetivo_id'] = $objetivos;
 					$this->ObjetivoProjeto->save($this->request->data);
 					$this->ObjetivoProjeto->id = null;					
 				}
-				
+				}
 				$this->loadModel("PatrocinadorProjeto");
+				
+				if ($this->request->data['Projeto']['patrocinadores']){
 				foreach($this->request->data['Projeto']['patrocinadores'] as $patrocinadores){
 					$this->request->data['PatrocinadorProjeto']['projeto_id'] = $this->Projeto->id;
 					$this->request->data['PatrocinadorProjeto']['pessoa_id'] = $patrocinadores;
 					$this->PatrocinadorProjeto->save($this->request->data);
 					$this->PatrocinadorProjeto->id = null;
 				}
-				
+				}
 				$this->Audit->salvar($this->request->data, "Projeto", array(), "adicionar", true, $this->Projeto->id, $this->Auth->user("id"));
 				$this->Session->setFlash(__(Util::REGISTRO_ADICIONADO_SUCESSO), 'success');
 				$this->redirect(array('action' => 'index'));

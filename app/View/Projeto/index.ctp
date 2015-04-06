@@ -62,15 +62,31 @@
 				</div>
 			</div><!-- /.list-filters -->
 				<div class="list-actions-buttons pull-right">
+				<button class="btn btn-small btn-primary" type="button" onclick="javascript: void(0);$('#TargetGraphic').slideToggle('slow');"><i class="fa-bar-chart"></i>Exibir Gráfico</button>
 				<?php if($adicionar){?>				
 				<button class="btn btn-small btn-primary" type="button" onclick="location.href='<?php echo $this->webroot; ?>Projeto/adicionar' "><i class="fa fa-plus-circle"></i>Adicionar</button>
 				<?php }?>
+				
 			</div><!-- /.list-actions -->
 			<!-- end Filtros -->
 		</div>
 	</form>
-	
-	
+	<div id="TargetGraphic" style="display: none" >
+		<?php 
+		$parametros = array();
+		
+		foreach($projetos as $dadosProjeto){
+			
+			$projeto_titulo = explode(' - ', $dadosProjeto['titulo']);
+			$dadosProjeto['andamento']=50;
+			$parametros[] = $projeto_titulo[0].'|'.$dadosProjeto['importancia_politica'].'|'.$dadosProjeto['andamento'].'|'.$dadosProjeto['saude_projeto'].'|'.$dadosProjeto['id'];
+		}
+		$parametros = implode(';', $parametros);
+		?>
+		
+		<iframe src="http://<?php echo $_SERVER['HTTP_HOST'] . $this->base; ?>/graficos/ver_alvo_projeto.php?base=<?php echo $this->base;?>&showscale=1&width=800&height=800&table_data=<?php echo $parametros;?>" width="100%" height="840" style="border: 0px;" scrolling="no"> </iframe>
+		
+	</div>
 	<table cellpadding="0" cellspacing="0" class="footable table table-bordered table-hover table-condensed" id="index">
 		<thead>
 			<tr>
@@ -149,8 +165,9 @@
 										</acronym>
 										
 										<?php
+										
 										if(($value["Atividade"]["status"]==5)){
-								
+										
 											if (strtotime(Util::inverteData($value["Atividade"]["data_conclusao"]))>strtotime(Util::inverteData($value["Atividade"]["data_fim_previsto"])))
 											$barraProgresso="progress progress-danger progress-striped";
 											else
@@ -233,7 +250,7 @@
 <div id="cronograma" title="Cronograma" style="display: none">
 	
 </div>
-
+</div>
 <script type="text/javascript" src="<?php echo $this->base?>/js/libs/highcharts.js"></script>
 <script type="text/javascript" src="<?php echo $this->base?>/js/libs/jquery.fn.gantt.js"></script>
 <script>
