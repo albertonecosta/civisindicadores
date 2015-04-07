@@ -10,6 +10,8 @@
  *
  */
 App::uses('AppModel', 'Model');
+App::uses('Projeto', 'Model');
+
 /**
  * Atividade Model
  *
@@ -177,6 +179,36 @@ class Atividade extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+	
+	/**
+	 * Salva 
+	 * 
+	 * (non-PHPdoc)
+	 * @see Model::afterSave()
+	 */
+	public function afterSave($created){
+
+		if ($this->data["Atividade"]["projeto_id"]){
+		
+			$atividades = $this->find("all",array("conditions"=>array('Atividade.projeto_id'=> $this->data["Atividade"]["projeto_id"],'Atividade.status !='=> Util::INATIVO)));
+			$andamento=0;
+			$cont=0;
+			foreach($atividades as $campos){
+				
+				$andamento += str_replace("%","",$campos["Atividade"]["andamento"]);
+				$cont++;
+				
+			}
+			$media = $andamento/$cont;
+			$projeto = new Projeto();
+			$projeto->id = $this->data["Atividade"]["projeto_id"];
+			$projeto->saveField("andamento", $media);
+				
+		}
+	
+		
+		
+	}
 	
 	public function beforeSave($options){
 			

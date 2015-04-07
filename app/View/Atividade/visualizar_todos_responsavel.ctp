@@ -71,34 +71,35 @@ $visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar',
 				</tr>
 			</thead>
 			<tbody>
-			<?php foreach($atividades as $atividade){?>
+			<?php foreach($atividade as $atividades){
+				?>
 				<tr>
 					<td>
 						<?php
 							if($visualizar){
-								echo $this->Html->link($atividade['Acao']['titulo'], array('action' => 'visualizar', $atividade['Acao']['id']));
+								echo $this->Html->link($atividades['Atividade']['titulo'], array('action' => 'visualizar', $atividades['Atividade']['id']));
 							}else{
-								echo $atividade['Acao']['titulo'];
+								echo $atividades['Atividade']['titulo'];
 							}
 						?>&nbsp;
 					</td>
-					<td><?php echo $atividade['Acao']['data_inicio_previsto']; ?>&nbsp;</td>
-					<td><?php echo $atividade['Acao']['data_fim_previsto']; ?>&nbsp;</td>
+					<td><?php echo $atividades['Atividade']['data_inicio_previsto']; ?>&nbsp;</td>
+					<td><?php echo $atividades['Atividade']['data_fim_previsto']; ?>&nbsp;</td>
 					<td>
 						<?php
 							if($visualizarUsuario){
-								echo $this->Html->link($atividade['Responsavel']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $atividade['Responsavel']['id']));
+								echo $this->Html->link($atividades['Responsavel']["Pessoa"]["titulo"], array('controller' => 'Usuario','action' => 'visualizar', $atividades['Responsavel']["Pessoa"]['id']));
 							}else{
-								echo $atividade['Responsavel']['Pessoa']['titulo'];
+								echo $atividades['Responsavel']['Pessoa']['titulo'];
 							}
 						?>&nbsp;
 					</td>
 					<td>
 						<?php
 							if($visualizarUsuario){
-								echo $this->Html->link($atividade['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $atividade['Supervisor']['id']));
+								echo $this->Html->link($atividades['Supervisor']['Pessoa']['titulo'], array('controller' => 'Usuario','action' => 'visualizar', $atividades['Supervisor']['id']));
 							}else{
-								echo $atividade['Supervisor']['Pessoa']['titulo'];
+								echo $atividades['Supervisor']['Pessoa']['titulo'];
 							}
 						?>&nbsp;
 					</td>
@@ -106,17 +107,17 @@ $visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar',
 					<?php
 									
 										
-										if($atividade['Acao']["status"]==5){
-											if (strtotime(Util::inverteData($atividade['Acao']["data_conclusao"]))-strtotime(Util::inverteData($atividade['Acao']["data_fim_previsto"]))>604800)
+										if($atividades['Atividade']["status"]==5){
+											if (strtotime(Util::inverteData($atividades['Atividade']["data_conclusao"]))-strtotime(Util::inverteData($atividades['Atividade']["data_fim_previsto"]))>604800)
 											$barraProgresso="progress progress-danger progress-striped";
-											elseif (strtotime(Util::inverteData($atividade['Acao']["data_fim_previsto"]))-strtotime(Util::inverteData($atividade['Acao']["data_conclusao"]))<604800)
+											elseif (strtotime(Util::inverteData($atividades['Atividade']["data_fim_previsto"]))-strtotime(Util::inverteData($atividades['Atividade']["data_conclusao"]))<604800)
 											$barraProgresso="progress progress-warning progress-striped";
 											else
 											$barraProgresso="progress progress-success progress-striped";
 										}else{
-											if (time()>strtotime(Util::inverteData($atividade['Acao']["data_fim_previsto"])))
+											if (time()>strtotime(Util::inverteData($atividades['Atividade']["data_fim_previsto"])))
 											$barraProgresso="progress progress-danger progress-striped";
-											elseif (time()-604800>strtotime(Util::inverteData($atividade['Acao']["data_fim_previsto"])))
+											elseif (time()-604800>strtotime(Util::inverteData($atividades['Atividade']["data_fim_previsto"])))
 											$barraProgresso="progress progress-warning progress-striped";
 											else
 											$barraProgresso="progress progress-success progress-striped";
@@ -124,7 +125,7 @@ $visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar',
 										
 										?>
 									<div class="<?php echo $barraProgresso; ?>">
-									  <div class="bar" style="width: <?php echo $atividade['Acao']['andamento'];?>;"><?php echo $atividade['Acao']['andamento'];?></div>
+									  <div class="bar" style="width: <?php echo $atividades['Atividade']['andamento'];?>;"><?php echo $atividades['Atividade']['andamento'];?></div>
 									</div>
 					
 					</td>
@@ -135,7 +136,7 @@ $visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar',
 							if($editar){
 							echo $this->Html->link(
 								__(""),
-								array('action' => 'editar', $atividade['Acao']['id']),
+								array('action' => 'editar', $atividades['Atividade']['id']),
 								array('class'=>'icon-edit')
 							);
 							echo "&nbsp;&nbsp;";
@@ -143,9 +144,9 @@ $visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar',
 							if($excluir){
 							echo $this->Form->postLink(
 								__(""), 
-								array('action' => 'excluir', $atividade['Acao']['id']), 
+								array('action' => 'excluir', $atividades['Atividade']['id']), 
 								array('class'=>'icon-trash'),
-								__(Util::MENSAGEM_DELETAR, $atividade['Acao']['id'])
+								__(Util::MENSAGEM_DELETAR, $atividades['Atividade']['id'])
 							); 
 							}
 						?>

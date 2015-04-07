@@ -78,7 +78,6 @@
 		foreach($projetos as $dadosProjeto){
 			
 			$projeto_titulo = explode(' - ', $dadosProjeto['titulo']);
-			$dadosProjeto['andamento']=50;
 			$parametros[] = $projeto_titulo[0].'|'.$dadosProjeto['importancia_politica'].'|'.$dadosProjeto['andamento'].'|'.$dadosProjeto['saude_projeto'].'|'.$dadosProjeto['id'];
 		}
 		$parametros = implode(';', $parametros);
