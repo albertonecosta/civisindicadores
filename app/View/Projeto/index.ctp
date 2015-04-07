@@ -89,6 +89,7 @@
 	<table cellpadding="0" cellspacing="0" class="footable table table-bordered table-hover table-condensed" id="index">
 		<thead>
 			<tr>
+				<th data-class="expand">Situação</th>
 				<th data-class="expand">Código</th>
 				<th data-class="expand">Titulo</th>
 				<th data-hide="phone,tablet">Início Previsto</th>
@@ -106,6 +107,24 @@
 		<?php foreach($projetos as $projeto){
 		?>
 			<tr>
+				<td><?php 
+				$situacaoNome = "";
+				if (!$projeto['andamento']) $projeto['andamento']=0;
+				switch ($projeto['saude_projeto']) {
+						case "0":
+							$situacaoNome = "<acronym title='Não Informado' ><span class='label label-success'>".$projeto['andamento']." %</span></acronym>";
+							break;
+						case "1":
+							$situacaoNome = "<acronym title='Adequado' ><span class='label label-warning'>".$projeto['andamento']." %</span></acronym>";
+							break;
+						case "2":
+							$situacaoNome = "<acronym title='Atenção' ><span class='label label-danger'>".$projeto['andamento']." %</span></acronym>";
+							break;
+
+				}
+				
+				echo  $situacaoNome;
+				?>&nbsp;</td>
 				<td nowrap="nowrap">
 					<?php
 						if($visualizar){

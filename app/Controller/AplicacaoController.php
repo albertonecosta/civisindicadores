@@ -40,12 +40,13 @@ class AplicacaoController extends AppController {
 		 */
 		
 		$this->loadModel('Projeto');
-		$projeto = $this->Projeto->query("select projeto.id, projeto.titulo, atividade.status,count(atividade.id) as totalatividade from projeto left join atividade on atividade.projeto_id=projeto.Id where (projeto.status <> ".Util::INATIVO." and atividade.status <> ".Util::INATIVO.") group by atividade.status,projeto.id,projeto.titulo,projeto.data_inicio_previsto order by projeto.data_inicio_previsto ASC");
+		$projeto = $this->Projeto->query("select projeto.id, projeto.titulo,projeto.andamento,saude_projeto from projeto where (projeto.status <> ".Util::INATIVO.") order by projeto.data_inicio_previsto ASC");
 		
 		$projetos =  array();
 		foreach($projeto as $vetorProjeto){
 			$projetos[$vetorProjeto[0]["id"]]["titulo"]=$vetorProjeto[0]["titulo"];
-			$projetos[$vetorProjeto[0]["id"]][$vetorProjeto[0]["status"]]=$vetorProjeto[0]["totalatividade"];
+			$projetos[$vetorProjeto[0]["id"]]["andamento"]=$vetorProjeto[0]["andamento"];
+			$projetos[$vetorProjeto[0]["id"]]["saude_projeto"]=$vetorProjeto[0]["saude_projeto"];
 			
 			
 		}

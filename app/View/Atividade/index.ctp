@@ -108,28 +108,27 @@ $visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar',
 					<td>
 					<?php
 									
-										
-										if($atividade['Atividade']["status"]==5){
-											if (strtotime(Util::inverteData($atividade['Atividade']["data_conclusao"]))-strtotime(Util::inverteData($atividade['Atividade']["data_fim_previsto"]))>604800)
-											$barraProgresso="progress progress-danger progress-striped";
-											elseif (strtotime(Util::inverteData($atividade['Atividade']["data_fim_previsto"]))-strtotime(Util::inverteData($atividade['Atividade']["data_conclusao"]))<604800)
-											$barraProgresso="progress progress-warning progress-striped";
-											else
-											$barraProgresso="progress progress-success progress-striped";
-										}else{
-											if (time()>strtotime(Util::inverteData($atividade['Atividade']["data_fim_previsto"])))
-											$barraProgresso="progress progress-danger progress-striped";
-											elseif (time()-604800>strtotime(Util::inverteData($atividade['Atividade']["data_fim_previsto"])))
-											$barraProgresso="progress progress-warning progress-striped";
-											else
-											$barraProgresso="progress progress-success progress-striped";
-										}
-										
-										?>
-									<div class="<?php echo $barraProgresso; ?>">
-									  <div class="bar" style="width: <?php echo $atividade['Atividade']['andamento'];?>;"><?php echo $atividade['Atividade']['andamento'];?></div>
-									</div>
+					if($atividade['Atividade']["status"]==5){
 					
+						if (strtotime(Util::inverteData($atividade["Atividade"]["data_conclusao"]))>strtotime(Util::inverteData($atividade["Atividade"]["data_fim_previsto"])))
+							$barraProgresso="progress progress-danger progress-striped";
+						else
+							$barraProgresso="progress progress-success progress-striped";
+					}else{
+							
+						if (time()>strtotime(Util::inverteData($atividade["Atividade"]["data_fim_previsto"])))
+							$barraProgresso="progress progress-danger progress-striped";
+						elseif (time()-604800>strtotime(Util::inverteData($atividade["Atividade"]["data_fim_previsto"])))
+						$barraProgresso="progress progress-success progress-striped";
+						else
+							$barraProgresso="progress progress-warning progress-striped";
+					}
+										
+					?>
+					<div class="<?php echo $barraProgresso; ?>">
+					  <div class="bar" style="width: <?php echo $atividade['Atividade']['andamento'];?>;"><?php echo $atividade['Atividade']['andamento'];?></div>
+					</div>
+	
 					</td>
 					<?php if($editar || $excluir){?>
 					<td width="7%" nowrap="nowrap">
@@ -214,28 +213,27 @@ $visualizarUsuario = $this->ControleDeAcesso->validaAcessoElemento('visualizar',
 					<td>
 					<?php
 									
-										
-										if($atividade['Atividade']["status"]==5){
-											if (strtotime(Util::inverteData($atividade['Atividade']["data_conclusao"]))-strtotime(Util::inverteData($atividade['Atividade']["data_fim_previsto"]))>604800)
-											$barraProgresso="progress progress-danger progress-striped";
-											elseif (strtotime(Util::inverteData($atividade['Atividade']["data_fim_previsto"]))-strtotime(Util::inverteData($atividade['Atividade']["data_conclusao"]))<604800)
-											$barraProgresso="progress progress-warning progress-striped";
-											else
-											$barraProgresso="progress progress-success progress-striped";
-										}else{
-											if (time()>strtotime(Util::inverteData($atividade['Atividade']["data_fim_previsto"])))
-											$barraProgresso="progress progress-danger progress-striped";
-											elseif (time()-604800>strtotime(Util::inverteData($atividade['Atividade']["data_fim_previsto"])))
-											$barraProgresso="progress progress-warning progress-striped";
-											else
-											$barraProgresso="progress progress-success progress-striped";
-										}
-										
-										?>
-									<div class="<?php echo $barraProgresso; ?>">
-									  <div class="bar" style="width: <?php echo $atividade['Atividade']['andamento'];?>;"><?php echo $atividade['Atividade']['andamento'];?></div>
-									</div>
+					if($atividade['Atividade']["status"]==5){
 					
+						if (strtotime(Util::inverteData($atividade["Atividade"]["data_conclusao"]))>strtotime(Util::inverteData($atividade["Atividade"]["data_fim_previsto"])))
+							$barraProgresso="progress progress-danger progress-striped";
+						else
+							$barraProgresso="progress progress-success progress-striped";
+					}else{
+							
+						if (time()>strtotime(Util::inverteData($atividade["Atividade"]["data_fim_previsto"])))
+							$barraProgresso="progress progress-danger progress-striped";
+						elseif (time()-604800>strtotime(Util::inverteData($atividade["Atividade"]["data_fim_previsto"])))
+						$barraProgresso="progress progress-success progress-striped";
+						else
+							$barraProgresso="progress progress-warning progress-striped";
+					}
+										
+					?>
+					<div class="<?php echo $barraProgresso; ?>">
+					  <div class="bar" style="width: <?php echo $atividade['Atividade']['andamento'];?>;"><?php echo $atividade['Atividade']['andamento'];?></div>
+					</div>
+
 					</td>
 					<?php if($editar || $excluir){?>
 					<td width="7%" nowrap="nowrap" align="center">

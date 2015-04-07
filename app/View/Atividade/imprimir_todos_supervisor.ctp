@@ -27,14 +27,14 @@ echo $this->Html->css('bootstrap-responsive.min');
 			</tr>
 		</thead>
 		<tbody>
-		<?php foreach($acao as $acao){?>
+		<?php foreach($atividade as $atividade){?>
 			<tr>
-				<td><?php echo $acao['Atividade']['titulo']; ?>&nbsp;</td>
-				<td><?php echo $acao['Atividade']['data_inicio_previsto']; ?>&nbsp;</td>
-				<td><?php echo $acao['Atividade']['data_fim_previsto']; ?>&nbsp;</td>
-				<td><?php echo $acao['Responsavel']['Pessoa']['titulo']; ?>&nbsp;</td>
-				<td><?php $acao['Supervisor']['Pessoa']['titulo']; ?>&nbsp;</td>
-				<td><?php echo $acao['Atividade']['andamento']; ?>&nbsp;</td>
+				<td><?php echo $atividade['Atividade']['titulo']; ?>&nbsp;</td>
+				<td><?php echo $atividade['Atividade']['data_inicio_previsto']; ?>&nbsp;</td>
+				<td><?php echo $atividade['Atividade']['data_fim_previsto']; ?>&nbsp;</td>
+				<td><?php echo $atividade['Responsavel']['Pessoa']['titulo']; ?>&nbsp;</td>
+				<td><?php $atividade['Supervisor']['Pessoa']['titulo']; ?>&nbsp;</td>
+				<td><?php echo $atividade['Atividade']['andamento']; ?>&nbsp;</td>
 			</tr>
 			<?php } ?>
 		</tbody>

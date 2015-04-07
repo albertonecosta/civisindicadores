@@ -225,18 +225,24 @@
 							<tr>
 								<td>
 								<?php 
+								
 								/**
 								* Link para página do projeto
 								*/
-								echo $this->Html->link( $projeto["titulo"], array('controller' => 'Projeto', 'action' => 'visualizar', $id));
-								/**
-								* Cálculo do percentual de atividades conckuídas
-								*/
-								$total = array_sum($projeto);
-								$percentual = @($projeto[5]/$total)*100;
+								echo $this->Html->link($projeto["titulo"], array('controller' => 'Projeto', 'action' => 'visualizar', $id));
+								
+								$corProjeto="";
+								if ($projeto["saude_projeto"]=="2"){
+										$corProjeto ="progress-danger";
+								}elseif ($projeto["saude_projeto"]=="1"){
+										$corProjeto ="progress-warning";
+								}elseif ($projeto["saude_projeto"]=="0"){
+										$corProjeto ="progress-success";
+								}
+								
 								?>
-									<div class="progress progress-danger progress-striped">
-										  <div class="bar" style="width: <?php echo number_format($percentual,2,".",".")?>%;"><?php echo number_format($percentual,2,",",".")?>%</div>
+									<div class="progress <?php echo $corProjeto ?> progress-striped">
+										  <div class="bar" style="width: <?php echo number_format($projeto["andamento"],2,".",".")?>%;"><?php echo number_format($projeto["andamento"],2,",",".")?>%</div>
 									</div>
 								</td>
 							</tr>

@@ -36,7 +36,7 @@
 		<div class="span5">				
 			<div class="span3">
 				<?php if($adicionar){?>
-				<button class="btn btn-small btn-primary pull-right" type="button" onclick="location.href= '<?php echo $this->Html->url(array('controller' => 'Acao', 'action' => 'adicionar'), true);?>' ">Adicionar</button>
+				<button class="btn btn-small btn-primary pull-right" type="button" onclick="location.href= '<?php echo $this->Html->url(array('controller' => 'Atividade', 'action' => 'adicionar'), true);?>' ">Adicionar</button>
 				<?php }?>
 			</div>
 			<?php 
@@ -46,7 +46,7 @@
 			?>
 			<div class="span1">
 				<?php if($imprimir){?>
-				<button class="btn btn-small btn-primary pull-left" type="button" onclick="location.href= '<?php echo $this->webroot;?>Acao/imprimirTodosSupervisor/<?php echo $url; ?>' ">Imprimir</button>
+				<button class="btn btn-small btn-primary pull-left" type="button" onclick="location.href= '<?php echo $this->webroot;?>Atividade/imprimirTodosSupervisor/<?php echo $url; ?>' ">Imprimir</button>
 				<?php }?>
 			</div>
 		</div>
@@ -106,19 +106,19 @@
 									
 										
 										if($atividades['Atividade']["status"]==5){
-											if (strtotime(Util::inverteData($atividades['Atividade']["data_conclusao"]))-strtotime(Util::inverteData($atividades['Atividade']["data_fim_previsto"]))>604800)
-											$barraProgresso="progress progress-danger progress-striped";
-											elseif (strtotime(Util::inverteData($atividades['Atividade']["data_fim_previsto"]))-strtotime(Util::inverteData($atividades['Atividade']["data_conclusao"]))<604800)
-											$barraProgresso="progress progress-warning progress-striped";
+
+											if (strtotime(Util::inverteData($atividades["Atividade"]["data_conclusao"]))>strtotime(Util::inverteData($atividades["Atividade"]["data_fim_previsto"])))
+												$barraProgresso="progress progress-danger progress-striped";
 											else
-											$barraProgresso="progress progress-success progress-striped";
+												$barraProgresso="progress progress-success progress-striped";
 										}else{
-											if (time()>strtotime(Util::inverteData($atividades['Atividade']["data_fim_previsto"])))
-											$barraProgresso="progress progress-danger progress-striped";
-											elseif (time()-604800>strtotime(Util::inverteData($atividades['Atividade']["data_fim_previsto"])))
-											$barraProgresso="progress progress-warning progress-striped";
+											
+											if (time()>strtotime(Util::inverteData($atividades["Atividade"]["data_fim_previsto"])))
+												$barraProgresso="progress progress-danger progress-striped";
+											elseif (time()-604800>strtotime(Util::inverteData($atividades["Atividade"]["data_fim_previsto"])))
+												$barraProgresso="progress progress-success progress-striped";
 											else
-											$barraProgresso="progress progress-success progress-striped";
+												$barraProgresso="progress progress-warning progress-striped";
 										}
 										
 										?>
