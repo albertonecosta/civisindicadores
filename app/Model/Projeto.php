@@ -136,19 +136,7 @@ class Projeto extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-		'PlanoAcaoProjeto' => array(
-			'className' => 'PlanoAcaoProjeto',
-			'foreignKey' => 'projeto_id',
-			'dependent' => false,
-			'conditions' => '',
-			'fields' => '',
-			'order' => '',
-			'limit' => '',
-			'offset' => '',
-			'exclusive' => '',
-			'finderQuery' => '',
-			'counterQuery' => ''
-		),
+		
 		'Reuniao' => array(
 			'className' => 'Reuniao',
 			'foreignKey' => 'projeto_id',

@@ -135,7 +135,7 @@
 			<div class="span6">
 				<div class="box-graph-w-numbers">
 					<div class="graph-number"><?php echo @$indicadores["QtdeAcoesEstrategicas"];?></div>
-					<div class="graph-number-desc">Ações Estratégicas do PDTI
+					<div class="graph-number-desc">Ações Estratégicas do
 						<!-- <span class="desc-arrow negative">-5% <span class="fa fa-caret-down"></span></span>-->
 					</div>
 					<div id="container3" class="graph" ></div>
@@ -151,7 +151,7 @@
 						<!--  <span class="desc-arrow negative">-8% <span class="fa fa-caret-down"></span></span>-->
 					</div>
 					<div id="container4" class="graph"></div>
-					<div class="graph-number-desc">Percentual de Monitoramento do PDTI
+					<div class="graph-number-desc">Percentual de Monitoramento
 						<span class="desc-arrow positive"><?php echo @$indicadores["PercentualAcoesMonitoradas"];?>%<span class="fa fa-caret-up"></span></span>
 					</div>
 				</div><!-- /.box-graph-w-numbers -->
