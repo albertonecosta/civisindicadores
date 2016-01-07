@@ -583,7 +583,7 @@ class AcaoEstrategicaController extends AppController {
 			limit 1;		
 		");
 		
-		
+		$editado = array();
 		foreach($editado_em as $vetorEditado){
 			$editado[]= $vetorEditado[0];
 		}
