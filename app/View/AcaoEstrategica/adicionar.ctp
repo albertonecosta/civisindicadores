@@ -33,7 +33,7 @@
 					echo $this->Form->input('riscos', array('label' => 'Riscos','class'=>'input-xxlarge textarea'));
 					echo $this->Form->input('observacoes', array('label' => 'Observações','class'=>'input-xxlarge textarea'));
 					echo $this->Form->input('data_ultima_atualizacao', array('label' => 'Última Atualização','type' => 'text','class'=>'input-xlarge data datepicker'));
-					echo $this->Form->input('tipo', array('class'=>'input-xlarge', 'empty' => 'Selecione o tipo do Ação Estratégica','type' => 'select','options' => array(Util::TIPO_PADRAO => 'Padrão', Util::TIPO_MEDIDA => 'Medida')));
+					//echo $this->Form->input('tipo', array('class'=>'input-xlarge', 'empty' => 'Selecione o tipo do Ação Estratégica','type' => 'select','options' => array(Util::TIPO_PADRAO => 'Padrão', Util::TIPO_MEDIDA => 'Medida')));
 					echo $this->Form->input('objetivo_id', array('label' => 'A que ação ou objetivo esta ação está associada?','div' => array('id' => 'medida_id'),'class'=>'input-xlarge', 'empty' => 'Selecione a ação','type' => 'select','options' => $acoesEstrategicas));
 					
 				?>
@@ -48,26 +48,7 @@
  			</div>
  		</fieldset>
 </div>
-<script type="text/javascript">
-    jQuery(document).ready(function($){
-		var valor = $("#MedidaTipo").val();
-		if(valor == <?php echo Util::TIPO_MEDIDA ?>){
-			$("#medida_id").show();
-		}else{
-			$("#MedidaMedidaId").val("");
-			$("#medida_id").hide();
-		}
-		$("#MedidaTipo").click(function() {
-			var valor = $(this).val();
-            if(valor == <?php echo Util::TIPO_MEDIDA ?>){
-            	$("#medida_id").show();
-            }else{
-            	$("#MedidaMedidaId").val("");
-            	$("#medida_id").hide();
-            }
-        })
-    });
-</script>
+
 <script type="text/javascript" src="http://code.jquery.com/jquery.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="<?php echo $this->base?>/js/jquery-te-1.4.0.min.js"></script>
 <link type="text/css" rel="stylesheet" href="<?php echo $this->base?>/css/jquery-te-1.4.0.css">
