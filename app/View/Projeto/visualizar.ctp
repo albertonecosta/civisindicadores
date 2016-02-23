@@ -596,18 +596,6 @@ function exibirIndicadores(projetoId){
         	*/
 
 			$(div).html(data);
-            
-            $(div).slideToggle("slow");
-            if(background_balao == 'rgba(0, 0, 0, 0)'){
-		    	$(balao).css("background-color", "#E6E6FA");
-		    }else{
-		    	$(balao).css("background-color", "");
-		    }
-		    
-        	var medida_id = "#medidas" + objetivoId;
-        	$(medida_id).slideToggle("slow");
-        	
-        	
         	
         	var exibir_valores = "#exibir_valores_" + objetivoId;
         	$(exibir_valores).click(function(){
