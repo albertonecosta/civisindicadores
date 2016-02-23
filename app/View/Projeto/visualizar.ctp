@@ -597,15 +597,15 @@ function exibirIndicadores(projetoId){
 
 			$(div).html(data);
         	
-        	var exibir_valores = "#exibir_valores_" + objetivoId;
+        	var exibir_valores = "#exibir_valores_" + projetoId;
         	$(exibir_valores).click(function(){
-        		var valores = "#valores_" + objetivoId;
+        		var valores = "#valores_" + projetoId;
         		$(valores).slideToggle("slow");
         		
-        		var atualizar_valores = "#atualizar_valores_" + objetivoId;
+        		var atualizar_valores = "#atualizar_valores_" + projetoId;
         		$(atualizar_valores).click(function(e){
         			e.preventDefault();
-        			var form = "#MapaEstrategicoSalvarForm" + objetivoId;
+        			var form = "#MapaEstrategicoSalvarForm" + projetoId;
         			var action = $(form).attr("action");
         			$.post(
         				action,
