@@ -570,33 +570,7 @@ function exibirIndicadores(projetoId){
         "<?php echo $this->webroot;?>MapaEstrategico/indicadoresPorProjeto/"+projetoId,
         null,
         function(data) {
-            /*
-            $(div).html(data);
-            
-        	var atualizar_valores = "#atualizar_valores_" + projetoId;
-        		$(atualizar_valores).click(function(e){
-        			e.preventDefault();
-        			var form = "#MapaEstrategicoSalvarForm" + projetoId;
-        			var action = $(form).attr("action");
-        			$.post(
-        				action,
-        				$(form).serialize(),
-        				function(data){
-        					alert(data);
-        				}
-        			);
-        		});
-        	
-        	
-        	var exibir_valores = "#exibir_valores_" + projetoId;
-        	$(exibir_valores).click(function(){
-        		var valores = "#valores_" + projetoId;
-        		$(valores).slideToggle("slow");
-        	});
-        	*/
-
 			$(div).html(data);
-        	
         	var exibir_valores = "#exibir_valores_" + projetoId;
         	$(exibir_valores).click(function(){
         		var valores = "#valores_" + projetoId;
@@ -616,15 +590,11 @@ function exibirIndicadores(projetoId){
         			);
         		});	
         	});
-			
-        	
         }
     );
 }
 
-exibirIndicadores(<?php echo $projeto['Projeto']['id'];?>);
-
-								
+exibirIndicadores(<?php echo $projeto['Projeto']['id'];?>);				
 								
 function abrirModalAtividade(idProjeto){
 	var action = "<?php echo $this->webroot;?>Atividade/ajaxAdicionarComProjeto";
