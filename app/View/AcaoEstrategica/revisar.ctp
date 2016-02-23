@@ -39,7 +39,7 @@
 						return $box;
 					}
 					
-					$versao_ponto_focal = unserialize($editado_em[0]['valor_novo']);				
+					@$versao_ponto_focal = unserialize($editado_em[0]['valor_novo']);				
 					
 					
   					echo $this->Form->input('id', array('type' => 'hidden'));
@@ -61,10 +61,10 @@
 						echo buildBox("andamento" ,"Andamento", $versao_ponto_focal['andamento']);
 					}
 					
-					echo $this->Form->input('status_acaoestrategica', array('label' => 'Status','class'=>'input-xlarge', 'empty' => 'Selecione o Status','type' => 'select','options' => $status_acaoestrategica));
+					echo $this->Form->input('status', array('label' => 'Status','class'=>'input-xlarge', 'empty' => 'Selecione o Status','type' => 'select','options' => $status_acaoestrategica));
 					
-					if (isset($versao_ponto_focal['status_acaoestrategica']) && isset($status_acaoestrategica[$versao_ponto_focal['status_acaoestrategica']])){
-						echo buildBox("status_acaoestrategica", "Status", $status_acaoestrategica[$versao_ponto_focal['status_acaoestrategica']]);
+					if (isset($versao_ponto_focal['status']) && isset($status_acaoestrategica[$versao_ponto_focal['status']])){
+						echo buildBox("status", "Status", $status_acaoestrategica[$versao_ponto_focal['status']]);
 					}
 					
 					
@@ -112,12 +112,9 @@
 					}
 					
 					
-					echo $this->Form->input('data_ultima_atualizacao', array('label' => 'Última Atualização','type' => 'text'));					
+					echo $this->Form->input('data_ultima_atualizacao', array('label' => 'Última Atualização','type' => 'text','class'=>'input-xlarge data datepicker'));					
 					echo $this->Form->input('data_ultima_revisao', array('type' => 'hidden', 'value' => date('d/m/Y')));
 					
-					//echo $this->Form->input('data_ultima_revisao', array('label' => 'Última Revisão','type' => 'text'));
-			//		echo $this->Form->input('tipo', array('class'=>'input-xlarge', 'empty' => 'Selecione o tipo do medida','type' => 'select','options' => array(Util::TIPO_PADRAO => 'Padrão', Util::TIPO_MEDIDA => 'Medida')));
-			//		echo $this->Form->input('objetivo_id', array('label' => 'A que ação ou objetivo esta ação está associada?','div' => array('id' => 'medida_id'),'class'=>'input-xlarge', 'empty' => 'Selecione a ação','type' => 'select','options' => $medidas));
 							?>
   			</div>
  			</div>

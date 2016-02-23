@@ -415,8 +415,10 @@ class AcaoEstrategicaController extends AppController {
 	 * @return void
 	 */
 	public function adicionar() {
+				
 		
 		if ($this->request->is('post')) {
+			$this->request->data["AcaoEstrategica"]["tipo"]=2;
 			$this->AcaoEstrategica->create();
 			if ($this->AcaoEstrategica->save($this->request->data)) {
 				$this->Audit->salvar($this->request->data, "AcaoEstrategica", array(), "adicionar", true, $this->AcaoEstrategica->id, $this->Auth->user("id"));

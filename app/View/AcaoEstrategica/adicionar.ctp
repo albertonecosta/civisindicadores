@@ -24,7 +24,7 @@
 					echo $this->Form->input('ano', array('class'=>'input-xlarge', 'empty' => 'Selecione o ano','type' => 'select','options' => Util::anos()));
 					echo $this->Form->input('usuario_id', array('label' => 'Responsável','class'=>'input-xlarge', 'empty' => 'Selecione o Responsável','type' => 'select','options' => $usuarios));
 					echo $this->Form->input('andamento', array('label' => 'Andamento','class'=>'input-xlarge','type' => 'select','options' => $andamento));
-					echo $this->Form->input('status_acaoestrategica', array('label' => 'Status','class'=>'input-xlarge', 'empty' => 'Selecione o Status','type' => 'select','options' => $status_acaoestrategica));
+					echo $this->Form->input('status', array('label' => 'Status','class'=>'input-xlarge', 'empty' => 'Selecione o Status','type' => 'select','options' => $status_acaoestrategica));
 					echo $this->Form->input('situacao', array('label' => 'Situação','class'=>'input-xlarge', 'empty' => 'Selecione a Situação','type' => 'select','options' => $situacao));
 					echo $this->Form->input('situacao_desc', array('label' => 'Descrição da Situação','class'=>'input-xxlarge textarea'));
 					echo $this->Form->input('resultado', array('label' => 'Resultados','class'=>'input-xxlarge textarea'));
@@ -33,7 +33,7 @@
 					echo $this->Form->input('riscos', array('label' => 'Riscos','class'=>'input-xxlarge textarea'));
 					echo $this->Form->input('observacoes', array('label' => 'Observações','class'=>'input-xxlarge textarea'));
 					echo $this->Form->input('data_ultima_atualizacao', array('label' => 'Última Atualização','type' => 'text','class'=>'input-xlarge data datepicker'));
-					//echo $this->Form->input('tipo', array('class'=>'input-xlarge', 'empty' => 'Selecione o tipo do Ação Estratégica','type' => 'select','options' => array(Util::TIPO_PADRAO => 'Padrão', Util::TIPO_MEDIDA => 'Medida')));
+					
 					echo $this->Form->input('objetivo_id', array('label' => 'A que ação ou objetivo esta ação está associada?','div' => array('id' => 'medida_id'),'class'=>'input-xlarge', 'empty' => 'Selecione a ação','type' => 'select','options' => $acoesEstrategicas));
 					
 				?>

@@ -101,6 +101,7 @@ class ObjetivoController extends AppController {
 	 */
 	public function adicionar() {
 		if ($this->request->is('post')) {
+			$this->request->data["Objetivo"]["tipo"]=1;
 			$this->Objetivo->create();
 			if ($this->Objetivo->save($this->request->data)) {
 				$this->Audit->salvar($this->request->data, "Objetivo", array(), "adicionar", true, $this->Objetivo->id, $this->Auth->user("id"));

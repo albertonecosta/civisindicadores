@@ -68,7 +68,7 @@ class AcaoEstrategica extends AppModel {
  						//'on' => 'create', // Limit validation to 'create' or 'update' operations
  				),
  		),
-		'status_acaoestrategica' => array(
+		'status' => array(
  				'Obrigatório' => array(
  						'rule' => array('notempty'),
  						'message' => 'Campo dimensão é obrigatório',

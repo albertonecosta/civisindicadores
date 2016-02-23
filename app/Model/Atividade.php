@@ -188,7 +188,7 @@ class Atividade extends AppModel {
 	 */
 	public function afterSave($created){
 
-		if ($this->data["Atividade"]["projeto_id"]){
+		if (@$this->data["Atividade"]["projeto_id"]){
 		
 			$atividades = $this->find("all",array("conditions"=>array('Atividade.projeto_id'=> $this->data["Atividade"]["projeto_id"],'Atividade.status !='=> Util::INATIVO)));
 			$andamento=0;
