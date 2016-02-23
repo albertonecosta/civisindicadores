@@ -570,6 +570,7 @@ function exibirIndicadores(projetoId){
         "<?php echo $this->webroot;?>MapaEstrategico/indicadoresPorProjeto/"+projetoId,
         null,
         function(data) {
+            /*
             $(div).html(data);
             
         	var atualizar_valores = "#atualizar_valores_" + projetoId;
@@ -592,6 +593,42 @@ function exibirIndicadores(projetoId){
         		var valores = "#valores_" + projetoId;
         		$(valores).slideToggle("slow");
         	});
+        	*/
+
+			$(div).html(data);
+            
+            $(div).slideToggle("slow");
+            if(background_balao == 'rgba(0, 0, 0, 0)'){
+		    	$(balao).css("background-color", "#E6E6FA");
+		    }else{
+		    	$(balao).css("background-color", "");
+		    }
+		    
+        	var medida_id = "#medidas" + objetivoId;
+        	$(medida_id).slideToggle("slow");
+        	
+        	
+        	
+        	var exibir_valores = "#exibir_valores_" + objetivoId;
+        	$(exibir_valores).click(function(){
+        		var valores = "#valores_" + objetivoId;
+        		$(valores).slideToggle("slow");
+        		
+        		var atualizar_valores = "#atualizar_valores_" + objetivoId;
+        		$(atualizar_valores).click(function(e){
+        			e.preventDefault();
+        			var form = "#MapaEstrategicoSalvarForm" + objetivoId;
+        			var action = $(form).attr("action");
+        			$.post(
+        				action,
+        				$(form).serialize(),
+        				function(data){
+        					alert(data);
+        				}
+        			);
+        		});	
+        	});
+			
         	
         }
     );
