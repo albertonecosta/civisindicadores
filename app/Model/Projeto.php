@@ -192,6 +192,7 @@ class Projeto extends AppModel {
 		if(!empty($this->data['Projeto']['data_ultima_atualizacao'])){
 			$this->data['Projeto']['data_ultima_atualizacao'] = Util::inverteData($this->data['Projeto']['data_ultima_atualizacao']);
 		}
+		
 		if(isset($this->data['Projeto']["custo"]) && !empty($this->data['Projeto']["custo"])){
 			$valor = str_replace(".", "", $this->data['Projeto']["custo"]);
 			$this->data['Projeto']["custo"] = str_replace(",", ".", $valor);
@@ -201,6 +202,7 @@ class Projeto extends AppModel {
 			$valor = str_replace(".", "", $this->data['Projeto']["gasto"]);
 			$this->data['Projeto']["gasto"] = str_replace(",", ".", $valor);
 		}
+		
 	}
 	
 	public function afterFind($results){
@@ -218,6 +220,7 @@ class Projeto extends AppModel {
 				if(isset($model['Projeto']['data_ultima_atualizacao'])){
 					$results[$key]['Projeto']['data_ultima_atualizacao'] = Util::inverteData($model['Projeto']['data_ultima_atualizacao']);
 				}
+				/*
 				if(isset($model['Projeto']["custo"])){
 					$results[$key]['Projeto']["custo"] = number_format($model['Projeto']["custo"], 2,',','.');
 				}
@@ -225,6 +228,7 @@ class Projeto extends AppModel {
 				if(isset($model['Projeto']["gasto"])){
 					$results[$key]['Projeto']["gasto"] = number_format($model['Projeto']["gasto"], 2,',','.');
 				}
+				*/
 			}
 			
 		}

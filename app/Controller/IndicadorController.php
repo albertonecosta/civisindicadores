@@ -181,7 +181,7 @@ class IndicadorController extends AppController {
 					$this->IndicadorMeta->id = null;
 					$this->IndicadorRealizado->id = null;					
 				}
-					
+				
 				$this->Session->setFlash(__(Util::REGISTRO_ADICIONADO_SUCESSO), 'success');
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -241,6 +241,7 @@ class IndicadorController extends AppController {
 			
 			//Algoritimo para montar a string de anos
 			$anos = '';
+			$anosAntes = $this->request->data['Indicador']['anos'];
 			foreach($this->request->data['Indicador']['anos'] as $ano){
 				$anos .= $ano.',';
 			}
@@ -282,6 +283,45 @@ class IndicadorController extends AppController {
 				}
 				
 				$this->Audit->salvar($this->request->data, "Indicador", array(), "editar", false, $id, $this->Auth->user("id"));
+				
+					
+				$this->loadModel("IndicadorMeta");
+				$this->loadModel("IndicadorRealizado");
+				
+				$anosGravados = $this->IndicadorMeta->find('list', array('conditions' => array('indicador_id' => $id), 'fields' => array('ano')));
+				
+				foreach($anosAntes as $ano){
+					if (!in_array($ano, $anosGravados)) { 							
+						$indices['indicador_id'] = $id;
+						$indices['ano'] = $ano;
+						$indices['janeiro'] = 0;
+						$indices['fevereiro'] = 0;
+						$indices['marco'] = 0;
+						$indices['abril'] = 0;
+						$indices['maio'] = 0;
+						$indices['junho'] = 0;
+						$indices['julho'] = 0;
+						$indices['agosto'] = 0;
+						$indices['setembro'] = 0;
+						$indices['outubro'] = 0;
+						$indices['novembro'] = 0;
+						$indices['dezembro'] = 0;
+						$indicadorIndice['IndicadorMeta'] = $indices;
+						$indicadorIndice['IndicadorRealizado'] = $indices;
+						$this->IndicadorMeta->save($indicadorIndice);
+						$this->IndicadorRealizado->save($indicadorIndice);
+						$this->IndicadorMeta->id = null;
+						$this->IndicadorRealizado->id = null;	
+					}
+									
+				}
+				foreach($anosGravados as $ano){
+					if (!in_array($ano, $anosAntes)) { 	
+					 $this->IndicadorMeta->query("delete from indicador_meta where ano='$ano' and indicador_id='$id'");
+					 $this->IndicadorRealizado->query("delete from indicador_realizado where ano='$ano' and indicador_id='$id'");
+					}		
+				}
+				
 				
 				$this->Session->setFlash(__(Util::REGISTRO_EDITADO_SUCESSO), 'success');
 				$this->redirect(array('action' => 'index'));

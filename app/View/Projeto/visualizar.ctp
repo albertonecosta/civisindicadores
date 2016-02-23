@@ -205,7 +205,7 @@ $adicionarAtividade = $this->ControleDeAcesso->validaAcessoElemento('adicionar',
 											$diferenca = (strtotime($value["data_fim_previsto"])-strtotime($value["data_inicio_previsto"]));
 											$ondeDeveriaHoje = ($ondeDeveriaHoje/$diferenca)*100;
 										}
-										 $ondeDeveriaHoje;
+										echo $ondeDeveriaHoje;
 										
 										$ondeDeveriaTotal+=$ondeDeveriaHoje;
 										$ondeEstaTotal+=$ondeEsta;
@@ -222,12 +222,16 @@ $adicionarAtividade = $this->ControleDeAcesso->validaAcessoElemento('adicionar',
 								
 								}
 								//Calculo para exibição nos indicadores
-								$ondeDeveriaMedia = ($ondeDeveriaTotal/$qtdAcoes);
+								 $ondeDeveriaMedia = ($ondeDeveriaTotal/$qtdAcoes);
 								
-								$ondeEstaMedia = ($ondeEstaTotal/$qtdAcoes);
-							
-									$vp = $projeto['Projeto']['custo']*$ondeDeveriaMedia*10;
-									$va = $projeto['Projeto']['custo']*$ondeEstaMedia*10;
+								 $ondeEstaMedia = ($ondeEstaTotal/$qtdAcoes);
+								
+									 $vp = $projeto['Projeto']['custo']*($ondeDeveriaMedia/100);
+									
+									 $va = $projeto['Projeto']['custo']*($ondeEstaMedia/100);
+									
+									
+									
 									$idc= $va/$projeto['Projeto']['gasto'];
 									$idp= $va/$vp;
 								
@@ -251,15 +255,15 @@ $adicionarAtividade = $this->ControleDeAcesso->validaAcessoElemento('adicionar',
 						<td>$ <?php echo number_format($va,2,',','.'); ?></td>
 					</tr>
 					<tr>
-						<td><strong><?php echo __('IDP'); ?><abbr title='Se IDP maior que 1 (um) você está adiantado, se menor que 1 você está atrasado.'><span class="fa fa-question-circle fa-1g"></span></abbr></strong></td>
+						<td><strong><?php echo __('IDP'); ?><abbr title='Índice de desempenho de custos - Se IDP maior que 1 (um) você está adiantado, se menor que 1 você está atrasado.'><span class="fa fa-question-circle fa-1g"></span></abbr></strong></td>
 						<td><?php echo number_format($idp,2,',','.') ?></td>
 					</tr>
 					<tr>
-						<td><strong><?php echo __('IDC'); ?><abbr title='Se IDC maior que 1 (um) você está dentro do orçamento, se menor que 1 você está fora do orçamento'><span class="fa fa-question-circle fa-1g"></span></abbr></strong></td>
+						<td><strong><?php echo __('IDC'); ?><abbr title=' Índice de desempenho de prazos - Se IDC maior que 1 (um) você está dentro do orçamento, se menor que 1 você está fora do orçamento'><span class="fa fa-question-circle fa-1g"></span></abbr></strong></td>
 						<td><?php echo number_format($idc,2,',','.') ?></td>
 					</tr>
 					<tr>
-						<td><strong><?php echo __('VPR'); ?><abbr title='Esse indicador mostra em ($) o quanto seu projeto está adiantado, se estiver positivo, ou atrasado, se esiver negativo.'><span class="fa fa-question-circle fa-1g"></span></abbr></strong></td>
+						<td><strong><?php echo __('VPR'); ?><abbr title='Variação dos prazos -  Se o resultado for negativo, significa que houve atraso em relação ao cronograma, e quando positivo, o cronograma está adiantado, e se =1, o projeto está sendo desenvolvido dentro do prazo.'><span class="fa fa-question-circle fa-1g"></span></abbr></strong></td>
 						<td><?php echo number_format($va-$vp,2,',','.'); ?></td>
 					</tr>
 				</tbody>				

@@ -182,7 +182,7 @@
 								<td class="t-text"><?php echo $this->Html->link($tarefa['tarefa'], array('controller' => 'Tarefa', 'action' => 'visualizar', $tarefa['id'])) ?></td>
 								<td class="t-label" data-hide="phone,tablet">
 								<?php
-								$diff = Util::difData(date("d/m/Y"), UTIL::inverteData($tarefa['data_fim_previsto']), 'D');
+								$diff = Util::difData(date("d/m/Y"), Util::inverteData($tarefa['data_fim_previsto']), 'D');
 								if ($diff<0){
 									echo '<span class="label label-important">Atrasada</span>';
 								}elseif ($diff==0){
