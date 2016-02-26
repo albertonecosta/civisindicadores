@@ -56,7 +56,7 @@ class MapaEstrategicoController extends AppController {
 		$this->loadModel("Indicador");
 		
 		$this->Indicador->recursive = 1;
-		$indicadores = $this->Indicador->find("all", array('conditions' => array('Indicador.objetivo_id' => $id, 'Indicador.status' => Util::ATIVO), 'order' => array('Indicador.ordem ASC')));
+		$indicadores = $this->Indicador->find("all", array('conditions' => array('Indicador.objetivo_id' => $id, 'Indicador.status' => Util::ATIVO), 'order' => array('Indicador.id ASC','Indicador.ordem ASC')));
 		
 		
 		//Algoritimo para buscar pelos indicadores do ano selecionado pelo usuario e fazer seus calculos de meta e realizado
@@ -277,14 +277,16 @@ class MapaEstrategicoController extends AppController {
 			//Atualmente está configurado para pegar até 10 niveis de pais acima do indicador
 			if(isset($value['Indicador']['pai_id']) && $value['Indicador']['pai_id'] != null){
 				$pais = array($value['Indicador']['pai_id']);
-				for ($i=0; $i < 10; $i++) {
+				for ($i=0; $i < 20; $i++) {
 					if(isset($pais[$i])){
 						$indicadorPai = $this->Indicador->find('first', array('conditions' => array('Indicador.id' => $pais[$i])));
 						$paisSelecionados[] = $indicadorPai;
+						if ($indicadorPai['Pai']['id'])
 						$pais[] = $indicadorPai['Pai']['id'];
 					}
 				}			
 			}
+		
 			//Fim do algoritimo para identificar a arvore de pais do indicador
 			
 			$base = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
@@ -376,9 +378,12 @@ class MapaEstrategicoController extends AppController {
 					
 					//Buscamos pelos índices dos filhos desse indicador Pai e realizamos os calculos de cada um
 					foreach ($pai['Filhos'] as $filho) {
+					
 						$metas = $this->IndicadorMeta->find("first", array("conditions" => array("IndicadorMeta.indicador_id" => $filho['id'], "IndicadorMeta.ano" => $this->Session->read("ano_selecionado_indicadores"))));
 						$realizados = $this->IndicadorRealizado->find("first", array("conditions" => array("IndicadorRealizado.indicador_id" => $filho['id'], "IndicadorRealizado.ano" => $this->Session->read("ano_selecionado_indicadores"))));
+					
 						if($filho['tipo_calculo'] == Util::TIPO_CALCULO_POSITIVO){
+							
 							
 							$totalMeta['IndicadorMeta']['janeiro'] += str_replace(",", ".", str_replace(".", "",  $metas['IndicadorMeta']['janeiro']));
 							$totalMeta['IndicadorMeta']['fevereiro'] += str_replace(",", ".", str_replace(".", "", $metas['IndicadorMeta']['fevereiro']));
@@ -391,7 +396,7 @@ class MapaEstrategicoController extends AppController {
 							$totalMeta['IndicadorMeta']['setembro'] += str_replace(",", ".", str_replace(".", "", $metas['IndicadorMeta']['setembro']));
 							$totalMeta['IndicadorMeta']['outubro'] += str_replace(",", ".", str_replace(".", "", $metas['IndicadorMeta']['outubro']));
 							$totalMeta['IndicadorMeta']['novembro'] += str_replace(",", ".", str_replace(".", "", $metas['IndicadorMeta']['novembro']));
-							$totalMeta['IndicadorMeta']['dezembro'] += str_replace(",", ".", str_replace(".", "", $metas['IndicadorMeta']['dezembro']));
+							$totalMeta['IndicadorMeta']['dezembro'] += str_replace(",", ".", str_replace(".", "", $metas['IndicadorMeta']['dezembro']));							
 							
 							$totalRealizado['IndicadorRealizado']['janeiro'] += str_replace(",", ".", str_replace(".", "", $realizados['IndicadorRealizado']['janeiro']));
 							$totalRealizado['IndicadorRealizado']['fevereiro'] += str_replace(",", ".", str_replace(".", "", $realizados['IndicadorRealizado']['fevereiro']));
@@ -408,6 +413,7 @@ class MapaEstrategicoController extends AppController {
 							$count ++;
 						}else if($filho['tipo_calculo'] == Util::TIPO_CALCULO_NEGATIVO){
 							
+
 							$totalMeta['IndicadorMeta']['janeiro'] -= str_replace(",", ".", str_replace(".", "", $metas['IndicadorMeta']['janeiro']));
 							$totalMeta['IndicadorMeta']['fevereiro'] -= str_replace(",", ".", str_replace(".", "", $metas['IndicadorMeta']['fevereiro']));
 							$totalMeta['IndicadorMeta']['marco'] -= str_replace(",", ".", str_replace(".", "", $metas['IndicadorMeta']['marco']));
@@ -420,7 +426,7 @@ class MapaEstrategicoController extends AppController {
 							$totalMeta['IndicadorMeta']['outubro'] -= str_replace(",", ".", str_replace(".", "", $metas['IndicadorMeta']['outubro']));
 							$totalMeta['IndicadorMeta']['novembro'] -= str_replace(",", ".", str_replace(".", "", $metas['IndicadorMeta']['novembro']));
 							$totalMeta['IndicadorMeta']['dezembro'] -= str_replace(",", ".", str_replace(".", "", $metas['IndicadorMeta']['dezembro']));
-							
+												
 							$totalRealizado['IndicadorRealizado']['janeiro'] -= str_replace(",", ".", str_replace(".", "", $realizados['IndicadorRealizado']['janeiro']));
 							$totalRealizado['IndicadorRealizado']['fevereiro'] -= str_replace(",", ".", str_replace(".", "", $realizados['IndicadorRealizado']['fevereiro']));
 							$totalRealizado['IndicadorRealizado']['marco'] -= str_replace(",", ".", str_replace(".", "", $realizados['IndicadorRealizado']['marco']));
@@ -436,6 +442,7 @@ class MapaEstrategicoController extends AppController {
 							$count ++;
 							
 						}
+						
 					}					
 					
 					//Ao final se o indicador for do tipo média, tiramos a média desse indicador com base na quantidade dos seus filhos relevantes so cálculo
@@ -466,6 +473,36 @@ class MapaEstrategicoController extends AppController {
 						$totalRealizado['IndicadorRealizado']['outubro'] = number_format($totalRealizado['IndicadorRealizado']['outubro']/$count, 2, ",", ".");
 						$totalRealizado['IndicadorRealizado']['novembro'] = number_format($totalRealizado['IndicadorRealizado']['novembro']/$count, 2, ",", ".");
 						$totalRealizado['IndicadorRealizado']['dezembro'] = number_format($totalRealizado['IndicadorRealizado']['dezembro']/$count, 2, ",", ".");
+					}else{
+						$totalMeta['IndicadorMeta']['janeiro'] = number_format($totalMeta['IndicadorMeta']['janeiro'], 2, ",", ".");
+						$totalMeta['IndicadorMeta']['fevereiro'] = number_format($totalMeta['IndicadorMeta']['fevereiro'], 2, ",", ".");
+						$totalMeta['IndicadorMeta']['marco'] = number_format($totalMeta['IndicadorMeta']['marco'], 2, ",", ".");
+						$totalMeta['IndicadorMeta']['abril'] = number_format($totalMeta['IndicadorMeta']['abril'], 2, ",", ".");
+						$totalMeta['IndicadorMeta']['maio'] = number_format($totalMeta['IndicadorMeta']['maio'], 2, ",", ".");
+						$totalMeta['IndicadorMeta']['junho'] = number_format($totalMeta['IndicadorMeta']['junho'], 2, ",", ".");
+						$totalMeta['IndicadorMeta']['julho'] = number_format($totalMeta['IndicadorMeta']['julho'], 2, ",", ".");
+						$totalMeta['IndicadorMeta']['agosto'] = number_format($totalMeta['IndicadorMeta']['agosto'], 2, ",", ".");
+						$totalMeta['IndicadorMeta']['setembro'] = number_format($totalMeta['IndicadorMeta']['setembro'], 2, ",", ".");
+						$totalMeta['IndicadorMeta']['outubro'] = number_format($totalMeta['IndicadorMeta']['outubro'], 2, ",", ".");
+						$totalMeta['IndicadorMeta']['novembro'] = number_format($totalMeta['IndicadorMeta']['novembro'], 2, ",", ".");
+						$totalMeta['IndicadorMeta']['dezembro'] = number_format($totalMeta['IndicadorMeta']['dezembro'], 2, ",", ".");
+						
+						$totalRealizado['IndicadorRealizado']['janeiro'] = number_format($totalRealizado['IndicadorRealizado']['janeiro'], 2, ",", ".");
+						$totalRealizado['IndicadorRealizado']['fevereiro'] = number_format($totalRealizado['IndicadorRealizado']['fevereiro'], 2, ",", ".");
+						$totalRealizado['IndicadorRealizado']['marco'] = number_format($totalRealizado['IndicadorRealizado']['marco'], 2, ",", ".");
+						$totalRealizado['IndicadorRealizado']['abril'] = number_format($totalRealizado['IndicadorRealizado']['abril'], 2, ",", ".");
+						$totalRealizado['IndicadorRealizado']['maio'] = number_format($totalRealizado['IndicadorRealizado']['maio'], 2, ",", ".");
+						$totalRealizado['IndicadorRealizado']['junho'] = number_format($totalRealizado['IndicadorRealizado']['junho'], 2, ",", ".");
+						$totalRealizado['IndicadorRealizado']['julho'] = number_format($totalRealizado['IndicadorRealizado']['julho'], 2, ",", ".");
+						$totalRealizado['IndicadorRealizado']['agosto'] = number_format($totalRealizado['IndicadorRealizado']['agosto'], 2, ",", ".");
+						$totalRealizado['IndicadorRealizado']['setembro'] = number_format($totalRealizado['IndicadorRealizado']['setembro'], 2, ",", ".");
+						$totalRealizado['IndicadorRealizado']['outubro'] = number_format($totalRealizado['IndicadorRealizado']['outubro'], 2, ",", ".");
+						$totalRealizado['IndicadorRealizado']['novembro'] = number_format($totalRealizado['IndicadorRealizado']['novembro'], 2, ",", ".");
+						$totalRealizado['IndicadorRealizado']['dezembro'] = number_format($totalRealizado['IndicadorRealizado']['dezembro'], 2, ",", ".");
+						
+						
+						
+						
 					}
 					
 					//Ao final, atualizamos os valores, para ficarem no formato adequado para inserir no banco de dados
