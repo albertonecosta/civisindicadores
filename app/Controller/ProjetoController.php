@@ -88,7 +88,7 @@ class ProjetoController extends AppController {
 		$atividades = array();
 		foreach($projeto as $p){
 			$projetos[] = $p[0];
-			$atividades[$p[0]['id']] = $this->Atividade->find('all', array('conditions'=>array('Atividade.projeto_id'=>$p[0]['id']),'order' => array('Atividade.data_inicio_previsto','Atividade.marco','Atividade.titulo')));
+			$atividades[$p[0]['id']] = $this->Atividade->find('all', array('conditions'=>array('Atividade.projeto_id'=>$p[0]['id']),'order' => array('Atividade.ordem','Atividade.marco','Atividade.titulo')));
 		}
 		
 		$this->paginacao($projetos, $total, $pagina);
@@ -189,7 +189,7 @@ class ProjetoController extends AppController {
 			INNER JOIN usuario Usuario ON Usuario.id = Atividade.responsavel_id 
 			INNER JOIN pessoa Pessoa ON Pessoa.id = Usuario.pessoa_id 
 			WHERE Atividade.status<>0 and Atividade.projeto_id = {$id} and Atividade.atividade_id is NULL
-			ORDER BY Atividade.data_inicio_previsto asc, Atividade.marco,Atividade.titulo");
+			ORDER BY Atividade.ordem asc, Atividade.marco,Atividade.titulo");
 		$x=0;
 		foreach($atividades as $novas){
 			$x++;
@@ -199,7 +199,7 @@ class ProjetoController extends AppController {
 			INNER JOIN usuario Usuario ON Usuario.id = Atividade.responsavel_id 
 			INNER JOIN pessoa Pessoa ON Pessoa.id = Usuario.pessoa_id 
 			WHERE Atividade.status<>0 and Atividade.atividade_id = ".$novas[0]["id"]."
-			ORDER BY Atividade.data_inicio_previsto asc, Atividade.marco,Atividade.titulo");
+			ORDER BY Atividade.ordem asc, Atividade.marco,Atividade.titulo");
 			
 			foreach($filhos as $novosFilhos){
 				$atividades1[$x]["Filhos"][]=$novosFilhos[0];
@@ -671,6 +671,23 @@ class ProjetoController extends AppController {
 	 * @throws NotFoundException
 	 * @return void
 	 */	
+	public function atividade(){
+		$this->autoRender = false;
+		$this->layout = "ajax";
+		foreach($_POST['menu'] as $posicao=>$id){
+			$this->loadModel("Atividade"); 
+			$this->Atividade->id = $id;
+			$this->Atividade->ordem = $posicao;
+			
+			if ($this->request->is('post') || $this->request->is('put')) {
+			
+			$this->Atividade->query("UPDATE atividade SET ordem = '$posicao'
+													WHERE atividade.id='".$id."'");
+			}
+		}
+	
+	} 
+	 
 	public function exibirGantt($id = null){
 		$this->autoRender = false;
 		$this->layout = "ajax";

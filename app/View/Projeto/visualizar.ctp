@@ -18,6 +18,27 @@ $visualizarPrograma = $this->ControleDeAcesso->validaAcessoElemento('visualizar'
 $visualizarAtividade = $this->ControleDeAcesso->validaAcessoElemento('visualizar', 'Atividade');
 $adicionarAtividade = $this->ControleDeAcesso->validaAcessoElemento('adicionar', 'Atividade');
 ?>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+$(document).ready(
+	function() {
+		$("#sortme").sortable({
+			update : function () {
+			serial = $('#sortme').sortable('serialize');
+			$.ajax({
+				url: "http://localhost:8181/civisindicadores/Projeto/atividade/",
+				type: "post",
+				data: serial,
+				error: function(){
+					alert("theres an error with AJAX");
+				}
+			});
+		}
+	});
+}
+);
+</script>
 <div class="container">
 	<legend>Visualizar Projeto
 		<div class="list-actions-buttons pull-right">
@@ -144,7 +165,7 @@ $adicionarAtividade = $this->ControleDeAcesso->validaAcessoElemento('adicionar',
 					<tr>
 						<td><strong><?php echo __('Atividades Associadas'); ?></strong></td>
 						<td class="no-padding">
-							<ul class="list-inner">
+							<ul class="list-inner" id="sortme">
 							
 							<?php
 							/**
@@ -156,7 +177,7 @@ $adicionarAtividade = $this->ControleDeAcesso->validaAcessoElemento('adicionar',
 								foreach ($atividades as $key => $value) {
 								?>
 								
-									<li>
+									<li id="menu_<?php echo $value['id']?>">
 									<div class="wrapper">
 									<div class="text">
 									<abbr style='font-size: 14px;' title='<?php echo $value["nome"]." | ".Util::inverteData($value["data_inicio_previsto"])." a ".Util::inverteData($value["data_fim_previsto"])?>'>
