@@ -59,11 +59,11 @@ class EmailConfig {
 
 	public $smtp = array(
 		'transport' => 'Smtp',
-		'from' => array('oto@civis.com.br' => 'Civis'),
+		'from' => array('email@civis.com.br' => 'Civis'),
 		'host' => 'mail.civis.gov.br',
 		'port' => 110,
 		'timeout' => 300,
-		'username' => 'oto@civis.com.br',
+		'username' => 'email@civis.com.br',
 		'password' => '',
 		'client' => null,
 		'log' => false,
