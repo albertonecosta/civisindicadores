@@ -62,10 +62,10 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Postgres',
 		'persistent' => false,
-		'host' => '10.209.9.227',
+		'host' => 'localhost',
 		'login' => 'civis',
-		'password' => 'aVnpm4i!',
-		'database' => 'civis',
+		'password' => '',
+		'database' => '',
 		'prefix' => '',
 		'encoding' => 'utf8'
 	);
